@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30907.101
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fengj", "Fengj.csproj", "{9FEEBC5F-AE3E-4116-B28E-61AB6619D843}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		ExportDebug|Any CPU = ExportDebug|Any CPU
+		ExportRelease|Any CPU = ExportRelease|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9FEEBC5F-AE3E-4116-B28E-61AB6619D843}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9FEEBC5F-AE3E-4116-B28E-61AB6619D843}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9FEEBC5F-AE3E-4116-B28E-61AB6619D843}.ExportDebug|Any CPU.ActiveCfg = ExportDebug|Any CPU
+		{9FEEBC5F-AE3E-4116-B28E-61AB6619D843}.ExportDebug|Any CPU.Build.0 = ExportDebug|Any CPU
+		{9FEEBC5F-AE3E-4116-B28E-61AB6619D843}.ExportRelease|Any CPU.ActiveCfg = ExportRelease|Any CPU
+		{9FEEBC5F-AE3E-4116-B28E-61AB6619D843}.ExportRelease|Any CPU.Build.0 = ExportRelease|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C61D9DCA-B669-4C5C-B829-0FCD1877A011}
+	EndGlobalSection
+EndGlobal
