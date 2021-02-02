@@ -24,7 +24,7 @@ namespace XUnitTest.Runner
 
             map.cells = new List<ICell>();
 
-            for(int i=0; i<map.row; i++)
+            for (int i = 0; i < map.row; i++)
             {
                 for (int j = 0; j < map.column; j++)
                 {

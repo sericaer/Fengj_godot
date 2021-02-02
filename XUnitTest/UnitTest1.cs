@@ -1,4 +1,5 @@
-using System;
+﻿using System;
+using System.Linq;
 using Xunit;
 
 namespace XUnitTest
@@ -6,9 +7,8 @@ namespace XUnitTest
     public class UnitTest1
     {
         [Fact]
-        public void Test1()
+        public void TestMethod1()
         {
-
         }
     }
 }
