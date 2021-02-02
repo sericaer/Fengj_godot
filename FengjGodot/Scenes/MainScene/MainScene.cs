@@ -11,10 +11,12 @@ public class MainScene : Control
 	Facade facade;
 	public override void _Ready()
 	{
-		facade = new Facade(GlobalPath.mod);
+		facade = new Facade();
+		facade.CreateModder(GlobalPath.mod);
+
 		GlobalResource.BuildTileSet(facade.modder.terrainDefs);
 
-		facade.GenerateRunData(new RunInit() { mapSize = (100, 100)});
+		facade.CreateRunData(new RunInit() { mapSize = (100, 100)});
 
 		map = GetNode<Map>("Map");
 		map.gmObj = facade.runData.map;

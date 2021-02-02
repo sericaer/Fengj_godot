@@ -15,17 +15,16 @@ namespace Fengj.Facade
         public RunData runData;
 
 
-        public void GenerateRunData(RunInit runInit)
+        public void CreateModder(string modPath)
+        {
+            modder = Modder.Load(modPath);
+        }
+
+        public void CreateRunData(RunInit runInit)
         {
             runData = new RunData();
 
             runData.map = mapBuider.build(runInit.mapSize, modder.terrainDefs);
-        }
-
-        
-        public Facade(string modPath)
-        {
-            modder = Modder.Load(modPath);
         }
     }
 }
