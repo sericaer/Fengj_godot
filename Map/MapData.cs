@@ -4,6 +4,7 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
+using LoggerInterface;
 
 namespace Fengj.Map
 {
@@ -25,6 +26,7 @@ namespace Fengj.Map
         public int size => cells.Count();
 
         public List<ICell> cells { get; set; }
+        
 
         public MapData()
         {

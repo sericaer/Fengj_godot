@@ -12,6 +12,8 @@ public class MainScene : Control
 	Facade facade;
 	public override void _Ready()
 	{
+		Facade.logger = (str) => GD.Print(str);
+
 		facade = new Facade();
 		facade.CreateModder(GlobalPath.mod);
 
@@ -20,7 +22,8 @@ public class MainScene : Control
 		facade.CreateRunData(new RunInit() { mapSize = (100, 100)});
 
 		map = GetNode<Map>("Map");
-		map.gmObj = facade.runData.map;
+		
+		map.SetGmObj(facade.runData.map);
 	}
 
 	private void _on_ButtonDirect_mouse_entered(String direct)

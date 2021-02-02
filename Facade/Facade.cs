@@ -1,4 +1,6 @@
-﻿using Fengj.Modder;
+﻿using Fengj.Map;
+using Fengj.Modder;
+using LoggerInterface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,12 +11,26 @@ namespace Fengj.Facade
 {
     class Facade
     {
+
         public ModManager modder;
 
         public MapBuider mapBuider;
 
         public RunData runData;
 
+        public static Action<string> logger
+        {
+            set
+            {
+                LOG.logger = value;
+            }
+        }
+
+        public Facade()
+        {
+           
+            mapBuider = new MapBuider();
+        }
 
         public void CreateModder(string modPath)
         {

@@ -28,8 +28,15 @@ namespace Fengj.Facade
             {
                 for (int j = 0; j < column; j++)
                 {
-                    var nears = tempCells.GetNeighbours((i, j), column);
-                    var terrainKey = CalcTerrain(nears.Values.Select(x => x?.terrainKey).ToArray(), terrainDefs);
+                    var nears = tempCells.GetNeighbours((i, j), column).Values.Where(x => x != null) ;
+
+                    var terrainKey = "_PLAIN";
+
+                    if(nears.Count() > 0 )
+                    {
+                        terrainKey = CalcTerrain(nears.Select(x => x.terrainKey).ToArray(), terrainDefs);
+                    }
+                    
 
                     tempCells.Add(new Cell(i, j, terrainKey));
                 }

@@ -2,6 +2,8 @@
 using System;
 using Newtonsoft.Json.Linq;
 
+using LoggerInterface;
+
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -19,14 +21,16 @@ namespace Fengj
 
         public string fileName => Path.GetFileNameWithoutExtension(path);
 
-        public Occur occur;
+        private Occur occur;
 
-        public TerrainDef(string filePath, string jsonStr)
+        public TerrainDef(string modName, string filePath, string jsonStr)
         {
-            path = filePath;
+            this.modName = modName;
+            this.path = filePath;
+
 
             var json = JObject.Parse(jsonStr);
-            occur = new Occur(json["occur"] as JObject);
+            occur = new Occur(modName, json["occur"] as JObject);
         }
 
         public double CalcOccur(IEnumerable<string> nears)
@@ -34,19 +38,19 @@ namespace Fengj
             return occur.Calc(nears);
         }
 
-        public class Occur
+        private class Occur
         {
             public double baseValue;
             public Dictionary<string, double> nearBuff;
 
-            public Occur(JObject json)
+            public Occur(String modName, JObject json)
             {
                 baseValue = 0;
                 nearBuff = new Dictionary<string, double>();
 
                 foreach(var elem in json)
                 {
-                    nearBuff.Add(elem.Key, elem.Value.ToObject<double>());
+                    nearBuff.Add($"{modName}_{elem.Key}".ToUpper(), elem.Value.ToObject<double>());
                 }
             }
 

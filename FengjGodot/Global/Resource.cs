@@ -10,12 +10,16 @@ static class GlobalResource
     {
 		tileSet = new TileSet();
 
+
+
 		foreach (var terrain in terrainDefs)
 		{
 			var id = tileSet.GetLastUnusedTileId();
 			tileSet.CreateTile(id);
 			tileSet.TileSetName(id, terrain.key);
-			tileSet.TileSetTexture(0, ResourceLoader.Load<Texture>(terrain.path));
+			tileSet.TileSetTexture(id, ResourceLoader.Load<Texture>(terrain.path));
+
+			GD.Print(terrain.path + id.ToString());
 		}
 	}
 }
