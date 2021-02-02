@@ -1,20 +1,23 @@
 using Godot;
 using System;
 
-using Fengj;
+using Fengj.Facade;
 
 public class MainScene : Control
 {
 
 	Map map;
 
+	Facade facade;
 	public override void _Ready()
 	{
-		Facade.modder = Modder.Load(GlobalPath.mod);
-		Facade.runner = Runner.Gen(Facade.modder.terrainDefs);
+		facade = new Facade(GlobalPath.mod);
+		GlobalResource.BuildTileSet(facade.modder.terrainDefs);
+
+		facade.GenerateRunData(new RunInit() { mapSize = (100, 100)});
 
 		map = GetNode<Map>("Map");
-		map.gmObj = Facade.runner.map;
+		map.gmObj = facade.runData.map;
 	}
 
 	private void _on_ButtonDirect_mouse_entered(String direct)

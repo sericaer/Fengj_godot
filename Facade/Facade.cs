@@ -4,12 +4,29 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fengj
+namespace Fengj.Facade
 {
     class Facade
     {
-        public static Modder modder;
-        public static Runner runner;
+        public Modder modder;
+
+        public MapBuider mapBuider;
+
+        public RunData runData;
+
+
+        public void GenerateRunData(RunInit runInit)
+        {
+            runData = new RunData();
+
+            runData.map = mapBuider.build(runInit.mapSize, modder.terrainDefs);
+        }
+
+        
+        public Facade(string modPath)
+        {
+            modder = Modder.Load(modPath);
+        }
     }
 }
 

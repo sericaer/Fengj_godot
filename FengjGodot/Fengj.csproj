@@ -6,6 +6,5 @@
     <ProjectReference Include="..\API\API.csproj" />
     <ProjectReference Include="..\Facade\Facade.csproj" />
     <ProjectReference Include="..\Mod\Modder.csproj" />
-    <ProjectReference Include="..\Runner\Runner.csproj" />
   </ItemGroup>
 </Project>

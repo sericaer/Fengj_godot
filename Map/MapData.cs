@@ -5,38 +5,30 @@ using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fengj
+namespace Fengj.Map
 {
-    partial class Map
+    public enum DIRECTION
     {
-        public enum DIRECTION
-        {
-            WEST_NORTH,
-            EAST_NORTH,
-            EAST,
-            EAST_SOUTH,
-            WEST_SOUTH,
-            WEST,
-        }
+        WEST_NORTH,
+        EAST_NORTH,
+        EAST,
+        EAST_SOUTH,
+        WEST_SOUTH,
+        WEST,
+    }
 
-        public static ICellsGenerator cellsGenerator { set; private get; }
-
+    class MapData
+    {
         public int row { get; internal set; }
         public int column { get; internal set; }
 
         public int size => cells.Count();
 
-        internal List<ICell> cells { get; set; }
+        public List<ICell> cells { get; set; }
 
-        public static Map Gen(int row, int column)
+        public MapData()
         {
-            var map = new Map();
-            Cell.map = map;
-
-            map.row = row;
-            map.column = column;
-            map.cells = cellsGenerator.generate(row, column);
-            return map;
+            Cell.map = this;
         }
 
         public Dictionary<DIRECTION, ICell> GetNeighbours((int x, int y) index)

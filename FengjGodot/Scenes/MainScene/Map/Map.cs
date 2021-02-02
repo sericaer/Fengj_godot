@@ -1,12 +1,12 @@
 using Fengj;
 using Fengj.API;
-
+using Fengj.Map;
 using Godot;
 using System;
 
 public class Map : Node2D
 {
-	internal Fengj.Map gmObj;
+	internal MapData gmObj;
 
 	public TileMap tileMap;
 	public MapCamera2D camera;
@@ -19,27 +19,12 @@ public class Map : Node2D
 		vectotCameraBase = camera.Position;
 
 		tileMap = GetNode<TileMap>("TileMap");
-		tileMap.TileSet = CreateTileSet(Facade.modder.terrainDefs);
+		tileMap.TileSet = GlobalResource.tileSet;
 
 		foreach (var cell in gmObj.cells)
         {
 			tileMap.SetCells(cell.index, cell.terrainKey);
 		}
-	}
-
-	private TileSet CreateTileSet(ITerrainDef[] terrainDefs)
-	{
-		var tileSet = new TileSet();
-
-		foreach(var terrain in terrainDefs)
-        {
-			var id = tileSet.GetLastUnusedTileId();
-			tileSet.CreateTile(id);
-			tileSet.TileSetName(id, terrain.key);
-			tileSet.TileSetTexture(0, ResourceLoader.Load<Texture>(terrain.path));
-		}
-
-		return tileSet;
 	}
 
 	public override void _UnhandledInput(InputEvent @event)

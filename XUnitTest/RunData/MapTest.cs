@@ -6,9 +6,7 @@ using Moq;
 using Fengj;
 
 using Xunit;
-
-using static Fengj.Map;
-
+using Fengj.Map;
 
 namespace XUnitTest.Runner
 {
@@ -17,7 +15,7 @@ namespace XUnitTest.Runner
         [Fact]
         public void GenerateTest()
         {
-            var map = new Map();
+            var map = new MapData();
 
             map.row = 5;
             map.column = 5;
