@@ -1,11 +1,11 @@
-﻿using API;
+﻿using Fengj.API;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Runner
+namespace Fengj
 {
     partial class Map
     {
@@ -16,7 +16,7 @@ namespace Runner
 
         public class CellsGenerator : ICellsGenerator
         {
-            public static List<ITerrainOccur> defs { set; private get; }
+            public static IEnumerable<ITerrainOccur> defs { set; private get; }
             public List<ICell> generate(int row, int column)
             {
                 var tempCells = new List<ICell>();

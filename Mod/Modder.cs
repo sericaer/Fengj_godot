@@ -1,28 +1,33 @@
-﻿using API;
+﻿using Fengj.API;
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Modder
+namespace Fengj
 {
     public class Modder
     {
-        public ITerrainDef[] terrainDefs;
+        public ITerrainDef[] terrainDefs => mods.SelectMany(x => x.terrainDefs).ToArray();
+
+        private List<Mod> mods;
+
+        public Modder()
+        {
+            mods = new List<Mod>();
+        }
 
         public static Modder Load(string path)
         {
             var modder = new Modder();
-            modder.terrainDefs = new ITerrainDef[]
+
+            foreach (var subpath in Directory.EnumerateDirectories(path))
             {
-                new TerrainDef(){ key = "terrain_1", occur = new TerrainDef.Occur(){ baseValue = 1} },
-                new TerrainDef(){ key = "terrain_2", occur = new TerrainDef.Occur(){ baseValue = 2} },
-                new TerrainDef(){ key = "terrain_3", occur = new TerrainDef.Occur(){ baseValue = 3} },
-                new TerrainDef(){ key = "terrain_4", occur = new TerrainDef.Occur(){ baseValue = 4} },
-                new TerrainDef(){ key = "terrain_5", occur = new TerrainDef.Occur(){ baseValue = 5} }
-            };
+                modder.mods.Add(new Mod(subpath));
+            }
 
             return modder;
         }

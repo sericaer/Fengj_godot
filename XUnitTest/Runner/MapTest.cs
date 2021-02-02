@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Text;
 using FluentAssertions;
 using Moq;
-using Runner;
+using Fengj;
 
 using Xunit;
 
-using static Runner.Map;
+using static Fengj.Map;
+
 
 namespace XUnitTest.Runner
 {
@@ -30,6 +31,8 @@ namespace XUnitTest.Runner
                     map.cells.Add(Mock.Of<ICell>(x => x.terrainKey == $"T{j}{i}"));
                 }
             }
+
+
 
             var nears = map.GetNeighbours((0, 0));
             nears[DIRECTION.WEST_NORTH].Should().BeNull();

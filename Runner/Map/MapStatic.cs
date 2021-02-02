@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static Runner.Map;
+using static Fengj.Map;
 
-namespace Runner
+namespace Fengj
 {
     static class MapExtentions
     {

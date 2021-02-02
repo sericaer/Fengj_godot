@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XUnitTest", "..\XUnitTest\X
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Modder", "..\Mod\Modder.csproj", "{B5E245EC-B317-45F5-BA01-C06C0A5F4666}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Facade", "..\Facade\Facade.csproj", "{C5A94CFA-2A90-416A-8FFD-8056A20C6ACA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -61,6 +63,14 @@ Global
 		{B5E245EC-B317-45F5-BA01-C06C0A5F4666}.ExportRelease|Any CPU.Build.0 = Release|Any CPU
 		{B5E245EC-B317-45F5-BA01-C06C0A5F4666}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B5E245EC-B317-45F5-BA01-C06C0A5F4666}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5A94CFA-2A90-416A-8FFD-8056A20C6ACA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5A94CFA-2A90-416A-8FFD-8056A20C6ACA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5A94CFA-2A90-416A-8FFD-8056A20C6ACA}.ExportDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5A94CFA-2A90-416A-8FFD-8056A20C6ACA}.ExportDebug|Any CPU.Build.0 = Debug|Any CPU
+		{C5A94CFA-2A90-416A-8FFD-8056A20C6ACA}.ExportRelease|Any CPU.ActiveCfg = Release|Any CPU
+		{C5A94CFA-2A90-416A-8FFD-8056A20C6ACA}.ExportRelease|Any CPU.Build.0 = Release|Any CPU
+		{C5A94CFA-2A90-416A-8FFD-8056A20C6ACA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5A94CFA-2A90-416A-8FFD-8056A20C6ACA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

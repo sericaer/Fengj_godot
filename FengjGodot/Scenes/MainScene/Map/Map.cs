@@ -1,41 +1,43 @@
+using Fengj;
+using Fengj.API;
+
 using Godot;
 using System;
 
 public class Map : Node2D
 {
+	internal Fengj.Map gmObj;
 
 	public TileMap tileMap;
 	public MapCamera2D camera;
-
-	Vector2 vectotCameraBase;
+    
+    Vector2 vectotCameraBase;
 
 	public override void _Ready()
 	{
-		GD.Print(GlobalPath.mod);
-
 		camera = GetNode<MapCamera2D>("Camera2D");
 		vectotCameraBase = camera.Position;
 
 		tileMap = GetNode<TileMap>("TileMap");
-		tileMap.TileSet = CreateTileSet();
+		tileMap.TileSet = CreateTileSet(Facade.modder.terrainDefs);
 
-		tileMap.SetCell(0, 0, 0);
-		tileMap.SetCell(1, 0, 0);
-		tileMap.SetCell(2, 0, 0);
+		foreach (var cell in gmObj.cells)
+        {
+			tileMap.SetCells(cell.index, cell.terrainKey);
+		}
 	}
 
-
-
-	private TileSet CreateTileSet()
+	private TileSet CreateTileSet(ITerrainDef[] terrainDefs)
 	{
 		var tileSet = new TileSet();
 
-		var id = tileSet.GetLastUnusedTileId();
-		tileSet.CreateTile(id);
-		tileSet.TileSetName(0, "TEST1");
-
-		var path = GlobalPath.mod + "Native/png/map/terrain/grass_05.png";
-		tileSet.TileSetTexture(0, ResourceLoader.Load<Texture>(path));
+		foreach(var terrain in terrainDefs)
+        {
+			var id = tileSet.GetLastUnusedTileId();
+			tileSet.CreateTile(id);
+			tileSet.TileSetName(id, terrain.key);
+			tileSet.TileSetTexture(0, ResourceLoader.Load<Texture>(terrain.path));
+		}
 
 		return tileSet;
 	}

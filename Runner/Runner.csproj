@@ -7,7 +7,7 @@
     <ProjectGuid>{A9DB64FE-1C21-467C-A845-2A9808BCE8D0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Runner</RootNamespace>
+    <RootNamespace>Fengj</RootNamespace>
     <AssemblyName>Runner</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

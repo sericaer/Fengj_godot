@@ -5,7 +5,7 @@ using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Runner
+namespace Fengj
 {
     partial class Map
     {
@@ -31,6 +31,8 @@ namespace Runner
         public static Map Gen(int row, int column)
         {
             var map = new Map();
+            Cell.map = map;
+
             map.row = row;
             map.column = column;
             map.cells = cellsGenerator.generate(row, column);

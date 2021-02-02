@@ -1,6 +1,8 @@
 using Godot;
 using System;
 
+using Fengj;
+
 public class MainScene : Control
 {
 
@@ -8,7 +10,11 @@ public class MainScene : Control
 
 	public override void _Ready()
 	{
+		Facade.modder = Modder.Load(GlobalPath.mod);
+		Facade.runner = Runner.Gen(Facade.modder.terrainDefs);
+
 		map = GetNode<Map>("Map");
+		map.gmObj = Facade.runner.map;
 	}
 
 	private void _on_ButtonDirect_mouse_entered(String direct)

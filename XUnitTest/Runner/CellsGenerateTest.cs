@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using API;
+using Fengj.API;
 using FluentAssertions;
 using Moq;
-using Runner;
 
 using Xunit;
 
-using static Runner.Map;
+using static Fengj.Map;
 
 namespace XUnitTest.Runner
 {
