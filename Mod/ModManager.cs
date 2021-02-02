@@ -7,22 +7,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fengj
+namespace Fengj.Modder
 {
-    public class Modder
+    class ModManager
     {
         public ITerrainDef[] terrainDefs => mods.SelectMany(x => x.terrainDefs).ToArray();
 
         private List<Mod> mods;
 
-        public Modder()
+        public ModManager()
         {
             mods = new List<Mod>();
         }
 
-        public static Modder Load(string path)
+        public static ModManager Load(string path)
         {
-            var modder = new Modder();
+            var modder = new ModManager();
 
             foreach (var subpath in Directory.EnumerateDirectories(path))
             {

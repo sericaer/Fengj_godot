@@ -2,6 +2,7 @@ using Godot;
 using System;
 
 using Fengj.Facade;
+using Fengj.Modder;
 
 public class MainScene : Control
 {

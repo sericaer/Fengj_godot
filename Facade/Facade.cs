@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Fengj.Modder;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ namespace Fengj.Facade
 {
     class Facade
     {
-        public Modder modder;
+        public ModManager modder;
 
         public MapBuider mapBuider;
 
@@ -17,7 +18,7 @@ namespace Fengj.Facade
 
         public void CreateModder(string modPath)
         {
-            modder = Modder.Load(modPath);
+            modder = ModManager.Load(modPath);
         }
 
         public void CreateRunData(RunInit runInit)

@@ -13,7 +13,7 @@ namespace XUnitTest.Runner
     public class MapBuiderTest
     {
         [Fact]
-        public void GenerateTest()
+        public void BuildTest()
         {
             var defs = new List<ITerrainOccur>()
             {
