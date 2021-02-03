@@ -6,7 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using LoggerInterface;
+using Fengj.IO;
 
 namespace Fengj.Modder
 {
@@ -29,9 +29,7 @@ namespace Fengj.Modder
 
             foreach (var subpath in Directory.EnumerateDirectories(path))
             {
-                LOG.INFO("load mod:" + subpath);
-
-                modder.mods.Add(new Mod(subpath));
+                modder.mods.Add(Mod.Builder.Build(subpath));
             }
 
             return modder;

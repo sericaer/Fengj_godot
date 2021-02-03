@@ -7,7 +7,7 @@
     <ProjectGuid>{B5E245EC-B317-45F5-BA01-C06C0A5F4666}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Fengj.Mod</RootNamespace>
+    <RootNamespace>Fengj.Modder</RootNamespace>
     <AssemblyName>Modder</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -36,6 +36,9 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.IO.Abstractions, Version=13.0.0.0, Culture=neutral, PublicKeyToken=96bf224d23c43e59, processorArchitecture=MSIL">
+      <HintPath>..\FengjGodot\packages\System.IO.Abstractions.13.2.9\lib\net461\System.IO.Abstractions.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -53,14 +56,17 @@
     <ProjectReference Include="..\API\API.csproj">
       <Project>{b82b49b2-140f-45ca-b9e8-953f2d284470}</Project>
       <Name>API</Name>
+      <Private>False</Private>
     </ProjectReference>
-    <ProjectReference Include="..\LoggerInterface\LoggerInterface.csproj">
+    <ProjectReference Include="..\LoggerInterface\IO.csproj">
       <Project>{54a87f69-52c5-49d7-aeb2-f22d0952f36c}</Project>
-      <Name>LoggerInterface</Name>
+      <Name>IO</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\Map\Map.csproj">
       <Project>{72726818-513c-4d6b-8187-1a6a62732a1d}</Project>
       <Name>Map</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

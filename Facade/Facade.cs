@@ -1,11 +1,13 @@
 ﻿using Fengj.Map;
 using Fengj.Modder;
-using LoggerInterface;
+using Fengj.IO;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO.Abstractions;
 
 namespace Fengj.Facade
 {
@@ -28,8 +30,12 @@ namespace Fengj.Facade
 
         public Facade()
         {
-           
             mapBuider = new MapBuider();
+        }
+
+        public void InitIO()
+        {
+            SystemIO.FileSystem = new FileSystem();
         }
 
         public void CreateModder(string modPath)

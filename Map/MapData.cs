@@ -4,7 +4,8 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
-using LoggerInterface;
+
+using Fengj.IO;
 
 namespace Fengj.Map
 {

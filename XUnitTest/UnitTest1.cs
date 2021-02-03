@@ -1,5 +1,6 @@
-﻿using System;
-using System.Linq;
+using Moq;
+using System;
+using System.IO.Abstractions;
 using Xunit;
 
 namespace XUnitTest
@@ -7,8 +8,9 @@ namespace XUnitTest
     public class UnitTest1
     {
         [Fact]
-        public void TestMethod1()
+        public void Test1()
         {
+            var file = Mock.Of<IFile>();
         }
     }
 }
