@@ -131,12 +131,39 @@ namespace Fengj.Map
                 return tempCells;
             }
 
-            private static List<(string key, double percent)> calcPercent(MapBuildType mapType, IEnumerable<ITerrainOccur> terrainDefs)
+            private static List<(string key, int percent)> calcPercent(MapBuildType mapType, IEnumerable<ITerrainOccur> terrainDefs)
             {
                 switch(mapType)
                 {
                     case MapBuildType.MAP_PLAIN:
-                        break;
+                        return new List<(string key, int percent)>(){
+                            ("NATIVE_PLAIN", 90),
+                            ("NATIVE_HILL", 9),
+                            ("NATIVE_MOUNT", 1),
+                        };
+                    case MapBuildType.MAP_SMALL_HILL:
+                        return new List<(string key, int percent)>(){
+                            ("NATIVE_PLAIN", 60),
+                            ("NATIVE_HILL", 30),
+                            ("NATIVE_MOUNT", 10),
+                        };
+
+                    case MapBuildType.MAP_BIG_HILL:
+                        return new List<(string key, int percent)>(){
+                            ("NATIVE_PLAIN", 40),
+                            ("NATIVE_HILL", 40),
+                            ("NATIVE_MOUNT", 30),
+                        };
+
+                    case MapBuildType.MAP_MOUNT:
+                        return new List<(string key, int percent)>(){
+                            ("NATIVE_PLAIN", 20),
+                            ("NATIVE_HILL", 30),
+                            ("NATIVE_MOUNT", 50),
+                        };
+
+                    default:
+                        throw new Exception();
                 }
             }
 
@@ -174,7 +201,7 @@ namespace Fengj.Map
 
                 }
 
-                public static MapTemplate build(int row, int column, List<(string key, double percent)> type2Percent)
+                public static MapTemplate build(int row, int column, List<(string key, int percent)> type2Percent)
                 {
                     var rslt = new MapTemplate(row, column);
 
@@ -183,29 +210,47 @@ namespace Fengj.Map
                         rslt.list.Add(type2Percent.First().key);
                     }
 
+                    List<(int x, int y)> back = new List<(int x, int y)>();
+
+                    for (int i = 0; i < row; i++)
+                    {
+                        for (int j = 0; j < column; j++)
+                        {
+                            back.Add((i, j));
+                        }
+                    }
 
                     byte[] buffer = Guid.NewGuid().ToByteArray();
                     Random random = new Random(BitConverter.ToInt32(buffer, 0));
 
                     for (int index = 1; index < type2Percent.Count; index++)
                     {
-                        var count = type2Percent[index].percent * row * column;
+                        var  newback = new List<(int x, int y)>();
+
+                        var count = type2Percent[index].percent * row * column / 100;
+
+                        LOG.INFO(type2Percent[index].ToString());
+
 
                         int curr = 0;
                         while (curr < count)
                         {
-                            for (int i = 0; i < row; i++)
+                            for (int m = 0; m < back.Count; m++)
                             {
-                                for (int j = 0; j < column; j++)
+                                if (curr < count)
                                 {
-                                    
-                                    int occur = CalcKeyOccur(type2Percent[index].key, i, j, rslt.GetNears(i,j).Where(x=>x.Value != null).Select(x=>x.Value));
-                                    
+                                    int i = m / column;
+                                    int j = m % column;
+
+                                    double occur = CalcKeyOccur(type2Percent[index].key, i, j, rslt.GetNears(i, j).Where(x => x.Value != null).Select(x => x.Value));
+
                                     var rd = random.Next(0, 100);
                                     if (occur > rd)
                                     {
-                                        rslt.SetElem(i, j,  type2Percent[index].key);
+                                        rslt.SetElem(i, j, type2Percent[index].key);
                                         curr++;
+
+                                        newback.Add((i, j));
                                     }
                                 }
                             }
@@ -215,23 +260,23 @@ namespace Fengj.Map
                     return rslt;
                 }
 
-                public static int CalcKeyOccur(string curr, int x, int y, IEnumerable<string> value)
+                public static double CalcKeyOccur(string curr, int x, int y, IEnumerable<string> value)
                 {
                     var same_count = value.Where(v => v == curr).Count();
                     switch(same_count)
                     {
                         case 0:
-                            return 3;
+                            return 0.01;
                         case 1:
-                            return 30;
-                        case 2:
                             return 50;
-                        case 3:
-                            return 70;
-                        case 4:
+                        case 2:
                             return 80;
-                        case 5:
+                        case 3:
+                            return 85;
+                        case 4:
                             return 90;
+                        case 5:
+                            return 95;
                         case 6:
                             return 100;
                         default:
@@ -284,6 +329,17 @@ namespace Fengj.Map
             return list[x * colum + y];
         }
 
+        public T TryGetElem(int x, int y)
+        {
+            if (x > colum - 1 || x < 0
+                || y > row - 1 || y < 0)
+            {
+                return default(T);
+            }
+
+            return list[x * colum + y];
+        }
+
         public void SetElem(int x, int y, T value)
         {
             if (x > colum - 1 || x < 0
@@ -319,7 +375,7 @@ namespace Fengj.Map
                     break;
             }
 
-            return GetElem(neighbourIndex.x, neighbourIndex.y);
+            return TryGetElem(neighbourIndex.x, neighbourIndex.y);
         }
     }
 

@@ -16,13 +16,6 @@ namespace Fengj.Modder
 
         public string modName => Path.GetFileName(path);
 
-        public Mod()
-        {
-            this.path = path;
-
-            terrainDefs = TerrainDef.Builder.BuildArray(modName, path);
-        }
-
         public static class Builder
         {
             public static Mod Build(string path)

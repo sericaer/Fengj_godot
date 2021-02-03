@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/mount.png-69b1cebbb1e47402081b62ef532fe73c.stex"
+path="res://.import/mount.png-321bf2ebf229f75225c3b16fc8fedf95.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Release/Fengj/mods/Native/png/map/terrain/mount.png"
-dest_files=[ "res://.import/mount.png-69b1cebbb1e47402081b62ef532fe73c.stex" ]
+source_file="res://Release/Fengj/mods/Native/image/map/terrain/mount.png"
+dest_files=[ "res://.import/mount.png-321bf2ebf229f75225c3b16fc8fedf95.stex" ]
 
 [params]
 

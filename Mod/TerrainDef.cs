@@ -59,12 +59,13 @@ namespace Fengj
 
                 var scriptDirPath = path + scriptPath;
 
-                LOG.INFO("Check Terrains path:" + scriptPath);
+                LOG.INFO("Check Terrains path:" + scriptDirPath);
 
-                if (Directory.Exists(scriptPath))
+                if (Directory.Exists(scriptDirPath))
                 {
                     foreach (var scriptFilePath in Directory.EnumerateFiles(scriptDirPath, "*.json"))
                     {
+                        LOG.INFO("Load Terrains script:" + scriptFilePath);
                         rslt.Add(Build(modName, scriptFilePath));
                     }
                 }
@@ -81,15 +82,18 @@ namespace Fengj
 
                 rslt.modName = modName;
                 rslt.fileName = SystemIO.FileSystem.Path.GetFileNameWithoutExtension(scriptFilePath);
+
+                //var json = JObject.Parse(SystemIO.FileSystem.File.ReadAllText(scriptFilePath));
+                //rslt.occur = new Occur();
+
                 rslt.path = scriptFilePath.Replace(scriptPath, imagePath).Replace("json", "png");
 
-                var json = JObject.Parse(SystemIO.FileSystem.File.ReadAllText(scriptFilePath));
-                rslt.occur = new Occur();
 
-                foreach (var elem in json["occur"] as JObject)
-                {
-                    rslt.occur.nearBuff.Add($"{modName}_{elem.Key}".ToUpper(), elem.Value.ToObject<double>());
-                }
+
+                //foreach (var elem in json["occur"] as JObject)
+                //{
+                //    rslt.occur.nearBuff.Add($"{modName}_{elem.Key}".ToUpper(), elem.Value.ToObject<double>());
+                //}
 
                 return rslt;
             }

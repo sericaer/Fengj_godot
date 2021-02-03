@@ -15,11 +15,14 @@ public class MainScene : Control
 		Facade.logger = (str) => GD.Print(str);
 
 		facade = new Facade();
+		facade.InitIO();
+
 		facade.CreateModder(GlobalPath.mod);
+		
 
 		GlobalResource.BuildTileSet(facade.modder.terrainDefs);
 
-		facade.CreateRunData(new RunInit() { mapSize = (100, 100)});
+		facade.CreateRunData(new RunInit() { mapBuildType = Fengj.Map.MapBuildType.MAP_PLAIN, mapSize = (100, 100)});
 
 		map = GetNode<Map>("Map");
 		

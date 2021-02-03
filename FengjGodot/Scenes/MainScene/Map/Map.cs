@@ -77,7 +77,7 @@ public class Map : Node2D
 
 				if (eventMouseButton.ButtonIndex == 5)
 				{
-					if (camera.Zoom.x < 5)
+					if (camera.Zoom.x < 100)
 					{
 						var camera = GetNode<Camera2D>("Camera2D");
 						camera.Zoom += new Vector2(0.1f, 0.1f);

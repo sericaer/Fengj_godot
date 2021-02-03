@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/plain.png-9684108d1da2e54b1fdadd16ff6aaecf.stex"
+path="res://.import/plain.png-a5ec85a9542e19e05c1a7a8b9b62237a.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Release/Fengj/mods/Native/png/map/terrain/plain.png"
-dest_files=[ "res://.import/plain.png-9684108d1da2e54b1fdadd16ff6aaecf.stex" ]
+source_file="res://Release/Fengj/mods/Native/image/map/terrain/plain.png"
+dest_files=[ "res://.import/plain.png-a5ec85a9542e19e05c1a7a8b9b62237a.stex" ]
 
 [params]
 
