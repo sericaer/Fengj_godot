@@ -16,8 +16,6 @@ namespace Fengj.Facade
 
         public ModManager modder;
 
-        public MapBuider mapBuider;
-
         public RunData runData;
 
         public static Action<string> logger
@@ -30,7 +28,6 @@ namespace Fengj.Facade
 
         public Facade()
         {
-            mapBuider = new MapBuider();
         }
 
         public void InitIO()
@@ -47,7 +44,7 @@ namespace Fengj.Facade
         {
             runData = new RunData();
 
-            runData.map = mapBuider.build(runInit.mapSize, modder.terrainDefs);
+            runData.map = MapData.Buider.build(runInit.mapSize, modder.terrainDefs);
         }
     }
 }

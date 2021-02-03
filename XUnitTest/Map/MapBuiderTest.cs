@@ -5,12 +5,12 @@ using System.Text;
 using Fengj.API;
 using FluentAssertions;
 using Moq;
-using Fengj.Facade;
 using Xunit;
+using Fengj.Map;
 
 namespace XUnitTest.Runner
 {
-    public class MapBuiderTest
+    public class BuiderTest
     {
         [Fact]
         public void BuildTest()
@@ -22,8 +22,7 @@ namespace XUnitTest.Runner
                 Mock.Of<ITerrainOccur>(e=>e.key == "TEST3" && e.CalcOccur(It.IsAny<IEnumerable<string>>()) == 50)
             };
 
-            var builder = new MapBuider();
-            var map = builder.build((100, 100), defs);
+            var map = MapData.Buider.build((100, 100), defs);
 
             map.size.Should().Be(100 * 100);
 

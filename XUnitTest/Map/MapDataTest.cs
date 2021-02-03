@@ -10,10 +10,10 @@ using Fengj.Map;
 
 namespace XUnitTest.Runner
 {
-    public class MapTest
+    public class MapDataTest
     {
         [Fact]
-        public void GenerateTest()
+        public void GetNeighboursTest()
         {
             var map = new MapData();
 

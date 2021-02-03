@@ -29,4 +29,8 @@
     <ProjectReference Include="..\Mod\Modder.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Facade\" />
+  </ItemGroup>
+
 </Project>
