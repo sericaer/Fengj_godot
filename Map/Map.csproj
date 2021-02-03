@@ -52,7 +52,7 @@
       <Name>API</Name>
       <Private>False</Private>
     </ProjectReference>
-    <ProjectReference Include="..\LoggerInterface\IO.csproj">
+    <ProjectReference Include="..\IO\IO.csproj">
       <Project>{54a87f69-52c5-49d7-aeb2-f22d0952f36c}</Project>
       <Name>IO</Name>
       <Private>False</Private>
