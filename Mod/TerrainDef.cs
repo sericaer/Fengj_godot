@@ -23,6 +23,8 @@ namespace Fengj
 
         public string key => $"{modName}_{fileName}".ToUpper();
 
+        public double height { get; private set; }
+
         private Occur occur;
 
         public double CalcOccur(IEnumerable<string> nears)

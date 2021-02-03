@@ -4,7 +4,7 @@ using System.Text;
 
 namespace XUnitTest.Modder
 {
-    class LoaderTest
+    class ModBuliderTest
     {
     }
 }

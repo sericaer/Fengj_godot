@@ -44,7 +44,7 @@ namespace Fengj.Facade
         {
             runData = new RunData();
 
-            runData.map = MapData.Buider.build(runInit.mapSize, modder.terrainDefs);
+            runData.map = MapData.Buider.build(runInit.mapBuildType, runInit.mapSize, modder.terrainDefs);
         }
     }
 }

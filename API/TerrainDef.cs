@@ -15,6 +15,9 @@ namespace Fengj.API
     {
         string key { get; }
         string path { get; }
+
+        double height { get; }
+
         double CalcOccur(IEnumerable<string> near);
     }
 

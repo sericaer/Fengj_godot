@@ -22,7 +22,7 @@ namespace XUnitTest.Runner
                 Mock.Of<ITerrainOccur>(e=>e.key == "TEST3" && e.CalcOccur(It.IsAny<IEnumerable<string>>()) == 50)
             };
 
-            var map = MapData.Buider.build((100, 100), defs);
+            var map = MapData.Buider.build(MapBuildType.MAP_PLAIN, (100, 100), defs);
 
             map.size.Should().Be(100 * 100);
 
