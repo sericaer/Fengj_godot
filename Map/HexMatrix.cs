@@ -81,19 +81,49 @@ namespace Fengj.Map
             switch (direct)
             {
                 case DIRECTION.WEST_NORTH:
-                    neighbourIndex = (x, y - 1);
-                    break;
+                    if (y % 2 == 0)
+                    {
+                        neighbourIndex = (x-1, y - 1);
+                        break;
+                    }
+                    else
+                    {
+                        neighbourIndex = (x, y - 1);
+                        break;
+                    }
                 case DIRECTION.EAST_NORTH:
-                    neighbourIndex = (x + 1, y - 1);
-                    break;
+                    if (y % 2 == 0)
+                    {
+                        neighbourIndex = (x, y-1);
+                        break;
+                    }
+                    else
+                    {
+                        neighbourIndex = (x + 1, y-1);
+                        break;
+                    }
                 case DIRECTION.EAST:
                     neighbourIndex = (x + 1, y);
                     break;
                 case DIRECTION.EAST_SOUTH:
+
+                    if (y % 2 == 0)
+                    {
+                        neighbourIndex = (x + 1, y);
+                        break;
+                    }
+                    else
+                    {
+                        neighbourIndex = (x + 1, y + 1);
+                        break;
+                    }
                     neighbourIndex = (x, y + 1);
                     break;
                 case DIRECTION.WEST_SOUTH:
                     neighbourIndex = (x - 1, y + 1);
+                    break;
+                case DIRECTION.WEST:
+                    neighbourIndex = (x - 1, y);
                     break;
             }
 

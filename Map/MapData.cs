@@ -53,29 +53,23 @@ namespace Fengj.Map
             base.SetCell(y*colum+x, cell);
         }
 
-        private void ReplaceCell(ICell oldCell, ICell cell)
+        public void ReplaceCell(ICell oldCell, ICell cell)
         {
             cell.vectIndex = oldCell.vectIndex;
             base.SetCell(oldCell.vectIndex.x, oldCell.vectIndex.y, cell);
         }
 
-        private IEnumerable<ICell> GetBoundCells(params TerrainType[] terrainType)
+        public IEnumerable<ICell> GetBoundCells(params TerrainType[] terrainType)
         {
             var rslt = new List<ICell>();
-            foreach(var cell in cells)
-            {
-                if (terrainType.Contains(cell.terrainType))
-                {
-                    continue;
-                }
 
+            var content = cells.Where(x => terrainType.Contains(x.terrainType));
+            foreach (var cell in content)
+            {
                 var nears = cell.GetNeighbours().Where(x => x.Value != null);
-                if (nears.Select(x => x.Value).Any(x => terrainType.Contains(x.terrainType)))
-                {
-                    rslt.Add(cell);
-                }
+                rslt.AddRange(nears.Select(x => x.Value).Where(x => !terrainType.Contains(x.terrainType)));
             }
-            return rslt;
+            return rslt.Distinct();
         }
 
         public static class Buider
@@ -134,7 +128,8 @@ namespace Fengj.Map
                     IEnumerable<ICell> bounds = map.GetBoundCells(TerrainType.MOUNT, TerrainType.HILL);
                     if (bounds.Count() == 0)
                     {
-                        throw new Exception();
+                        var cells = map.Where(x => x.terrainType == TerrainType.MOUNT || x.terrainType == TerrainType.HILL);
+                        throw new Exception("bound is null" + cells.Count());
                     }
 
                     bounds = bounds.OrderBy(a => Guid.NewGuid());
@@ -164,7 +159,7 @@ namespace Fengj.Map
                 int total = (int)(percent * map.cells.Length);
    
                 var cellcount = map.cells.Length;
-                IEnumerable<int> seeds = Enumerable.Range(0, total / 10).Select(x => random.Next(0, cellcount)).Distinct();
+                IEnumerable<int> seeds = Enumerable.Range(0, total / 10).Select(x => random.Next(0, cellcount)).Distinct().ToArray();
 
                 foreach (var seed in seeds)
                 {
@@ -172,14 +167,13 @@ namespace Fengj.Map
                 }
 
                 int curr = seeds.Count();
-
                 while (true)
                 {
 
                     IEnumerable<ICell> bounds = map.GetBoundCells(TerrainType.MOUNT);
                     if (bounds.Count() == 0)
                     {
-                        throw new Exception();
+                        throw new Exception("bound is null");
                     }
 
                     bounds = bounds.OrderBy(a => Guid.NewGuid());
@@ -195,6 +189,11 @@ namespace Fengj.Map
 
                         if (curr == total)
                         {
+                            if (curr != map.Count(x => x.terrainType == TerrainType.MOUNT))
+                            {
+                                throw new Exception();
+                            }
+
                             return;
                         }
                     }
