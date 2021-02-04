@@ -26,13 +26,14 @@ namespace Fengj.Facade
             }
         }
 
-        public Facade()
-        {
-        }
-
-        public void InitIO()
+        public static void InitIO()
         {
             SystemIO.FileSystem = new FileSystem();
+        }
+
+
+        public Facade()
+        {
         }
 
         public void CreateModder(string modPath)

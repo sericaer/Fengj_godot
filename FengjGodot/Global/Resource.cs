@@ -16,7 +16,7 @@ static class GlobalResource
 		{
 			var id = tileSet.GetLastUnusedTileId();
 			tileSet.CreateTile(id);
-			tileSet.TileSetName(id, terrain.key);
+			tileSet.TileSetName(id, terrain.key.ToString());
 			tileSet.TileSetTexture(id, ResourceLoader.Load<Texture>(terrain.path));
 
 			GD.Print(terrain.path + id.ToString());

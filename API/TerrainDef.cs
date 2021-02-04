@@ -11,9 +11,17 @@ namespace Fengj.API
     {
         string modName { get; }
     }
+
+    public enum TerrainType
+    {
+        PLAIN,
+        HILL,
+        MOUNT
+    }
+
     public interface ITerrainOccur : ModElement
     {
-        string key { get; }
+        TerrainType key { get; }
         string path { get; }
 
         double height { get; }

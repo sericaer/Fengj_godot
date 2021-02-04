@@ -21,7 +21,7 @@ namespace Fengj
 
         public string fileName { get; private set; }
 
-        public string key => $"{modName}_{fileName}".ToUpper();
+        public TerrainType key { get; private set; }
 
         public double height { get; private set; }
 

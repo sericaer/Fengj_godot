@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Fengj.API;
 using FluentAssertions;
 using Moq;
 using Xunit;
@@ -13,24 +12,56 @@ namespace XUnitTest.Runner
     public class BuiderTest
     {
         [Fact]
-        public void BuildTest()
+        public void BuildPlainTest()
         {
-            var defs = new List<ITerrainOccur>()
+            var map = new MapData(100, 100);
+            MapData.Buider.BuildPlain(ref map);
+
+            foreach(var cell in map)
             {
-                Mock.Of<ITerrainOccur>(e=>e.key == "TEST1" && e.CalcOccur(It.IsAny<IEnumerable<string>>()) == 20),
-                Mock.Of<ITerrainOccur>(e=>e.key == "TEST2" && e.CalcOccur(It.IsAny<IEnumerable<string>>()) == 30),
-                Mock.Of<ITerrainOccur>(e=>e.key == "TEST3" && e.CalcOccur(It.IsAny<IEnumerable<string>>()) == 50)
-            };
+                cell.terrainType.Should().Be(TerrainType.PLAIN);
+            }
+        }
 
-            var map = MapData.Buider.build(MapBuildType.MAP_PLAIN, (100, 100), defs);
+        [Fact]
+        public void BuildMountTest()
+        {
+            var map = new MapData(50, 50);
 
-            map.size.Should().Be(100 * 100);
+            for (int i=0; i<map.cells.Length; i++)
+            {
+                map.SetCell(i, new Cell(TerrainType.PLAIN));
+            }
 
-            var statisc = map.cells.GroupBy(x => x.terrainKey).ToDictionary(x => x.Key, y => y.Count() * 100 / map.size);
+            var percent = 0.1;
+            MapData.Buider.BuildMount(ref map, percent);
 
-            statisc["TEST1"].Should().BeInRange(19, 21);
-            statisc["TEST2"].Should().BeInRange(29, 31);
-            statisc["TEST3"].Should().BeInRange(49, 51);
+            map.cells.Where(x => x.terrainType == TerrainType.MOUNT).Count().Should().Be((int)(percent * map.cells.Length));
+        }
+
+        [Fact]
+        public void BuildHillTest()
+        {
+            var map = new MapData(50, 50);
+
+            for (int i = 0; i < map.cells.Length; i++)
+            {
+                map.SetCell(i, new Cell(TerrainType.PLAIN));
+            }
+
+            byte[] buffer = Guid.NewGuid().ToByteArray();
+            Random random = new Random(BitConverter.ToInt32(buffer, 0));
+
+            int mountCount = random.Next(1, 11);
+            for (int i=0; i<mountCount; i++)
+            {
+                map.SetCell(random.Next(0, 50*50), new Cell(TerrainType.MOUNT));
+            }
+
+            var percent = 0.5;
+            MapData.Buider.BuildHill(ref map, percent);
+
+            map.cells.Where(x => x.terrainType == TerrainType.HILL).Count().Should().Be((int)(percent * map.cells.Length));
         }
     }
 }

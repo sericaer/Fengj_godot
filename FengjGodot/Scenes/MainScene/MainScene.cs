@@ -13,12 +13,11 @@ public class MainScene : Control
 	public override void _Ready()
 	{
 		Facade.logger = (str) => GD.Print(str);
+		Facade.InitIO();
 
 		facade = new Facade();
-		facade.InitIO();
 
 		facade.CreateModder(GlobalPath.mod);
-		
 
 		GlobalResource.BuildTileSet(facade.modder.terrainDefs);
 

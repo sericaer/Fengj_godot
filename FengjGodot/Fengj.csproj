@@ -5,7 +5,6 @@
   <ItemGroup>
     <ProjectReference Include="..\API\API.csproj" />
     <ProjectReference Include="..\Facade\Facade.csproj" />
-    <ProjectReference Include="..\Map\Map.csproj" />
     <ProjectReference Include="..\Mod\Modder.csproj" />
   </ItemGroup>
 </Project>

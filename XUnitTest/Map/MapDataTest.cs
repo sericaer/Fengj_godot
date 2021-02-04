@@ -15,28 +15,18 @@ namespace XUnitTest.Runner
         [Fact]
         public void GetNeighboursTest()
         {
-            var map = new MapData();
+            var map = new MapData(5, 5);
 
-            map.row = 5;
-            map.column = 5;
-
-            map.cells = new List<ICell>();
-
-            for (int i = 0; i < map.row; i++)
+            for (int i = 0; i < map.row * map.colum; i++)
             {
-                for (int j = 0; j < map.column; j++)
-                {
-                    map.cells.Add(Mock.Of<ICell>(x => x.terrainKey == $"T{j}{i}"));
-                }
+                map.SetCell(i, Mock.Of<ICell>());
             }
 
-
-
-            var nears = map.GetNeighbours((0, 0));
+            var nears = map.GetNears(0, 0);
             nears[DIRECTION.WEST_NORTH].Should().BeNull();
             nears[DIRECTION.EAST_NORTH].Should().BeNull();
-            nears[DIRECTION.EAST].terrainKey.Should().Be("T10");
-            nears[DIRECTION.EAST_SOUTH].terrainKey.Should().Be("T01");
+            nears[DIRECTION.EAST].vectIndex.Should().Be((1, 0));
+            nears[DIRECTION.EAST_SOUTH].vectIndex.Should().Be((0, 1));
             nears[DIRECTION.WEST_SOUTH].Should().BeNull();
         }
     }

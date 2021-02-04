@@ -1,34 +1,41 @@
-﻿using System.Collections.Generic;
+﻿using Fengj.API;
+using System;
+using System.Collections.Generic;
 
 namespace Fengj.Map
 {
 
     interface ICell
     {
-        string terrainKey { get; }
+        TerrainType terrainType { get; set; }
 
-        (int x, int y) index { get; }
+        (int x, int y) vectIndex { get; set; }
 
-        Dictionary<Map.DIRECTION, ICell> GetNeighbours();
+        ITerrainDef terrainDef { get; }
+
+        Dictionary<DIRECTION, ICell> GetNeighbours();
     }
 
     class Cell : ICell
     {
         public static MapData map;
 
-        public (int x, int y) index { get; set; }
+        public static Func<TerrainType, ITerrainDef> funcGetTerrainDef;
 
-        public string terrainKey { get; set; }
+        public (int x, int y) vectIndex { get; set; }
 
-        public Cell(int x, int y, string terrainKey)
+        public TerrainType terrainType { get; set; }
+
+        public ITerrainDef terrainDef => funcGetTerrainDef(terrainType);
+
+        public Cell(TerrainType type)
         {
-            this.index = (x, y);
-            this.terrainKey = terrainKey;
+            this.terrainType = type;
         }
 
         public Dictionary<DIRECTION, ICell> GetNeighbours()
         {
-            return map.GetNeighbours(index);
+            return map.GetNears(vectIndex.x, vectIndex.y);
         }
     }
 }
