@@ -41,13 +41,13 @@ namespace Fengj.Map
             Cell.map = this;
         }
 
-        public new void SetCell(int index,  ICell cell)
+        public new  void SetCell(int index,  ICell cell)
         {
             cell.vectIndex = (index % colum, index / colum);
             base.SetCell(index, cell);
         }
 
-        public void SetCell(int x, int y, ICell cell)
+        public new void SetCell(int x, int y, ICell cell)
         {
             cell.vectIndex = (x, y);
             base.SetCell(y*colum+x, cell);
@@ -80,11 +80,10 @@ namespace Fengj.Map
 
         public static class Buider
         {
-            private static Dictionary<TerrainType, ITerrainOccur> terrainDict;
 
             public static MapData build(MapBuildType mapType, (int row, int column) mapSize, IEnumerable<ITerrainOccur> terrainDefs)
             {
-                terrainDict = new Dictionary<TerrainType, ITerrainOccur>();
+                var terrainDict = new Dictionary<TerrainType, ITerrainOccur>();
 
                 var map = new MapData(mapSize.row, mapSize.column);
                 BuildPlain(ref map);
@@ -239,7 +238,7 @@ namespace Fengj.Map
                         return new Dictionary<TerrainType, double>(){
                             { TerrainType.PLAIN, 0.2 },
                             { TerrainType.HILL, 0.4 },
-                            { TerrainType.MOUNT, 0.3 },
+                            { TerrainType.MOUNT, 0.4 },
                         };
 
                     default:
