@@ -13,7 +13,7 @@ public class MainScene : Control
 	public override void _Ready()
 	{
 		Facade.logger = (str) => GD.Print(str);
-		Facade.InitIO();
+		Facade.InitStatic();
 
 		facade = new Facade();
 
@@ -24,7 +24,7 @@ public class MainScene : Control
 		facade.CreateRunData(new RunInit() { mapBuildType = Fengj.Map.MapBuildType.MAP_PLAIN, mapSize = (100, 100)});
 
 		map = GetNode<Map>("Map");
-		
+		GD.Print(facade.runData.map);
 		map.SetGmObj(facade.runData.map);
 	}
 

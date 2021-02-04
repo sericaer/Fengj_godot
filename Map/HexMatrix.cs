@@ -106,10 +106,9 @@ namespace Fengj.Map
                     neighbourIndex = (x + 1, y);
                     break;
                 case DIRECTION.EAST_SOUTH:
-
                     if (y % 2 == 0)
                     {
-                        neighbourIndex = (x + 1, y);
+                        neighbourIndex = (x, y+1);
                         break;
                     }
                     else
@@ -117,10 +116,18 @@ namespace Fengj.Map
                         neighbourIndex = (x + 1, y + 1);
                         break;
                     }
-                    neighbourIndex = (x, y + 1);
-                    break;
                 case DIRECTION.WEST_SOUTH:
-                    neighbourIndex = (x - 1, y + 1);
+                    if (y % 2 == 0)
+                    {
+                        neighbourIndex = (x - 1, y + 1);
+                        break;
+                    }
+                    else
+                    {
+                        neighbourIndex = (x, y + 1);
+                        break;
+                    }
+                    
                     break;
                 case DIRECTION.WEST:
                     neighbourIndex = (x - 1, y);

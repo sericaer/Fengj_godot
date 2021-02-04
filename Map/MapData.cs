@@ -27,13 +27,6 @@ namespace Fengj.Map
         MAP_MOUNT
     }
 
-    public enum TerrainType
-    {
-        PLAIN,
-        HILL,
-        MOUNT
-    }
-
     class MapData : HexMatrix<ICell>
     {
         public MapData(int row, int colum) : base(row, colum)
@@ -66,7 +59,7 @@ namespace Fengj.Map
             var content = cells.Where(x => terrainType.Contains(x.terrainType));
             foreach (var cell in content)
             {
-                var nears = cell.GetNeighbours().Where(x => x.Value != null);
+                var nears = cell.GetNeighboursWithDirect().Where(x => x.Value != null);
                 rslt.AddRange(nears.Select(x => x.Value).Where(x => !terrainType.Contains(x.terrainType)));
             }
             return rslt.Distinct();
@@ -83,7 +76,9 @@ namespace Fengj.Map
                 BuildPlain(ref map);
 
                 var Type2Percent = calcPercent(mapType);
+
                 BuildMount(ref map, Type2Percent[TerrainType.MOUNT]);
+
                 BuildHill(ref map, Type2Percent[TerrainType.HILL]);
 
                 //BuildForest(ref map, 0.1);
@@ -91,6 +86,7 @@ namespace Fengj.Map
                 //BuildRiver(ref map, 0.1);
                 //BuildMarsh(ref map, 0.1);
 
+                LOG.INFO("build" + map.ToString());
                 return map;
             }
 
@@ -114,12 +110,26 @@ namespace Fengj.Map
                 //todo
             }
 
-            public static void BuildHill(ref MapData map, double percent)
+            public static int BuildHill(ref MapData map, double percent)
             {
                 byte[] buffer = Guid.NewGuid().ToByteArray();
                 Random random = new Random(BitConverter.ToInt32(buffer, 0));
 
                 int total = (int)(percent * map.cells.Length);
+
+                if (total < 20)
+                {
+                    throw new Exception();
+                }
+
+                var cellcount = map.cells.Length;
+
+                IEnumerable<int> seeds = Enumerable.Range(0, total / 20).Select(x => random.Next(0, cellcount)).Distinct().ToArray();
+
+                foreach (var seed in seeds)
+                {
+                    map.ReplaceCell(map.cells[seed], new Cell(TerrainType.HILL));
+                }
 
                 int curr = 0;
 
@@ -136,7 +146,20 @@ namespace Fengj.Map
 
                     foreach (var bound in bounds)
                     {
-                        var value = random.Next(0, 10);
+                        var value = -1;
+                        if(bound.GetNeighbours().Any(x=>x.terrainType == TerrainType.MOUNT))
+                        {
+                            value = 0;
+                        }
+                        else if (bound.GetNeighbours().Any(x => x.terrainType == TerrainType.MOUNT))
+                        {
+                            value = random.Next(0, 10);
+                        }
+                        else
+                        {
+                            value = random.Next(0, 100);
+                        }
+                        
                         if (value == 0)
                         {
                             map.ReplaceCell(bound, new Cell(TerrainType.HILL));
@@ -145,13 +168,14 @@ namespace Fengj.Map
 
                         if (curr == total)
                         {
-                            return;
-                        }
+                            LOG.INFO("BuildHill"+ curr);
+                            return curr;
+                        } 
                     }
                 }
             }
 
-            public static void BuildMount(ref MapData map, double percent)
+            public static int BuildMount(ref MapData map, double percent)
             {
                 byte[] buffer = Guid.NewGuid().ToByteArray();
                 Random random = new Random(BitConverter.ToInt32(buffer, 0));
@@ -159,7 +183,13 @@ namespace Fengj.Map
                 int total = (int)(percent * map.cells.Length);
    
                 var cellcount = map.cells.Length;
-                IEnumerable<int> seeds = Enumerable.Range(0, total / 10).Select(x => random.Next(0, cellcount)).Distinct().ToArray();
+
+                if(total < 10 )
+                {
+                    throw new Exception();
+                }
+
+                IEnumerable<int> seeds = Enumerable.Range(0, total / 10 ).Select(x => random.Next(0, cellcount)).Distinct().ToArray();
 
                 foreach (var seed in seeds)
                 {
@@ -180,7 +210,7 @@ namespace Fengj.Map
 
                     foreach (var bound in bounds)
                     {
-                        var value = random.Next(0, 10);
+                        var value = random.Next(0, 100);
                         if (value == 0)
                         {
                             map.ReplaceCell(bound, new Cell(TerrainType.MOUNT));
@@ -193,8 +223,8 @@ namespace Fengj.Map
                             {
                                 throw new Exception();
                             }
-
-                            return;
+                            LOG.INFO("BuildMount" + curr);
+                            return curr;
                         }
                     }
                 }

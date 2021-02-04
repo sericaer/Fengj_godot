@@ -46,7 +46,7 @@ public class Map : Node2D
 
 		foreach (var cell in gmObj.cells)
 		{
-			tileMap.SetCells(cell.vectIndex, cell.terrainDef.path);
+			tileMap.SetCells(cell.vectIndex, cell.terrainDef.key.ToString());
 		}
 	}
 

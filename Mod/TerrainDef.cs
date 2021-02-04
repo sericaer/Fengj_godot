@@ -61,13 +61,12 @@ namespace Fengj
 
                 LOG.INFO("Check Terrains path:" + scriptDirPath);
 
-                if (Directory.Exists(scriptDirPath))
+                foreach(TerrainType type in Enum.GetValues(typeof(TerrainType)))
                 {
-                    foreach (var scriptFilePath in Directory.EnumerateFiles(scriptDirPath, "*.json"))
-                    {
-                        LOG.INFO("Load Terrains script:" + scriptFilePath);
-                        rslt.Add(Build(modName, scriptFilePath));
-                    }
+                    var scriptFilePath = scriptDirPath + type.ToString().ToLower() + ".json";
+                    LOG.INFO("Load Terrains script:" + scriptFilePath);
+
+                    rslt.Add(Build(modName, type, scriptFilePath));
                 }
 
                 CheckITerrainDefList(rslt);
@@ -76,13 +75,13 @@ namespace Fengj
                 return rslt;
             }
 
-            private static ITerrainDef Build(string modName, string scriptFilePath)
+            private static ITerrainDef Build(string modName, TerrainType type, string scriptFilePath)
             {
                 TerrainDef rslt = new TerrainDef();
 
                 rslt.modName = modName;
                 rslt.fileName = SystemIO.FileSystem.Path.GetFileNameWithoutExtension(scriptFilePath);
-
+                rslt.key = type;
                 //var json = JObject.Parse(SystemIO.FileSystem.File.ReadAllText(scriptFilePath));
                 //rslt.occur = new Occur();
 

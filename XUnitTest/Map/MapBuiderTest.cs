@@ -6,6 +6,7 @@ using FluentAssertions;
 using Moq;
 using Xunit;
 using Fengj.Map;
+using Fengj.API;
 
 namespace XUnitTest.Runner
 {

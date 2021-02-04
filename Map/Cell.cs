@@ -1,6 +1,7 @@
 ﻿using Fengj.API;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Fengj.Map
 {
@@ -13,7 +14,9 @@ namespace Fengj.Map
 
         ITerrainDef terrainDef { get; }
 
-        Dictionary<DIRECTION, ICell> GetNeighbours();
+        IEnumerable<ICell> GetNeighbours();
+
+        Dictionary<DIRECTION, ICell> GetNeighboursWithDirect();
     }
 
     class Cell : ICell
@@ -33,9 +36,14 @@ namespace Fengj.Map
             this.terrainType = type;
         }
 
-        public Dictionary<DIRECTION, ICell> GetNeighbours()
+        public Dictionary<DIRECTION, ICell> GetNeighboursWithDirect()
         {
             return map.GetNears(vectIndex.x, vectIndex.y);
+        }
+
+        public IEnumerable<ICell> GetNeighbours()
+        {
+            return GetNeighboursWithDirect().Values.Where(x => x != null);
         }
     }
 }

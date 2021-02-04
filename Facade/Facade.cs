@@ -26,9 +26,10 @@ namespace Fengj.Facade
             }
         }
 
-        public static void InitIO()
+        public static void InitStatic()
         {
             SystemIO.FileSystem = new FileSystem();
+            
         }
 
 
@@ -39,6 +40,8 @@ namespace Fengj.Facade
         public void CreateModder(string modPath)
         {
             modder = ModManager.Load(modPath);
+
+            Cell.funcGetTerrainDef = (type) => modder.terrainDefs.Single(x => x.key == type);
         }
 
         public void CreateRunData(RunInit runInit)
