@@ -3,6 +3,7 @@ using System;
 
 using Fengj.Facade;
 using Fengj.Modder;
+using System.Linq;
 
 public class MainScene : Control
 {
@@ -19,7 +20,7 @@ public class MainScene : Control
 
 		facade.CreateModder(GlobalPath.mod);
 
-		GlobalResource.BuildTileSet(facade.modder.terrainDefs);
+		GlobalResource.BuildTileSet(facade.modder.dictTerrainDefs.Values.SelectMany(p=>p.Values));
 
 		facade.CreateRunData(new RunInit() { mapBuildType = Fengj.Map.MapBuildType.MAP_PLAIN, mapSize = (100, 100)});
 

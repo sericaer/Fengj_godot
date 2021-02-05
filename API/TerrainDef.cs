@@ -21,7 +21,10 @@ namespace Fengj.API
 
     public interface ITerrainDef : ModElement
     {
-        TerrainType key { get; }
+        TerrainType type { get; }
+        
+        string code { get; }
+
         string path { get; }
     }
 }

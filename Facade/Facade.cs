@@ -18,6 +18,8 @@ namespace Fengj.Facade
 
         public RunData runData;
 
+        public IModBuilder modBuilder;
+
         public static Action<string> logger
         {
             set
@@ -29,26 +31,26 @@ namespace Fengj.Facade
         public static void InitStatic()
         {
             SystemIO.FileSystem = new FileSystem();
-            
         }
 
 
         public Facade()
         {
+            modBuilder = new Mod.Builder();
         }
 
         public void CreateModder(string modPath)
         {
-            modder = ModManager.Load(modPath);
+            modder = ModManager.Load(modPath, modBuilder);
 
-            Cell.funcGetTerrainDef = (type) => modder.terrainDefs.Single(x => x.key == type);
+            Cell.funcGetTerrainDef = (type, code) => modder.dictTerrainDefs[type][code];
         }
 
         public void CreateRunData(RunInit runInit)
         {
             runData = new RunData();
 
-            runData.map = MapData.Buider.build(runInit.mapBuildType, runInit.mapSize, modder.terrainDefs);
+            runData.map = MapData.Buider.build(runInit.mapBuildType, runInit.mapSize, modder.dictTerrainDefs.Values.SelectMany(x=>x.Values));
         }
     }
 }

@@ -11,20 +11,25 @@ using System.IO;
 using System.Linq;
 
 
-namespace Fengj
+namespace Fengj.Modder
 {
     class TerrainDef : ITerrainDef
     {
+        public const string scriptPath = "script/map/terrain/";
+
+        public const string imagePath = "image/map/terrain/";
+
         public string modName { get; private set; }
 
         public string path { get; private set; }
 
-        public TerrainType key { get; private set; }
+        public TerrainType type { get; private set; }
+
+        public string code { get; private set; }
 
         public static class Builder
         {
-            public const string scriptPath = "/script/map/terrain/";
-            public const string imagePath = "/image/map/terrain/";
+  
 
             public static List<ITerrainDef>  BuildArray(string modName, string path)
             {
@@ -37,27 +42,38 @@ namespace Fengj
                 foreach(TerrainType type in Enum.GetValues(typeof(TerrainType)))
                 {
                     var scriptFilePath = scriptDirPath + type.ToString().ToLower() + ".json";
+
                     LOG.INFO("Load Terrains script:" + scriptFilePath);
 
-                    rslt.Add(Build(modName, type, scriptFilePath));
-                }
+                    var pngDirPath = path + imagePath + type.ToString();
+                    var pngFilePaths = SystemIO.FileSystem.Directory.EnumerateFiles(pngDirPath, "*.png");
+                    if(pngFilePaths.Count() == 0)
+                    {
+                        throw new Exception();
+                    }
 
-                CheckITerrainDefList(rslt);
+                    foreach (var pngFilePath in pngFilePaths)
+                    {
+                        LOG.INFO("Load Terrains png:" + pngFilePath);
+
+                        rslt.Add(Build(modName, type, scriptFilePath, pngFilePath));
+                    }
+                }
 
                 LOG.INFO("Builded Terrains count:" + rslt.Count);
                 return rslt;
             }
 
-            private static ITerrainDef Build(string modName, TerrainType type, string scriptFilePath)
+            private static ITerrainDef Build(string modName, TerrainType type, string scriptFilePath, string pngFilePath)
             {
                 TerrainDef rslt = new TerrainDef();
 
                 rslt.modName = modName;
-                rslt.key = type;
+                rslt.type = type;
                 //var json = JObject.Parse(SystemIO.FileSystem.File.ReadAllText(scriptFilePath));
                 //rslt.occur = new Occur();
-
-                rslt.path = scriptFilePath.Replace(scriptPath, imagePath).Replace("json", "png");
+                rslt.code = SystemIO.FileSystem.Path.GetFileNameWithoutExtension(pngFilePath);
+                rslt.path = pngFilePath;
 
 
 
@@ -67,17 +83,6 @@ namespace Fengj
                 //}
 
                 return rslt;
-            }
-
-            private static void CheckITerrainDefList(List<ITerrainDef> list)
-            {
-                foreach(var def in list)
-                {
-                    if(!SystemIO.FileSystem.File.Exists(def.path))
-                    {
-                        throw new FileNotFoundException(def.path);
-                    }
-                }
             }
         }
     }

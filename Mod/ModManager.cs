@@ -13,26 +13,48 @@ namespace Fengj.Modder
     class ModManager
     {
 
-        public ITerrainDef[] terrainDefs => mods.SelectMany(x => x.terrainDefs).ToArray();
+        public Dictionary<TerrainType, Dictionary<string, ITerrainDef>> dictTerrainDefs;
 
-
-        private List<Mod> mods;
+        private List<IMod> mods;
 
         public ModManager()
         {
-            mods = new List<Mod>();
+            mods = new List<IMod>();
         }
 
-        public static ModManager Load(string path)
+        public static ModManager Load(string path, IModBuilder builder)
         {
             var modder = new ModManager();
 
-            foreach (var subpath in Directory.EnumerateDirectories(path))
+            foreach (var subpath in SystemIO.FileSystem.Directory.EnumerateDirectories(path))
             {
-                modder.mods.Add(Mod.Builder.Build(subpath));
+                modder.mods.Add(builder.Build(subpath));
             }
+
+            modder.dictTerrainDefs = MergeTerrainDefs(modder.mods.SelectMany(x => x.terrainDefs));
 
             return modder;
         }
+
+        private static Dictionary<TerrainType, Dictionary<String, ITerrainDef>> MergeTerrainDefs(IEnumerable<ITerrainDef> terrainDefs)
+        {
+            var rslt = new Dictionary<TerrainType, Dictionary<String, ITerrainDef>>();
+            foreach(var elem in terrainDefs)
+            {
+                if(!rslt.ContainsKey(elem.type))
+                {
+                    rslt[elem.type] = new Dictionary<string, ITerrainDef>();
+                }
+
+                if(rslt[elem.type].ContainsKey(elem.code))
+                {
+                    throw new Exception();
+                }
+
+                rslt[elem.type][elem.code] = elem;
+            }
+            return rslt;
+        }
+
     }
 }

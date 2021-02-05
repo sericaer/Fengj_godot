@@ -21,13 +21,15 @@ namespace Fengj.Map
     {
         public static MapData map;
 
-        public static Func<TerrainType, ITerrainDef> funcGetTerrainDef;
+        public static Func<TerrainType, string, ITerrainDef> funcGetTerrainDef;
 
         public (int x, int y) vectIndex { get; set; }
 
         public TerrainType terrainType { get; set; }
 
-        public ITerrainDef terrainDef => funcGetTerrainDef(terrainType);
+        public string terrainCode;
+
+        public ITerrainDef terrainDef => funcGetTerrainDef(terrainType, terrainCode);
 
         public Cell(TerrainType type)
         {

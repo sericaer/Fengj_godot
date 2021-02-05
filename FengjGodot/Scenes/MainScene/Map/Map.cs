@@ -20,22 +20,6 @@ public class Map : Node2D
 
 		tileMap = GetNode<TileMap>("TileMap");
 		tileMap.TileSet = new TileSet();
-
-
-		//tileMap.TileSet.CreateTile(0);
-		//tileMap.TileSet.TileSetTexture(0, ResourceLoader.Load<Texture>(@"D:\MyProject\GitHub\Fengj\FengjGodot\Release\Fengj\mods\Native\png\map\terrain\hill.png"));
-
-		//tileMap.TileSet.CreateTile(1);
-		//tileMap.TileSet.TileSetTexture(1, ResourceLoader.Load<Texture>(@"D:\MyProject\GitHub\Fengj\FengjGodot\Release\Fengj\mods\Native\png\map\terrain\plain.png"));
-
-		//GD.Print(tileMap.TileSet);
-
-		//tileMap.SetCell(0, 0, 0);
-		//tileMap.SetCell(0, 1, 1);
-		//foreach (var cell in gmObj.cells)
-		//{
-		//    tileMap.SetCells(cell.index, cell.terrainKey);
-		//}
 	}
 
 	internal void SetGmObj(MapData map)
@@ -46,7 +30,7 @@ public class Map : Node2D
 
 		foreach (var cell in gmObj.cells)
 		{
-			tileMap.SetCells(cell.vectIndex, cell.terrainDef.key.ToString());
+			tileMap.SetCells(cell.vectIndex, cell.terrainDef.path);
 		}
 	}
 
