@@ -19,13 +19,13 @@ namespace Fengj.Modder
 
         public const string imagePath = "image/map/terrain/";
 
-        public string modName { get; private set; }
+        public string modName { get; set; }
 
-        public string path { get; private set; }
+        public string path { get;  set; }
 
-        public TerrainType type { get; private set; }
+        public TerrainType type { get;  set; }
 
-        public string code { get; private set; }
+        public string code { get;  set; }
 
         public static class Builder
         {
