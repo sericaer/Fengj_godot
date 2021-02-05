@@ -19,18 +19,9 @@ namespace Fengj.API
         MOUNT
     }
 
-    public interface ITerrainOccur : ModElement
+    public interface ITerrainDef : ModElement
     {
         TerrainType key { get; }
         string path { get; }
-
-        double height { get; }
-
-        double CalcOccur(IEnumerable<string> near);
-    }
-
-    public interface ITerrainDef : ITerrainOccur
-    {
-
     }
 }

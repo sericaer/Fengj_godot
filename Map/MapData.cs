@@ -69,9 +69,9 @@ namespace Fengj.Map
         public static class Buider
         {
 
-            public static MapData build(MapBuildType mapType, (int row, int column) mapSize, IEnumerable<ITerrainOccur> terrainDefs)
+            public static MapData build(MapBuildType mapType, (int row, int column) mapSize, IEnumerable<ITerrainDef> terrainDefs)
             {
-                var terrainDict = new Dictionary<TerrainType, ITerrainOccur>();
+                var terrainDict = new Dictionary<TerrainType, ITerrainDef>();
 
                 var map = new MapData(mapSize.row, mapSize.column);
                 BuildPlain(ref map);

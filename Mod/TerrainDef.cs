@@ -19,34 +19,7 @@ namespace Fengj
 
         public string path { get; private set; }
 
-        public string fileName { get; private set; }
-
         public TerrainType key { get; private set; }
-
-        public double height { get; private set; }
-
-        private Occur occur;
-
-        public double CalcOccur(IEnumerable<string> nears)
-        {
-            return occur.Calc(nears);
-        }
-
-        private class Occur
-        {
-            public double baseValue;
-            public Dictionary<string, double> nearBuff;
-
-            public Occur()
-            {
-                nearBuff = new Dictionary<string, double>();
-            }
-
-            public double Calc(IEnumerable<string> nears)
-            {
-                return baseValue + nears.Where(x => nearBuff.ContainsKey(x)).Sum(y => nearBuff[y]);
-            }
-        }
 
         public static class Builder
         {
@@ -80,7 +53,6 @@ namespace Fengj
                 TerrainDef rslt = new TerrainDef();
 
                 rslt.modName = modName;
-                rslt.fileName = SystemIO.FileSystem.Path.GetFileNameWithoutExtension(scriptFilePath);
                 rslt.key = type;
                 //var json = JObject.Parse(SystemIO.FileSystem.File.ReadAllText(scriptFilePath));
                 //rslt.occur = new Occur();
