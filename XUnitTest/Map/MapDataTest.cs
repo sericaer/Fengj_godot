@@ -10,8 +10,9 @@ using Fengj.Map;
 using System.Linq;
 using Fengj.API;
 
-namespace XUnitTest.Runner
+namespace XUnitTest.Map
 {
+    [Collection("MapAndCell")]
     public class MapDataTest
     {
         [Fact]
@@ -108,6 +109,26 @@ namespace XUnitTest.Runner
             nears[DIRECTION.EAST_SOUTH].vectIndex.Should().Be((3, 4));
             nears[DIRECTION.WEST_SOUTH].vectIndex.Should().Be((2, 4));
             nears[DIRECTION.WEST].vectIndex.Should().Be((1, 3));
+        }
+
+
+        [Fact]
+        public void GetNeighboursWithDistance()
+        {
+            var map = new MapData(5, 5);
+
+            for (int i = 0; i < map.row * map.colum; i++)
+            {
+                map.SetCell(i, Mock.Of<ICell>());
+            }
+
+            var cells = map.GetCellsWithDistance(0, 0, 2);
+            var indexList = new List<(int x, int y)>()
+            {
+                (1,0), (0, 1), (2, 0),(1,1),(0,2), (1,2)
+            };
+
+            cells.Select(x => x.vectIndex).Should().BeEquivalentTo(indexList);
         }
 
         [Fact]

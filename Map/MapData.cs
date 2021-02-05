@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Fengj.API;
 using Fengj.IO;
+using Fengj.Utility;
 
 namespace Fengj.Map
 {
@@ -131,7 +132,7 @@ namespace Fengj.Map
                     map.ReplaceCell(map.cells[seed], new Cell(TerrainType.HILL));
                 }
 
-                int curr = 0;
+                int curr = seeds.Count();
 
                 while (true)
                 {
@@ -146,31 +147,27 @@ namespace Fengj.Map
 
                     foreach (var bound in bounds)
                     {
-                        var value = -1;
-                        if(bound.GetNeighbours().Any(x=>x.terrainType == TerrainType.MOUNT))
+                        double p = 0;
+                        if(bound.GetNeighbours(2).Any(x=>x.terrainType == TerrainType.MOUNT))
                         {
-                            value = 0;
-                        }
-                        else if (bound.GetNeighbours().Any(x => x.terrainType == TerrainType.MOUNT))
-                        {
-                            value = random.Next(0, 10);
+                            p = 100;
                         }
                         else
                         {
-                            value = random.Next(0, 100);
+                            p = 1;
                         }
                         
-                        if (value == 0)
+                        if (GRandom.isOccur(p))
                         {
                             map.ReplaceCell(bound, new Cell(TerrainType.HILL));
                             curr++;
-                        }
 
-                        if (curr == total)
-                        {
-                            LOG.INFO("BuildHill"+ curr);
-                            return curr;
-                        } 
+                            if (curr == total)
+                            {
+                                LOG.INFO("BuildHill" + curr);
+                                return curr;
+                            }
+                        }
                     }
                 }
             }

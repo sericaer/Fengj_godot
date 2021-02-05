@@ -7,7 +7,12 @@ using System.Threading.Tasks;
 
 namespace Fengj.Map
 {
-    public class HexMatrix<T> : IEnumerable<T>
+    public interface IMatrixElem
+    {
+        (int x, int y) vectIndex { get; set; }
+    }
+
+    public class HexMatrix<T> : IEnumerable<T> where T: IMatrixElem
     {
         public int row;
         public int colum;
@@ -33,7 +38,7 @@ namespace Fengj.Map
 
             foreach (DIRECTION direct in Enum.GetValues(typeof(DIRECTION)))
             {
-                var near = GetNear(x, y, direct);
+                var near = GetNearWithDirect(x, y, direct);
                 rslt.Add(direct, near);
             }
 
@@ -74,7 +79,7 @@ namespace Fengj.Map
         }
 
 
-        public T GetNear(int x, int y, DIRECTION direct)
+        public T GetNearWithDirect(int x, int y, DIRECTION direct)
         {
             (int x, int y) neighbourIndex = (-1, -1);
 
@@ -140,6 +145,28 @@ namespace Fengj.Map
         public IEnumerator<T> GetEnumerator()
         {
             return ((IEnumerable<T>)cells).GetEnumerator();
+        }
+
+        public IEnumerable<T> GetCellsWithDistance(int x, int y, int distance)
+        {
+            if (distance < 0)
+            {
+                throw new Exception();
+            }
+
+            List<T> list = new List<T>();
+
+            var nears = GetNears(x, y);
+            var cells = nears.Values.Where(v => v != null);
+            list.AddRange(cells);
+
+            if (distance > 1)
+            {
+                list.AddRange(cells.SelectMany(n => GetCellsWithDistance(n.vectIndex.x, n.vectIndex.y,  distance - 1)).Distinct());
+            }
+
+            list.RemoveAll(n => n.vectIndex == (x, y));
+            return list.Distinct();
         }
 
         IEnumerator IEnumerable.GetEnumerator()

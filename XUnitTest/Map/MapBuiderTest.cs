@@ -8,9 +8,10 @@ using Xunit;
 using Fengj.Map;
 using Fengj.API;
 
-namespace XUnitTest.Runner
+namespace XUnitTest.Map
 {
-    public class BuiderTest
+    [Collection("MapAndCell")]
+    public class MapBuiderTest
     {
         [Fact]
         public void BuildPlainTest()

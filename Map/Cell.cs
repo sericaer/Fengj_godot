@@ -6,15 +6,13 @@ using System.Linq;
 namespace Fengj.Map
 {
 
-    interface ICell
+    interface ICell : IMatrixElem
     {
         TerrainType terrainType { get; set; }
 
-        (int x, int y) vectIndex { get; set; }
-
         ITerrainDef terrainDef { get; }
 
-        IEnumerable<ICell> GetNeighbours();
+        IEnumerable<ICell> GetNeighbours(int distance = 1);
 
         Dictionary<DIRECTION, ICell> GetNeighboursWithDirect();
     }
@@ -41,9 +39,9 @@ namespace Fengj.Map
             return map.GetNears(vectIndex.x, vectIndex.y);
         }
 
-        public IEnumerable<ICell> GetNeighbours()
+        public IEnumerable<ICell> GetNeighbours(int distance)
         {
-            return GetNeighboursWithDirect().Values.Where(x => x != null);
+            return map.GetCellsWithDistance(vectIndex.x, vectIndex.y, distance);
         }
     }
 }
