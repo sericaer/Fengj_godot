@@ -138,12 +138,12 @@ namespace XUnitTest.Map
 
             for (int i = 0; i < map.row * map.colum; i++)
             {
-                map.SetCell(i, new Cell(TerrainType.PLAIN));
+                map.SetCell(i, new Cell(TerrainType.PLAIN, "plain"));
             }
 
-            map.SetCell(0, 0, new Cell(TerrainType.HILL));
-            map.SetCell(0, 1, new Cell(TerrainType.HILL));
-            map.SetCell(1, 0, new Cell(TerrainType.HILL));
+            map.SetCell(0, 0, new Cell(TerrainType.HILL, "hill"));
+            map.SetCell(0, 1, new Cell(TerrainType.HILL, "hill"));
+            map.SetCell(1, 0, new Cell(TerrainType.HILL, "hill"));
 
             var bounds = map.GetBoundCells(TerrainType.HILL);
             bounds.Select(x=>x.terrainType).All(x=>x == TerrainType.PLAIN).Should().BeTrue();
@@ -164,12 +164,12 @@ namespace XUnitTest.Map
 
             for (int i = 0; i < map.row * map.colum; i++)
             {
-                map.SetCell(i, new Cell(TerrainType.PLAIN));
+                map.SetCell(i, new Cell(TerrainType.PLAIN, "plain"));
             }
 
-            map.SetCell(0, 8, new Cell(TerrainType.HILL));
-            map.SetCell(0, 9, new Cell(TerrainType.HILL));
-            map.SetCell(1, 9, new Cell(TerrainType.HILL));
+            map.SetCell(0, 8, new Cell(TerrainType.HILL, "hill"));
+            map.SetCell(0, 9, new Cell(TerrainType.HILL, "hill"));
+            map.SetCell(1, 9, new Cell(TerrainType.HILL, "hill"));
 
             var bounds = map.GetBoundCells(TerrainType.HILL);
             bounds.Select(x => x.terrainType).All(x => x == TerrainType.PLAIN).Should().BeTrue();
@@ -190,12 +190,12 @@ namespace XUnitTest.Map
 
             for (int i = 0; i < map.row * map.colum; i++)
             {
-                map.SetCell(i, new Cell(TerrainType.PLAIN));
+                map.SetCell(i, new Cell(TerrainType.PLAIN, "plain"));
             }
 
-            map.SetCell(9, 0, new Cell(TerrainType.HILL));
-            map.SetCell(9, 1, new Cell(TerrainType.HILL));
-            map.SetCell(8, 0, new Cell(TerrainType.HILL));
+            map.SetCell(9, 0, new Cell(TerrainType.HILL, "hill"));
+            map.SetCell(9, 1, new Cell(TerrainType.HILL, "hill"));
+            map.SetCell(8, 0, new Cell(TerrainType.HILL, "hill"));
 
             var bounds = map.GetBoundCells(TerrainType.HILL);
             bounds.Select(x => x.terrainType).All(x => x == TerrainType.PLAIN).Should().BeTrue();
@@ -217,12 +217,12 @@ namespace XUnitTest.Map
 
             for (int i = 0; i < map.row * map.colum; i++)
             {
-                map.SetCell(i, new Cell(TerrainType.PLAIN));
+                map.SetCell(i, new Cell(TerrainType.PLAIN, "plain"));
             }
 
-            map.SetCell(9, 9, new Cell(TerrainType.HILL));
-            map.SetCell(9, 8, new Cell(TerrainType.HILL));
-            map.SetCell(8, 9, new Cell(TerrainType.HILL));
+            map.SetCell(9, 9, new Cell(TerrainType.HILL, "hill"));
+            map.SetCell(9, 8, new Cell(TerrainType.HILL, "hill"));
+            map.SetCell(8, 9, new Cell(TerrainType.HILL, "hill"));
 
             var bounds = map.GetBoundCells(TerrainType.HILL);
             bounds.Select(x => x.terrainType).All(x => x == TerrainType.PLAIN).Should().BeTrue();

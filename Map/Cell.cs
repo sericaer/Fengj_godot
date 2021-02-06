@@ -31,9 +31,16 @@ namespace Fengj.Map
 
         public ITerrainDef terrainDef => funcGetTerrainDef(terrainType, terrainCode);
 
-        public Cell(TerrainType type)
+        public Cell(ITerrainDef def)
+        {
+            this.terrainType = def.type;
+            this.terrainCode = def.code;
+        }
+
+        public Cell(TerrainType type, string code)
         {
             this.terrainType = type;
+            this.terrainCode = code;
         }
 
         public Dictionary<DIRECTION, ICell> GetNeighboursWithDirect()

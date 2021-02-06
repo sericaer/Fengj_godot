@@ -69,18 +69,18 @@ namespace Fengj.Map
         public static class Buider
         {
 
-            public static MapData build(MapBuildType mapType, (int row, int column) mapSize, IEnumerable<ITerrainDef> terrainDefs)
+            public static MapData build(MapBuildType mapType, (int row, int column) mapSize, Dictionary<TerrainType, Dictionary<string, ITerrainDef>> terrainDefs)
             {
                 var terrainDict = new Dictionary<TerrainType, ITerrainDef>();
 
                 var map = new MapData(mapSize.row, mapSize.column);
-                BuildPlain(ref map);
+                BuildPlain(ref map, terrainDefs[TerrainType.PLAIN].Values);
 
                 var Type2Percent = calcPercent(mapType);
 
-                BuildMount(ref map, Type2Percent[TerrainType.MOUNT]);
+                BuildMount(ref map, Type2Percent[TerrainType.MOUNT], terrainDefs[TerrainType.MOUNT].Values);
 
-                BuildHill(ref map, Type2Percent[TerrainType.HILL]);
+                BuildHill(ref map, Type2Percent[TerrainType.HILL], terrainDefs[TerrainType.HILL].Values);
 
                 //BuildForest(ref map, 0.1);
                 //BuildLake(ref map, 0.1);
@@ -111,7 +111,7 @@ namespace Fengj.Map
                 //todo
             }
 
-            public static int BuildHill(ref MapData map, double percent)
+            public static int BuildHill(ref MapData map, double percent, IEnumerable<ITerrainDef> terrainDefs)
             {
                 byte[] buffer = Guid.NewGuid().ToByteArray();
                 Random random = new Random(BitConverter.ToInt32(buffer, 0));
@@ -129,7 +129,7 @@ namespace Fengj.Map
 
                 foreach (var seed in seeds)
                 {
-                    map.ReplaceCell(map.cells[seed], new Cell(TerrainType.HILL));
+                    map.ReplaceCell(map.cells[seed], new Cell(terrainDefs.RandomOne()));
                 }
 
                 int curr = seeds.Count();
@@ -159,7 +159,7 @@ namespace Fengj.Map
                         
                         if (GRandom.isOccur(p))
                         {
-                            map.ReplaceCell(bound, new Cell(TerrainType.HILL));
+                            map.ReplaceCell(bound, new Cell(terrainDefs.RandomOne()));
                             curr++;
 
                             if (curr == total)
@@ -172,7 +172,7 @@ namespace Fengj.Map
                 }
             }
 
-            public static int BuildMount(ref MapData map, double percent)
+            public static int BuildMount(ref MapData map, double percent, IEnumerable<ITerrainDef> terrainDefs)
             {
                 byte[] buffer = Guid.NewGuid().ToByteArray();
                 Random random = new Random(BitConverter.ToInt32(buffer, 0));
@@ -190,7 +190,7 @@ namespace Fengj.Map
 
                 foreach (var seed in seeds)
                 {
-                    map.ReplaceCell(map.cells[seed], new Cell(TerrainType.MOUNT));
+                    map.ReplaceCell(map.cells[seed], new Cell(terrainDefs.RandomOne()));
                 }
 
                 int curr = seeds.Count();
@@ -210,7 +210,7 @@ namespace Fengj.Map
                         var value = random.Next(0, 100);
                         if (value == 0)
                         {
-                            map.ReplaceCell(bound, new Cell(TerrainType.MOUNT));
+                            map.ReplaceCell(bound, new Cell(terrainDefs.RandomOne()));
                             curr++;
                         }
 
@@ -227,11 +227,11 @@ namespace Fengj.Map
                 }
             }
 
-            public static void BuildPlain(ref MapData map)
+            public static void BuildPlain(ref MapData map, IEnumerable<ITerrainDef> terrainDefs)
             {
                 for (int i = 0; i < map.cells.Length; i++)
                 {
-                    map.SetCell(i, new Cell(TerrainType.PLAIN));
+                    map.SetCell(i, new Cell(terrainDefs.RandomOne()));
                 }
             }
 
