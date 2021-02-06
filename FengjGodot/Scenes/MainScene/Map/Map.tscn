@@ -7,9 +7,9 @@
 script = ExtResource( 1 )
 
 [node name="TileMap" type="TileMap" parent="."]
-cell_size = Vector2( 120, 104 )
-cell_half_offset = 0
-cell_tile_origin = 1
+cell_size = Vector2( 112, 130 )
+cell_half_offset = 1
+cell_y_sort = true
 format = 1
 
 [node name="Camera2D" type="Camera2D" parent="."]
