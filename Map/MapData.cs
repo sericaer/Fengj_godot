@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Numerics;
 using System.Text;
@@ -14,10 +15,10 @@ namespace Fengj.Map
     {
         WEST_NORTH,
         EAST_NORTH,
-        EAST,
+        NORTH,
         EAST_SOUTH,
         WEST_SOUTH,
-        WEST,
+        SOUTH,
     }
 
     public enum MapBuildType
@@ -28,23 +29,27 @@ namespace Fengj.Map
         MAP_MOUNT
     }
 
-    class MapData : HexMatrix<ICell>
+    class MapData : HexMatrix<ICell> , INotifyPropertyChanged
     {
+        public Cell changedCell { get; set; }
+        
         public MapData(int row, int colum) : base(row, colum)
         {
             Cell.map = this;
         }
 
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public new  void SetCell(int index,  ICell cell)
         {
-            cell.vectIndex = (index % colum, index / colum);
+            cell.vectIndex = (index / colum, index % colum);
             base.SetCell(index, cell);
         }
 
         public new void SetCell(int x, int y, ICell cell)
         {
             cell.vectIndex = (x, y);
-            base.SetCell(y*colum+x, cell);
+            base.SetCell(x*colum+y, cell);
         }
 
         public void ReplaceCell(ICell oldCell, ICell cell)

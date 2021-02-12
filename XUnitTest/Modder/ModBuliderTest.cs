@@ -14,6 +14,7 @@ using System.IO;
 
 namespace XUnitTest.Modder
 {
+    [Collection("ModTest")]
     public class ModManagerTest : IClassFixture<ModManagerTestFixture>
     {
         public static FileSystemWapper fileSystemWapper;
@@ -25,10 +26,10 @@ namespace XUnitTest.Modder
             var subPaths = new string[] { "M1", "M2", "M3" };
 
             var mockDirectory = new Mock<IDirectory>();
+            mockDirectory.Setup(x => x.EnumerateDirectories($"{path}")).Returns<string>((x) => subPaths.Select(code => $"{path}{code}").ToArray());
             foreach (var sub in subPaths)
             {
-                mockDirectory.Setup(x => x.EnumerateDirectories($"{path}"))
-                    .Returns<string>((x) => sub.Select(code => $"{path}/{sub}").ToArray());
+
             }
 
             fileSystemWapper.Directory = mockDirectory.Object;

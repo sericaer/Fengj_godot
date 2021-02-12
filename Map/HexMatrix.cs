@@ -64,7 +64,7 @@ namespace Fengj.Map
                 return default(T);
             }
 
-            return cells[x  + y *colum];
+            return cells[x * colum  + y];
         }
 
         public void SetCell(int x, int y, T value)
@@ -75,7 +75,7 @@ namespace Fengj.Map
                 throw new IndexOutOfRangeException();
             }
 
-            SetCell(x + y * colum, value);
+            SetCell(x*colum + y, value);
         }
 
 
@@ -85,10 +85,35 @@ namespace Fengj.Map
 
             switch (direct)
             {
-                case DIRECTION.WEST_NORTH:
-                    if (y % 2 == 0)
+                case DIRECTION.EAST_NORTH:
+                    if(y %2 != 0)
                     {
-                        neighbourIndex = (x-1, y - 1);
+                        neighbourIndex = (x, y + 1);
+                        break;
+                    }
+                    else
+                    {
+                        neighbourIndex = (x - 1, y + 1);
+                        break;
+                    }
+                case DIRECTION.EAST_SOUTH:
+                    if (y % 2 != 0)
+                    {
+                        neighbourIndex = (x+1, y+1);
+                        break;
+                    }
+                    else
+                    {
+                        neighbourIndex = (x, y+1);
+                        break;
+                    }
+                case DIRECTION.SOUTH:
+                    neighbourIndex = (x + 1, y);
+                    break;
+                case DIRECTION.WEST_SOUTH:
+                    if (y % 2 != 0)
+                    {
+                        neighbourIndex = (x+1, y-1);
                         break;
                     }
                     else
@@ -96,45 +121,20 @@ namespace Fengj.Map
                         neighbourIndex = (x, y - 1);
                         break;
                     }
-                case DIRECTION.EAST_NORTH:
-                    if (y % 2 == 0)
+                case DIRECTION.WEST_NORTH:
+                    if (y % 2 != 0)
                     {
-                        neighbourIndex = (x, y-1);
+                        neighbourIndex = (x, y - 1);
                         break;
                     }
                     else
                     {
-                        neighbourIndex = (x + 1, y-1);
-                        break;
-                    }
-                case DIRECTION.EAST:
-                    neighbourIndex = (x + 1, y);
-                    break;
-                case DIRECTION.EAST_SOUTH:
-                    if (y % 2 == 0)
-                    {
-                        neighbourIndex = (x, y+1);
-                        break;
-                    }
-                    else
-                    {
-                        neighbourIndex = (x + 1, y + 1);
-                        break;
-                    }
-                case DIRECTION.WEST_SOUTH:
-                    if (y % 2 == 0)
-                    {
-                        neighbourIndex = (x - 1, y + 1);
-                        break;
-                    }
-                    else
-                    {
-                        neighbourIndex = (x, y + 1);
+                        neighbourIndex = (x-1, y - 1);
                         break;
                     }
                     
                     break;
-                case DIRECTION.WEST:
+                case DIRECTION.NORTH:
                     neighbourIndex = (x - 1, y);
                     break;
             }

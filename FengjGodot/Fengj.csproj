@@ -1,11 +1,17 @@
-<Project Sdk="Godot.NET.Sdk/3.2.3">
+﻿<Project Sdk="Godot.NET.Sdk/3.2.3">
   <PropertyGroup>
     <TargetFramework>net472</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="ReactiveMarbles.PropertyChanged" Version="1.4.1" />
+    <PackageReference Include="System.ValueTuple" Version="4.5.0" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\API\API.csproj" />
     <ProjectReference Include="..\Facade\Facade.csproj" />
+    <ProjectReference Include="..\IO\IO.csproj" />
     <ProjectReference Include="..\Map\Map.csproj" />
     <ProjectReference Include="..\Mod\Modder.csproj" />
+    <ProjectReference Include="..\Utility\Utility.csproj" />
   </ItemGroup>
 </Project>

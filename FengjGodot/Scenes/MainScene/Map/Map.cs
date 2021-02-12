@@ -2,6 +2,7 @@ using Fengj;
 using Fengj.API;
 using Fengj.Map;
 using Godot;
+using ReactiveMarbles.PropertyChanged;
 using System;
 
 public class Map : Node2D
@@ -30,8 +31,27 @@ public class Map : Node2D
 
 		foreach (var cell in gmObj.cells)
 		{
-			tileMap.SetCells(cell.vectIndex, cell.terrainDef.path);
+			if(cell.detectLevel != 0)
+			{
+				tileMap.SetCells(cell.vectIndex, cell.terrainDef.path);
+			}
+			
 		}
+
+		gmObj.WhenPropertyChanges(x => x.changedCell).Subscribe(y=>UpdateCell(y.Value));
+
+		var point = tileMap.MapToWorld(new Vector2(gmObj.row/2,gmObj.colum/2));
+		camera.Position = point;
+	}
+
+	private void UpdateCell(Cell cell)
+	{
+		if(cell.detectLevel == 0)
+		{
+			return;
+		}
+
+		tileMap.SetCells(cell.vectIndex, cell.terrainDef.path);
 	}
 
 	public override void _UnhandledInput(InputEvent @event)
@@ -43,6 +63,12 @@ public class Map : Node2D
 				if (eventMouseButton.ButtonIndex == 1 || eventMouseButton.ButtonIndex == 2)
 				{
 					var position = GetTileIndex(eventMouseButton.Position);
+
+					var cell = gmObj.GetCell((int)position.x, (int)position.y);
+					if(cell.detectLevel == 0)
+					{
+						cell.detectLevel = 1;
+					}
 
 					GD.Print("Click", position);
 					return;

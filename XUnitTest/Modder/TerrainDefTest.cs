@@ -13,6 +13,7 @@ using System.IO.Abstractions;
 
 namespace XUnitTest.Modder
 {
+    [Collection("ModTest")]
     public class TerrainDefTest : IClassFixture<TerrainDefTestFixture>
     {
         public static FileSystemWapper fileSystemWapper;
@@ -21,7 +22,7 @@ namespace XUnitTest.Modder
         void BuildTest()
         {
             var modName = "TEST_MOD";
-            var modPath = "C:/TEST_MOD/";
+            var modPath = "C:/TEST_MOD";
 
 
             var pngCodes = Enumerable.Range(0, 10); ;
@@ -49,7 +50,8 @@ namespace XUnitTest.Modder
                     rslt.Should().Contain(x => x.type == type
                         && x.modName == modName
                         && x.code == code.ToString()
-                        && x.path == $"{modPath}{TerrainDef.imagePath}{type}/{code}.png");
+                        && x.path == $"{modPath}{TerrainDef.imagePath}{type}/{code}.png"
+                        );
                 }
             }
         }
