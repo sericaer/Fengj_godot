@@ -31,7 +31,7 @@ public class Map : Node2D
 
 		foreach (var cell in gmObj.cells)
 		{
-			if(cell.detectLevel != 0)
+			//if(cell.detectLevel != 0)
 			{
 				tileMap.SetCells(cell.vectIndex, cell.terrainDef.path);
 			}
@@ -42,6 +42,7 @@ public class Map : Node2D
 
 		var point = tileMap.MapToWorld(new Vector2(gmObj.row/2,gmObj.colum/2));
 		camera.Position = point;
+		camera.MapSize = new Vector2(gmObj.colum* tileMap.CellSize.x, gmObj.row * tileMap.CellSize.y);
 	}
 
 	private void UpdateCell(Cell cell)
@@ -52,6 +53,12 @@ public class Map : Node2D
 		}
 
 		tileMap.SetCells(cell.vectIndex, cell.terrainDef.path);
+	}
+
+	internal bool isPointIn(Vector2 pos)
+	{
+		var index = GetTileIndex(pos);
+		return ((index.x > 0 && index.x < gmObj.row) && (index.y > 0 && index.y < gmObj.colum));
 	}
 
 	public override void _UnhandledInput(InputEvent @event)
@@ -76,26 +83,13 @@ public class Map : Node2D
 
 				if (eventMouseButton.ButtonIndex == 4)
 				{
-					if (camera.Zoom.x > 1)
-					{
-						camera.Zoom -= new Vector2(0.1f, 0.1f);
+					camera.ZoomDec();
 
-						GD.Print("camera.Zoom", camera.Zoom);
-					}
-					return;
 				}
 
 				if (eventMouseButton.ButtonIndex == 5)
 				{
-					if (camera.Zoom.x < 100)
-					{
-						var camera = GetNode<Camera2D>("Camera2D");
-						camera.Zoom += new Vector2(0.1f, 0.1f);
-
-						GD.Print("camera.Zoom", camera.Zoom);
-					}
-
-					return;
+					camera.ZoomInc();
 				}
 
 			}
@@ -104,6 +98,8 @@ public class Map : Node2D
 
 	private Vector2 GetTileIndex(Vector2 position)
 	{
+		//TODO GetTileIndex
+
 		GD.Print("mouse", position);
 
 		var offset = camera.Position - vectotCameraBase;

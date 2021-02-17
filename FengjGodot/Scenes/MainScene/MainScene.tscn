@@ -16,58 +16,88 @@ __meta__ = {
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="ButtonDirectUp" type="Button" parent="CanvasLayer"]
-anchor_left = 0.5
-anchor_right = 0.5
-margin_left = -56.0
-margin_right = 56.0
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="CanvasLayer/VBoxContainer"]
+margin_right = 1024.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 0, 40 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/VBoxContainer"]
+margin_top = 44.0
+margin_right = 1024.0
+margin_bottom = 600.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ButtonDirectUp" type="Button" parent="CanvasLayer/VBoxContainer/MarginContainer"]
+margin_left = 456.0
+margin_right = 568.0
 margin_bottom = 20.0
+size_flags_horizontal = 4
+size_flags_vertical = 0
 text = "ButtonDirectUp"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ButtonDirectDown" type="Button" parent="CanvasLayer"]
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-margin_left = -65.0
-margin_top = -20.0
-margin_right = 65.0
-text = "ButtonDirectDown"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="ButtonDirectLeft" type="Button" parent="CanvasLayer"]
-anchor_top = 0.5
-anchor_bottom = 0.5
-margin_top = -10.0
+[node name="ButtonDirectLeft" type="Button" parent="CanvasLayer/VBoxContainer/MarginContainer"]
+margin_top = 268.0
 margin_right = 118.0
-margin_bottom = 10.0
+margin_bottom = 288.0
+size_flags_horizontal = 0
+size_flags_vertical = 4
 text = "ButtonDirectLeft"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ButtonDirectRight" type="Button" parent="CanvasLayer"]
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-margin_left = -126.0
-margin_top = -10.0
-margin_bottom = 10.0
+[node name="ButtonDirectDown" type="Button" parent="CanvasLayer/VBoxContainer/MarginContainer"]
+margin_left = 447.0
+margin_top = 536.0
+margin_right = 577.0
+margin_bottom = 556.0
+size_flags_horizontal = 4
+size_flags_vertical = 12
+text = "ButtonDirectDown"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ButtonDirectRight" type="Button" parent="CanvasLayer/VBoxContainer/MarginContainer"]
+margin_left = 898.0
+margin_top = 268.0
+margin_right = 1024.0
+margin_bottom = 288.0
+size_flags_horizontal = 8
+size_flags_vertical = 4
 text = "ButtonDirectRight"
 __meta__ = {
 "_edit_use_anchors_": false
 }
-[connection signal="mouse_entered" from="CanvasLayer/ButtonDirectUp" to="." method="_on_ButtonDirect_mouse_entered" binds= [ "UP" ]]
-[connection signal="mouse_exited" from="CanvasLayer/ButtonDirectUp" to="." method="_on_ButtonDirect_mouse_exited"]
-[connection signal="mouse_entered" from="CanvasLayer/ButtonDirectDown" to="." method="_on_ButtonDirect_mouse_entered" binds= [ "DOWN" ]]
-[connection signal="mouse_exited" from="CanvasLayer/ButtonDirectDown" to="." method="_on_ButtonDirect_mouse_exited"]
-[connection signal="mouse_entered" from="CanvasLayer/ButtonDirectLeft" to="." method="_on_ButtonDirect_mouse_entered" binds= [ "LEFT" ]]
-[connection signal="mouse_exited" from="CanvasLayer/ButtonDirectLeft" to="." method="_on_ButtonDirect_mouse_exited"]
-[connection signal="mouse_entered" from="CanvasLayer/ButtonDirectRight" to="." method="_on_ButtonDirect_mouse_entered" binds= [ "RIGHT" ]]
-[connection signal="mouse_exited" from="CanvasLayer/ButtonDirectRight" to="." method="_on_ButtonDirect_mouse_exited"]
+
+[node name="ButtonMinmap" type="Button" parent="CanvasLayer/VBoxContainer/MarginContainer"]
+margin_left = 917.0
+margin_top = 536.0
+margin_right = 1024.0
+margin_bottom = 556.0
+size_flags_horizontal = 8
+size_flags_vertical = 8
+text = "ButtonMinmap"
+[connection signal="mouse_entered" from="CanvasLayer/VBoxContainer/MarginContainer/ButtonDirectUp" to="." method="_on_ButtonDirect_mouse_entered" binds= [ "UP" ]]
+[connection signal="mouse_exited" from="CanvasLayer/VBoxContainer/MarginContainer/ButtonDirectUp" to="." method="_on_ButtonDirect_mouse_exited"]
+[connection signal="mouse_entered" from="CanvasLayer/VBoxContainer/MarginContainer/ButtonDirectLeft" to="." method="_on_ButtonDirect_mouse_entered" binds= [ "LEFT" ]]
+[connection signal="mouse_exited" from="CanvasLayer/VBoxContainer/MarginContainer/ButtonDirectLeft" to="." method="_on_ButtonDirect_mouse_exited"]
+[connection signal="mouse_entered" from="CanvasLayer/VBoxContainer/MarginContainer/ButtonDirectDown" to="." method="_on_ButtonDirect_mouse_entered" binds= [ "DOWN" ]]
+[connection signal="mouse_exited" from="CanvasLayer/VBoxContainer/MarginContainer/ButtonDirectDown" to="." method="_on_ButtonDirect_mouse_exited"]
+[connection signal="mouse_entered" from="CanvasLayer/VBoxContainer/MarginContainer/ButtonDirectRight" to="." method="_on_ButtonDirect_mouse_entered" binds= [ "RIGHT" ]]
+[connection signal="mouse_exited" from="CanvasLayer/VBoxContainer/MarginContainer/ButtonDirectRight" to="." method="_on_ButtonDirect_mouse_exited"]

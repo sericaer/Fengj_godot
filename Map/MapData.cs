@@ -98,22 +98,22 @@ namespace Fengj.Map
 
             private static void BuildMarsh(ref MapData map, double v)
             {
-                //todo
+                //TODO BuildMarsh
             }
 
             private static void BuildRiver(ref MapData map, double v)
             {
-                //todo
+                //TODO BuildRiver
             }
 
             private static void BuildLake(ref MapData map, double v)
             {
-                //todo
+                //TODO BuildLake
             }
 
             private static void BuildForest(ref MapData map, double v)
             {
-                //todo
+                //TODO BuildForest
             }
 
             public static int BuildHill(ref MapData map, double percent, IEnumerable<ITerrainDef> terrainDefs)

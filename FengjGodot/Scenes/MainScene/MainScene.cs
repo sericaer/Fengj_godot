@@ -31,7 +31,6 @@ public class MainScene : Control
 
 	private void _on_ButtonDirect_mouse_entered(String direct)
 	{
-		GD.Print(direct);
 		map.camera.StartMove(direct);
 	}
 
