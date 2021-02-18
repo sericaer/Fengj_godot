@@ -22,11 +22,14 @@ public class MainScene : Control
 
 		GlobalResource.BuildTileSet(facade.modder.dictTerrainDefs.Values.SelectMany(p=>p.Values));
 
-		facade.CreateRunData(new RunInit() { mapBuildType = Fengj.Map.MapBuildType.MAP_PLAIN, mapSize = (100, 100)});
+		facade.CreateRunData(new RunInit() { mapBuildType = Fengj.Map.MapBuildType.MAP_PLAIN, mapSize = (90, 90)});
 
 		map = GetNode<Map>("Map");
 		GD.Print(facade.runData.map);
 		map.SetGmObj(facade.runData.map);
+
+		var minmap = GetNode<MinmapControl>("CanvasLayer/Minmap");
+		minmap.SetGmObj(facade.runData.map);
 	}
 
 	private void _on_ButtonDirect_mouse_entered(String direct)
@@ -40,4 +43,11 @@ public class MainScene : Control
 		map.camera.StopMove();
 	}
 
+	private void _on_ButtonMinmap_pressed()
+	{
+		GetNode<Control>("CanvasLayer/Minmap").Visible = true;
+	}
 }
+
+
+

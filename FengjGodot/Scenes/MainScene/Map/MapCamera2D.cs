@@ -82,7 +82,7 @@ public class MapCamera2D : Camera2D
 
 	internal void ZoomInc()
 	{
-		if (Zoom.x < 5)
+		if (Zoom.x < 50)
 		{
 			Zoom += new Vector2(0.1f, 0.1f);
 

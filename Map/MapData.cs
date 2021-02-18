@@ -186,12 +186,13 @@ namespace Fengj.Map
    
                 var cellcount = map.cells.Length;
 
-                if(total < 10 )
+                
+                if (total < 5 )
                 {
-                    throw new Exception();
+                    total = 5;
                 }
 
-                IEnumerable<int> seeds = Enumerable.Range(0, total / 10 ).Select(x => random.Next(0, cellcount)).Distinct().ToArray();
+                IEnumerable<int> seeds = Enumerable.Range(0, total / 5 ).Select(x => random.Next(0, cellcount)).Distinct().ToArray();
 
                 foreach (var seed in seeds)
                 {
