@@ -91,7 +91,7 @@ namespace Fengj.Map
                 BuildLake(ref map, Type2Percent[TerrainType.LAKE], terrainDefs[TerrainType.LAKE].Values);
                 //BuildMarsh(ref map, 0.7);
 
-                //BuildRiver(ref map, 0.1);
+                BuildRiver(ref map);
 
 
                 LOG.INFO("build" + map.ToString());
@@ -103,12 +103,68 @@ namespace Fengj.Map
                 //TODO BuildMarsh
             }
 
-            private static void BuildRiver(ref MapData map, double v)
+            public static void BuildRiver(ref MapData map)
             {
-                //TODO BuildRiver
+                var random = new GTRandom();
+
+                ICell per = null;
+                var from = map.GetCell(0, random.Next(0, map.colum));
+
+                SetRiver(ref map, from);
+
             }
 
-            private static int BuildLake(ref MapData map, double percent, IEnumerable<ITerrainDef> terrainDefs)
+            private static bool SetRiver(ref MapData map, ICell cur)
+            {
+                cur.components.Add(new TerrainComponent(TerrainCMPType.RIVER));
+
+                if(cur.vectIndex.x == map.colum)
+                {
+                    return true;
+                }
+
+                var random = new GTRandom();
+
+                var dictNear = cur.GetNeighboursWithDirect();
+
+                var maxColum = map.colum - 1;
+                var nexts = dictNear.Where(x =>
+                                               x.Value != null
+                                               && x.Value != cur
+                                               && x.Value.vectIndex.y < maxColum && x.Value.vectIndex.y > 0);
+
+                if(nexts.All(x=>x.Value.components.Any(c=>c.type == TerrainCMPType.RIVER)))
+                {
+                    return true;
+                }
+
+                do
+                {
+                    var lakes = nexts.Where(x => x.Value.terrainType == TerrainType.LAKE && x.Value.components.All(c => c.type != TerrainCMPType.RIVER));
+                    if (lakes.Count() != 0)
+                    {
+                        cur = lakes.ElementAt(random.Next(0, lakes.Count())).Value;
+                    }
+                    else
+                    {
+                        var plains = nexts.Where(x => x.Value.terrainType == TerrainType.PLAIN && x.Value.components.All(c => c.type != TerrainCMPType.RIVER));
+                        if (plains.Count() != 0)
+                        {
+                            cur = plains.ElementAt(random.Next(0, plains.Count())).Value;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+
+                }
+                while (!SetRiver(ref map, cur));
+
+                return true;
+            }
+
+            public static int BuildLake(ref MapData map, double percent, IEnumerable<ITerrainDef> terrainDefs)
             {
                 byte[] buffer = Guid.NewGuid().ToByteArray();
                 Random random = new Random(BitConverter.ToInt32(buffer, 0));
@@ -159,7 +215,7 @@ namespace Fengj.Map
 
                         if (curr == total)
                         {
-                            if (curr != map.Count(x => x.terrainType == TerrainType.PLAIN))
+                            if (curr != map.Count(x => x.terrainType == TerrainType.LAKE))
                             {
                                 throw new Exception();
                             }

@@ -21,6 +21,11 @@ namespace Fengj.API
         MARSH
     }
 
+    public enum TerrainCMPType
+    {
+        RIVER,
+    }
+
     public interface ITerrainDef : ModElement
     {
         TerrainType type { get; }
