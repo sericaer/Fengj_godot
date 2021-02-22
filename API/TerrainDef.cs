@@ -16,7 +16,9 @@ namespace Fengj.API
     {
         PLAIN,
         HILL,
-        MOUNT
+        MOUNT,
+        LAKE,
+        MARSH
     }
 
     public interface ITerrainDef : ModElement
