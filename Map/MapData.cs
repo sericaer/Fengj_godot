@@ -174,13 +174,13 @@ namespace Fengj.Map
                 var cellcount = map.cells.Length;
 
 
-                if (total < 5)
+                if (total < 10)
                 {
-                    total = 5;
+                    total = 10;
                 }
 
                 var plains = map.cells.Where(x => x.terrainType == TerrainType.PLAIN).ToArray();
-                IEnumerable<int> seeds = Enumerable.Range(0, total / 5).Select(x => random.Next(0, plains.Count())).Distinct().ToArray();
+                IEnumerable<int> seeds = Enumerable.Range(0, total / 10).Select(x => random.Next(0, plains.Count())).Distinct().ToArray();
 
                 foreach (var seed in seeds.Select(x=> plains[x].vectIndex))
                 {
@@ -206,7 +206,7 @@ namespace Fengj.Map
                             continue;
                         }
 
-                        var value = random.Next(0, 100);
+                        var value = random.Next(0, 2);
                         if (value == 0)
                         {
                             map.ReplaceCell(bound, new Cell(terrainDefs.RandomOne()));

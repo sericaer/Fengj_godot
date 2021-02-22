@@ -45,10 +45,10 @@ public class Map : Node2D
 			{
 				tileMap.SetCells(cell.vectIndex, cell.terrainDef.path);
 				if(cell.components.Any(x=>x.type == TerrainCMPType.RIVER))
-                {
+				{
 					var dictNear = cell.GetNeighboursWithDirect();
 
-					riverTileMap.SetCells(cell.vectIndex, "RIVER");
+					//riverTileMap.SetCells(cell.vectIndex, "RIVER");
 				}
 			}
 		}

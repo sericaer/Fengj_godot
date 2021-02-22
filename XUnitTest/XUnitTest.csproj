@@ -28,6 +28,7 @@
     <ProjectReference Include="..\IO\IO.csproj" />
     <ProjectReference Include="..\Map\Map.csproj" />
     <ProjectReference Include="..\Mod\Modder.csproj" />
+    <ProjectReference Include="..\Utility\Utility.csproj" />
   </ItemGroup>
 
   <ItemGroup>
