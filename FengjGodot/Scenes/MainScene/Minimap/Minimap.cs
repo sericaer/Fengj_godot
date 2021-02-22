@@ -27,7 +27,7 @@ public class Minimap : Node2D
 		{
 			//if(cell.detectLevel != 0)
 			{
-				GD.Print(cell.vectIndex, cell.terrainDef.type.ToString());
+				//GD.Print(cell.vectIndex, cell.terrainDef.type.ToString());
 				tileMap.SetCells(cell.vectIndex, cell.terrainDef.type.ToString());
 			}
 

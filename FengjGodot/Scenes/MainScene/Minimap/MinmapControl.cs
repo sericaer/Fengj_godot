@@ -4,6 +4,10 @@ using System;
 
 public class MinmapControl : Panel
 {
+
+	public Vector2 viewPositionOffset { get; set; }
+	public Vector2 viewRectSizeOffset { get; set; }
+
 	// Declare member variables here. Examples:
 	// private int a = 2;
 	// private string b = "text";
@@ -26,4 +30,17 @@ public class MinmapControl : Panel
 	{
 		this.Visible = false;
 	}
-}
+
+	private void _on_Minmap_visibility_changed()
+	{
+		if (this.Visible)
+		{
+			var map = GetNode<Minimap>("ViewportContainer/Viewport/Map");
+			var viewRect = GetNode<Control>("ViewportContainer/Viewport/ViewRect");
+			viewRect.RectSize = viewRectSizeOffset * map.Size;
+
+			viewRect.SetPosition(map.Size/2 - viewRect.RectSize/2);		
+		}
+	}
+}                                                                     
+

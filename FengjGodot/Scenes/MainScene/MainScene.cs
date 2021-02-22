@@ -24,7 +24,7 @@ public class MainScene : Control
 
 		facade.CreateRunData(new RunInit() { mapBuildType = Fengj.Map.MapBuildType.MAP_PLAIN, mapSize = (90, 90)});
 
-		map = GetNode<Map>("Map");
+		map = GetNode<Map>("WordMap/Map");
 		GD.Print(facade.runData.map);
 		map.SetGmObj(facade.runData.map);
 
@@ -45,7 +45,14 @@ public class MainScene : Control
 
 	private void _on_ButtonMinmap_pressed()
 	{
-		GetNode<Control>("CanvasLayer/Minmap").Visible = true;
+		var minimapControl = GetNode<MinmapControl>("CanvasLayer/Minmap");
+		minimapControl.viewPositionOffset = (map.camera.Position) / map.Size;
+
+		GD.Print("offset", minimapControl.viewPositionOffset);
+
+		minimapControl.viewRectSizeOffset = map.camera.GetViewportRect().Size / map.Size * map.camera.Zoom ;
+
+		minimapControl.Visible = true;
 	}
 }
 

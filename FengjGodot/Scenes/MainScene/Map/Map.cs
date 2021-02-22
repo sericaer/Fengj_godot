@@ -11,13 +11,18 @@ public class Map : Node2D
 
 	public TileMap tileMap;
 	public MapCamera2D camera;
-	
-	Vector2 vectotCameraBase;
+
+	public Vector2 vectotCameraBase;
+
+	public Vector2 Size => new Vector2(gmObj.colum * tileMap.CellSize.x, gmObj.row * tileMap.CellSize.y) * tileMap.Scale;
 
 	public override void _Ready()
 	{
 		camera = GetNode<MapCamera2D>("Camera2D");
 		vectotCameraBase = camera.Position;
+
+		GD.Print("offset", camera.Position);
+		GD.Print("offset", vectotCameraBase);
 
 		tileMap = GetNode<TileMap>("TileMap");
 		tileMap.TileSet = new TileSet();
