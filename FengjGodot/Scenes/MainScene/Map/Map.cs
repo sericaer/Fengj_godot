@@ -4,12 +4,15 @@ using Fengj.Map;
 using Godot;
 using ReactiveMarbles.PropertyChanged;
 using System;
+using System.Linq;
 
 public class Map : Node2D
 {
 	internal MapData gmObj;
 
 	public TileMap tileMap;
+	public TileMap riverTileMap;
+
 	public MapCamera2D camera;
 
 	public Vector2 vectotCameraBase;
@@ -26,6 +29,8 @@ public class Map : Node2D
 
 		tileMap = GetNode<TileMap>("TileMap");
 		tileMap.TileSet = new TileSet();
+
+		riverTileMap = GetNode<TileMap>("RiverTileMap");
 	}
 
 	internal void SetGmObj(MapData map)
@@ -39,8 +44,13 @@ public class Map : Node2D
 			//if(cell.detectLevel != 0)
 			{
 				tileMap.SetCells(cell.vectIndex, cell.terrainDef.path);
+				if(cell.components.Any(x=>x.type == TerrainCMPType.RIVER))
+                {
+					var dictNear = cell.GetNeighboursWithDirect();
+
+					riverTileMap.SetCells(cell.vectIndex, "RIVER");
+				}
 			}
-			
 		}
 
 		gmObj.WhenPropertyChanges(x => x.changedCell).Subscribe(y=>UpdateCell(y.Value));

@@ -7,6 +7,11 @@ using System.Linq;
 
 namespace Fengj.Map
 {
+    interface IComponent
+    {
+        TerrainCMPType type { get; set; }
+    }
+
 
     interface ICell : IMatrixElem
     {
@@ -15,9 +20,21 @@ namespace Fengj.Map
         ITerrainDef terrainDef { get; }
         int detectLevel { get; set; }
 
+        List<IComponent> components { get; }
+
         IEnumerable<ICell> GetNeighbours(int distance = 1);
 
         Dictionary<DIRECTION, ICell> GetNeighboursWithDirect();
+    }
+
+    public class TerrainComponent : IComponent
+    {
+        public TerrainCMPType type { get; set; }
+
+        public TerrainComponent(TerrainCMPType type)
+        {
+            this.type = type;
+        }
     }
 
     class Cell : ICell, INotifyPropertyChanged
@@ -37,14 +54,13 @@ namespace Fengj.Map
         public ITerrainDef terrainDef => funcGetTerrainDef(terrainType, terrainCode);
 
         public int detectLevel { get; set; }
+        public List<IComponent> components => _components;
 
-        public Cell(ITerrainDef def)
+
+        private List<IComponent> _components;
+
+        public Cell(ITerrainDef def): this(def.type, def.code)
         {
-            this.terrainType = def.type;
-            this.terrainCode = def.code;
-            this.detectLevel = 0;
-
-            Intergrate();
         }
 
         public Cell(TerrainType type, string code)
@@ -53,6 +69,7 @@ namespace Fengj.Map
             this.terrainCode = code;
             this.detectLevel = 0;
 
+            this._components = new List<IComponent>();
             Intergrate();
         }
 

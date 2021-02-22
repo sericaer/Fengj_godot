@@ -16,7 +16,14 @@ namespace Fengj.API
     {
         PLAIN,
         HILL,
-        MOUNT
+        MOUNT,
+        LAKE,
+        MARSH
+    }
+
+    public enum TerrainCMPType
+    {
+        RIVER,
     }
 
     public interface ITerrainDef : ModElement

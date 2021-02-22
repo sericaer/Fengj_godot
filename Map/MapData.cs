@@ -88,9 +88,11 @@ namespace Fengj.Map
                 BuildHill(ref map, Type2Percent[TerrainType.HILL], terrainDefs[TerrainType.HILL].Values);
 
                 //BuildForest(ref map, 0.1);
-                //BuildLake(ref map, 0.1);
-                //BuildRiver(ref map, 0.1);
-                //BuildMarsh(ref map, 0.1);
+                BuildLake(ref map, Type2Percent[TerrainType.LAKE], terrainDefs[TerrainType.LAKE].Values);
+                //BuildMarsh(ref map, 0.7);
+
+                BuildRiver(ref map);
+
 
                 LOG.INFO("build" + map.ToString());
                 return map;
@@ -101,14 +103,127 @@ namespace Fengj.Map
                 //TODO BuildMarsh
             }
 
-            private static void BuildRiver(ref MapData map, double v)
+            public static void BuildRiver(ref MapData map)
             {
-                //TODO BuildRiver
+                var random = new GTRandom();
+
+                ICell per = null;
+                var from = map.GetCell(0, random.Next(0, map.colum));
+
+                SetRiver(ref map, from);
+
             }
 
-            private static void BuildLake(ref MapData map, double v)
+            private static bool SetRiver(ref MapData map, ICell cur)
             {
-                //TODO BuildLake
+                cur.components.Add(new TerrainComponent(TerrainCMPType.RIVER));
+
+                if(cur.vectIndex.x == map.colum)
+                {
+                    return true;
+                }
+
+                var random = new GTRandom();
+
+                var dictNear = cur.GetNeighboursWithDirect();
+
+                var maxColum = map.colum - 1;
+                var nexts = dictNear.Where(x =>
+                                               x.Value != null
+                                               && x.Value != cur
+                                               && x.Value.vectIndex.y < maxColum && x.Value.vectIndex.y > 0);
+
+                if(nexts.All(x=>x.Value.components.Any(c=>c.type == TerrainCMPType.RIVER)))
+                {
+                    return true;
+                }
+
+                do
+                {
+                    var lakes = nexts.Where(x => x.Value.terrainType == TerrainType.LAKE && x.Value.components.All(c => c.type != TerrainCMPType.RIVER));
+                    if (lakes.Count() != 0)
+                    {
+                        cur = lakes.ElementAt(random.Next(0, lakes.Count())).Value;
+                    }
+                    else
+                    {
+                        var plains = nexts.Where(x => x.Value.terrainType == TerrainType.PLAIN && x.Value.components.All(c => c.type != TerrainCMPType.RIVER));
+                        if (plains.Count() != 0)
+                        {
+                            cur = plains.ElementAt(random.Next(0, plains.Count())).Value;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+
+                }
+                while (!SetRiver(ref map, cur));
+
+                return true;
+            }
+
+            public static int BuildLake(ref MapData map, double percent, IEnumerable<ITerrainDef> terrainDefs)
+            {
+                byte[] buffer = Guid.NewGuid().ToByteArray();
+                Random random = new Random(BitConverter.ToInt32(buffer, 0));
+
+                int total = (int)(percent * map.cells.Length);
+
+                var cellcount = map.cells.Length;
+
+
+                if (total < 5)
+                {
+                    total = 5;
+                }
+
+                var plains = map.cells.Where(x => x.terrainType == TerrainType.PLAIN).ToArray();
+                IEnumerable<int> seeds = Enumerable.Range(0, total / 5).Select(x => random.Next(0, plains.Count())).Distinct().ToArray();
+
+                foreach (var seed in seeds.Select(x=> plains[x].vectIndex))
+                {
+                    map.ReplaceCell(map.TryGetCell(seed.x, seed.y), new Cell(terrainDefs.RandomOne()));
+                }
+
+                int curr = seeds.Count();
+                while (true)
+                {
+
+                    IEnumerable<ICell> bounds = map.GetBoundCells(TerrainType.LAKE);
+                    if (bounds.Count() == 0)
+                    {
+                        throw new Exception("bound is null");
+                    }
+
+                    bounds = bounds.OrderBy(a => Guid.NewGuid());
+
+                    foreach (var bound in bounds)
+                    {
+                        if(bound.terrainType != TerrainType.PLAIN)
+                        {
+                            continue;
+                        }
+
+                        var value = random.Next(0, 100);
+                        if (value == 0)
+                        {
+                            map.ReplaceCell(bound, new Cell(terrainDefs.RandomOne()));
+                            curr++;
+                        }
+
+                        if (curr == total)
+                        {
+                            if (curr != map.Count(x => x.terrainType == TerrainType.LAKE))
+                            {
+                                throw new Exception();
+                            }
+                            LOG.INFO("BuildLAKE" + curr);
+                            return curr;
+                        }
+                    }
+                }
             }
 
             private static void BuildForest(ref MapData map, double v)
@@ -248,29 +363,33 @@ namespace Fengj.Map
                 {
                     case MapBuildType.MAP_PLAIN:
                         return new Dictionary<TerrainType, double>(){
-                            { TerrainType.PLAIN, 0.9 },
+                            { TerrainType.PLAIN, 0.87 },
                             { TerrainType.HILL, 0.099 },
                             { TerrainType.MOUNT, 0.001 },
+                            { TerrainType.LAKE, 0.03 },
                         };
                     case MapBuildType.MAP_SMALL_HILL:
                         return new Dictionary<TerrainType, double>(){
-                            { TerrainType.PLAIN, 0.5 },
+                            { TerrainType.PLAIN, 0.47 },
                             { TerrainType.HILL, 0.35 },
                             { TerrainType.MOUNT, 0.15 },
+                            { TerrainType.LAKE, 0.03 },
                         };
 
                     case MapBuildType.MAP_BIG_HILL:
                         return new Dictionary<TerrainType, double>(){
-                            { TerrainType.PLAIN, 0.3 },
+                            { TerrainType.PLAIN, 0.27 },
                             { TerrainType.HILL, 0.5 },
                             { TerrainType.MOUNT, 0.2 },
+                            { TerrainType.LAKE, 0.03 },
                         };
 
                     case MapBuildType.MAP_MOUNT:
                         return new Dictionary<TerrainType, double>(){
-                            { TerrainType.PLAIN, 0.2 },
+                            { TerrainType.PLAIN, 0.17 },
                             { TerrainType.HILL, 0.4 },
                             { TerrainType.MOUNT, 0.4 },
+                            { TerrainType.LAKE, 0.03},
                         };
 
                     default:
