@@ -12,7 +12,7 @@ cell_half_offset = 1
 cell_y_sort = true
 format = 1
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera2D" type="Camera2D" parent="TileMap"]
 current = true
 limit_left = -1000000
 limit_top = -1000000

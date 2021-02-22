@@ -18,7 +18,7 @@ public class Map : Node2D
 
 	public override void _Ready()
 	{
-		camera = GetNode<MapCamera2D>("Camera2D");
+		camera = GetNode<MapCamera2D>("TileMap/Camera2D");
 		vectotCameraBase = camera.Position;
 
 		GD.Print("offset", camera.Position);

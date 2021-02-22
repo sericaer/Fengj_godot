@@ -24,7 +24,6 @@ __meta__ = {
 }
 
 [node name="Map" parent="WordMap" instance=ExtResource( 1 )]
-position = Vector2( 0, -40 )
 
 [node name="ViewportContainer" type="ViewportContainer" parent="WordMap"]
 anchor_right = 1.0
