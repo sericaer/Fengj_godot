@@ -24,7 +24,7 @@ public class MainScene : Control
 
 		facade.CreateRunData(new RunInit() { mapBuildType = Fengj.Map.MapBuildType.MAP_PLAIN, mapSize = (90, 90)});
 
-		map = GetNode<Map>("WordMap/Map");
+		map = GetNode<Map>("WordMap/ViewportContainer/Viewport/Map");
 		GD.Print(facade.runData.map);
 		map.SetGmObj(facade.runData.map);
 

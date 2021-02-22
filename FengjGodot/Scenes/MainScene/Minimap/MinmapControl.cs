@@ -18,7 +18,7 @@ public class MinmapControl : Panel
 	public override void _Ready()
 	{
 		map = GetNode<Minimap>("ViewportContainer/Viewport/Map");
-		viewRect = GetNode<Control>("ViewportContainer/Viewport/Map/Rect");
+		viewRect = GetNode<Control>("ViewportContainer/Viewport/Map/ViewRect");
 	}
 
 	internal void SetGmObj(MapData gmObj)
@@ -39,7 +39,7 @@ public class MinmapControl : Panel
 		if (this.Visible)
 		{
 			viewRect.RectSize = viewRectSizeOffset * map.Size;
-			viewRect.SetPosition(map.Size/2 - viewRect.RectSize/2);		
+			viewRect.SetPosition(map.Size * viewPositionOffset - viewRect.RectSize/2);		
 		}
 	}
 }                                                                     
