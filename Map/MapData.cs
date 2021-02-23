@@ -106,8 +106,6 @@ namespace Fengj.Map
             public static void BuildRiver(ref MapData map)
             {
                 var random = new GTRandom();
-
-                ICell per = null;
                 var from = map.GetCell(0, random.Next(0, map.colum));
 
                 SetRiver(ref map, from);

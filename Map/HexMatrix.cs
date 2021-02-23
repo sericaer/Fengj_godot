@@ -125,14 +125,11 @@ namespace Fengj.Map
                     if (y % 2 != 0)
                     {
                         neighbourIndex = (x, y - 1);
-                        break;
                     }
                     else
                     {
                         neighbourIndex = (x-1, y - 1);
-                        break;
                     }
-                    
                     break;
                 case DIRECTION.NORTH:
                     neighbourIndex = (x - 1, y);
