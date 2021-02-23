@@ -20,3 +20,9 @@ limit_right = 1000000
 limit_bottom = 1000000
 smoothing_enabled = true
 script = ExtResource( 2 )
+
+[node name="RiverTileMap" type="TileMap" parent="."]
+cell_size = Vector2( 112, 130 )
+cell_half_offset = 1
+cell_y_sort = true
+format = 1
