@@ -112,12 +112,15 @@ namespace Fengj.Map
                     seeds.AddRange(riverCells.RandomFetch(5 - seeds.Count));
                 }
 
+                seeds = seeds.Distinct().ToList();
+
                 foreach (var seed in seeds.Select(x => x.vectIndex))
                 {
                     map.ReplaceCell(map.TryGetCell(seed.x, seed.y), new Cell(terrainDefs.RandomOne()));
                 }
 
                 int curr = seeds.Count();
+
                 while (true)
                 {
 
@@ -145,10 +148,6 @@ namespace Fengj.Map
 
                         if (curr == total)
                         {
-                            if (curr != map.Count(x => x.terrainType == TerrainType.LAKE))
-                            {
-                                throw new Exception();
-                            }
                             LOG.INFO("BuildLAKE" + curr);
                             return curr;
                         }

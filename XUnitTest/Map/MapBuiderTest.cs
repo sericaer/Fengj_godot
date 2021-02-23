@@ -92,6 +92,16 @@ namespace XUnitTest.Map
                 map.SetCell(random.Next(0, 50 * 50), new Cell(TerrainType.HILL, "hill"));
             }
 
+            int riverCount = random.Next(1,10);
+            for (int i = 0; i < riverCount; i++)
+            {
+                var cell = map.cells[random.Next(0, 50 * 50)];
+                if(cell.components.All(x=>x.type != TerrainCMPType.RIVER))
+                {
+                    cell.components.Add(new TerrainComponent(TerrainCMPType.RIVER));
+                }
+            }
+
             var percent = 0.5;
             MapData.Buider.BuildLake(ref map, percent, new ITerrainDef[] { Mock.Of<ITerrainDef>(x => x.type == TerrainType.LAKE && x.code == "lake") });
 
