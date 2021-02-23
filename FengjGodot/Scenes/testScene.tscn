@@ -1,9 +1,9 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://Release/Fengj/mods/Native/image/map/component/RIVER/river_1.png" type="Texture" id=1]
+[ext_resource path="res://Release/Fengj/mods/Native/image/map/component/RIVER/RIVER.png" type="Texture" id=1]
 
 [node name="Node2D" type="Node2D"]
 
-[node name="river_1" type="Sprite" parent="."]
-position = Vector2( 840.579, 449.083 )
+[node name="RIVER" type="Sprite" parent="."]
+position = Vector2( 979.172, 365.644 )
 texture = ExtResource( 1 )

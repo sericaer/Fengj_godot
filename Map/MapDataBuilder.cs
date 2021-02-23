@@ -75,7 +75,7 @@ namespace Fengj.Map
             public static void BuildRiver(ref MapData map)
             {
                 var random = new GTRandom();
-                var from = map.GetCell(0, random.Next(0, map.colum));
+                var from = map.GetCell(random.Next(0, map.colum), 0);
 
                 SetRiver(ref map, from);
             }
@@ -94,8 +94,8 @@ namespace Fengj.Map
                 var dictNear = cur.GetNeighboursWithDirect();
 
                 var maxColum = map.colum - 1;
-                var nexts = dictNear.Where(x =>
-                                               x.Value != null
+                var nexts = dictNear.Where(x =>x.Key != DIRECTION.NORTH && x.Key != DIRECTION.WEST_NORTH && x.Key != DIRECTION.WEST_NORTH
+                                               && x.Value != null
                                                && x.Value != cur
                                                && x.Value.vectIndex.y < maxColum && x.Value.vectIndex.y > 0);
 
