@@ -27,20 +27,49 @@ namespace Fengj.Map
                 BuildHill(ref map, Type2Percent[TerrainType.HILL], terrainDefs[TerrainType.HILL].Values);
 
                 //BuildForest(ref map, 0.1);
-                //BuildMarsh(ref map, 0.7);
 
                 BuildRiver(ref map);
 
                 BuildLake(ref map, Type2Percent[TerrainType.LAKE], terrainDefs[TerrainType.LAKE].Values);
 
+                BuildMarsh(ref map, terrainDefs[TerrainType.MARSH].Values);
 
                 LOG.INFO("build" + map.ToString());
                 return map;
             }
 
-            private static void BuildMarsh(ref MapData map, double v)
+            public static void BuildMarsh(ref MapData map, IEnumerable<ITerrainDef> terrainDefs)
             {
-                //TODO BuildMarsh
+                var random = new GTRandom();
+
+                var LakeBounds = map.GetBoundCells(TerrainType.LAKE);
+                foreach(var bound in LakeBounds.Where(x => x.terrainType == TerrainType.PLAIN))
+                {
+                    if(random.Next(0, 3) < 2)
+                    {
+                        map.ReplaceCell(bound, new Cell(terrainDefs.RandomOne()));
+                    }
+                }
+
+                var riverCells = map.cells.Where(x => x.HasComponent(TerrainCMPType.RIVER));
+                foreach (var cell in riverCells)
+                {
+                    if (random.Next(0, 100) < 95)
+                    {
+                        ICell newCell = new Cell(terrainDefs.RandomOne());
+                        newCell.components.AddRange(cell.components);
+
+                        map.ReplaceCell(cell, newCell);
+
+                        foreach (var near in newCell.GetNeighbours().Where(x => x.terrainType == TerrainType.PLAIN))
+                        {
+                            if (random.Next(0, 2) < 1)
+                            {
+                                map.ReplaceCell(near, new Cell(terrainDefs.RandomOne()));
+                            }
+                        }
+                    }
+                }
             }
 
             public static void BuildRiver(ref MapData map)
@@ -49,7 +78,6 @@ namespace Fengj.Map
                 var from = map.GetCell(0, random.Next(0, map.colum));
 
                 SetRiver(ref map, from);
-
             }
 
             private static bool SetRiver(ref MapData map, ICell cur)
@@ -99,7 +127,6 @@ namespace Fengj.Map
                 int total = (int)(percent * map.cells.Length);
 
                 var random = new GTRandom();
-
 
                 var riverCells = map.cells.Where(x => x.HasComponent(TerrainCMPType.RIVER));
                 var riverConnCells = riverCells.Where(x=> x.GetNeighbours().Count(n=>n.HasComponent(TerrainCMPType.RIVER)) > 2);
