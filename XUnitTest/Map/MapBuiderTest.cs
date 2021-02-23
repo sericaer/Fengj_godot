@@ -92,11 +92,11 @@ namespace XUnitTest.Map
                 map.SetCell(random.Next(0, 50 * 50), new Cell(TerrainType.HILL, "hill"));
             }
 
-            int riverCount = random.Next(1,10);
+            int riverCount = random.Next(1, 10);
             for (int i = 0; i < riverCount; i++)
             {
                 var cell = map.cells[random.Next(0, 50 * 50)];
-                if(cell.components.All(x=>x.type != TerrainCMPType.RIVER))
+                if (cell.components.All(x => x.type != TerrainCMPType.RIVER))
                 {
                     cell.components.Add(new TerrainComponent(TerrainCMPType.RIVER));
                 }
@@ -144,12 +144,70 @@ namespace XUnitTest.Map
 
             riverCells.Count().Should().NotBe(0);
 
-            for (int i=0; i< riverCells.Count(); i++)
+            for (int i = 0; i < riverCells.Count(); i++)
             {
                 var cell = riverCells[i];
                 cell.terrainType.Should().Match<TerrainType>(x => x == TerrainType.LAKE || x == TerrainType.PLAIN);
 
                 cell.GetNeighbours().Any(x => riverCells.Contains(x)).Should().BeTrue();
+            }
+        }
+
+        [Fact]
+        public void BuildMarshTest()
+        {
+            var map = new MapData(50, 50);
+
+            for (int i = 0; i < map.cells.Length; i++)
+            {
+                map.SetCell(i, new Cell(TerrainType.PLAIN, "plain"));
+            }
+
+            var random = new GTRandom();
+
+            int mountCount = random.Next(1, 11);
+            for (int i = 0; i < mountCount; i++)
+            {
+                map.SetCell(random.Next(0, 50 * 50), new Cell(TerrainType.MOUNT, "mount"));
+            }
+
+            int hillCount = random.Next(11, 31);
+            for (int i = 0; i < mountCount; i++)
+            {
+                map.SetCell(random.Next(0, 50 * 50), new Cell(TerrainType.HILL, "hill"));
+            }
+
+
+            int lakeCount = random.Next(11, 31);
+            for (int i = 0; i < lakeCount; i++)
+            {
+                map.SetCell(random.Next(0, 50 * 50), new Cell(TerrainType.LAKE, "lake"));
+            }
+
+            int riverCount = random.Next(1, 200);
+            for (int i = 0; i < riverCount; i++)
+            {
+                var cell = map.cells[random.Next(0, 50 * 50)];
+                if(cell.terrainType != TerrainType.PLAIN)
+                {
+                    continue;
+                }
+
+                if (cell.components.All(x => x.type != TerrainCMPType.RIVER))
+                {
+                    cell.components.Add(new TerrainComponent(TerrainCMPType.RIVER));
+                }
+            }
+
+            MapData.Buider.BuildMarsh(ref map, new ITerrainDef[] { Mock.Of<ITerrainDef>(x => x.type == TerrainType.MARSH && x.code == "marsh") });
+
+            var marshCells = map.cells.Where(x => x.terrainType == TerrainType.MARSH);
+            marshCells.Count().Should().NotBe(0);
+
+            foreach(var cell in marshCells)
+            {
+                Assert.True(cell.HasComponent(TerrainCMPType.RIVER)
+                    || cell.GetNeighbours().Any(x => x.terrainType == TerrainType.LAKE || x.terrainType == TerrainType.MARSH));
             }
         }
     }

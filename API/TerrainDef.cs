@@ -18,7 +18,7 @@ namespace Fengj.API
         HILL,
         MOUNT,
         LAKE,
-        //MARSH
+        MARSH
     }
 
     public enum TerrainCMPType
