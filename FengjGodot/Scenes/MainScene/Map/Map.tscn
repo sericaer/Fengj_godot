@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Scenes/MainScene/Map/Map.cs" type="Script" id=1]
 [ext_resource path="res://Scenes/MainScene/Map/MapCamera2D.cs" type="Script" id=2]
+[ext_resource path="res://Scenes/MainScene/Map/river.tres" type="TileSet" id=3]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource( 1 )
@@ -22,6 +23,7 @@ smoothing_enabled = true
 script = ExtResource( 2 )
 
 [node name="RiverTileMap" type="TileMap" parent="."]
+tile_set = ExtResource( 3 )
 cell_size = Vector2( 112, 130 )
 cell_half_offset = 1
 cell_y_sort = true
