@@ -106,5 +106,10 @@ namespace HexMath
 
             return rslt;
         }
+
+        public IEnumerable<AxialCoord> GetRingWithWidth(int distance, int width)
+        {
+            return Enumerable.Range(distance, width).Select(x => GetRing(distance)).SelectMany(x=>x);
+        }
     }
 }

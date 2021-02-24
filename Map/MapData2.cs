@@ -17,6 +17,8 @@ namespace Fengj.Map
 
         public Dictionary<AxialCoord, Cell> cells;
 
+        public Cell center => cells[new AxialCoord(0, 0)];
+
         public MapData2(int maxDist)
         {
             this.cells = new Dictionary<AxialCoord, Cell>();

@@ -30,6 +30,8 @@ namespace Fengj.Map
 
                 BuildPlain(ref map, terrainDefs[TerrainType.PLAIN].Values);
 
+                BuildRiver(ref map);
+
                 //var Type2Percent = calcPercent(mapType);
 
                 //BuildMount(ref map, Type2Percent[TerrainType.MOUNT], terrainDefs[TerrainType.MOUNT].Values);
@@ -47,6 +49,36 @@ namespace Fengj.Map
                 LOG.INFO("build" + map.ToString());
                 return map;
             }
+
+            private static void BuildRiver(ref MapData2 map)
+            {
+                var coords = map.center.axialCoord.GetRingWithWidth(4, 2);
+
+                var cell = map.cells[coords.RandomOne()];
+
+                SetRiver(ref map, cell);
+                SetRiver(ref map, cell);
+            }
+
+            private static void SetRiver(ref MapData2 map, Cell cell)
+            {
+                cell.components.Add(new TerrainComponent(TerrainCMPType.RIVER));
+
+                var currMap = map;
+                var nextCells = cell.axialCoord.GetNeighbors()
+                                    .Where(x=>x.Length() < currMap.maxDist)
+                                    .Select(x => currMap.cells[x]);
+
+                nextCells = nextCells.Where(x => !x.HasComponent(TerrainCMPType.RIVER))
+                                     .Where(x => x.axialCoord.GetNeighbors()
+                                                  .Select(y => currMap.cells[y])
+                                                  .Count(z => z.HasComponent(TerrainCMPType.RIVER)) < 2);
+
+                var nextCell = nextCells.RandomOne();
+
+                SetRiver(ref map, nextCell);
+            }
+
 
             //public static void BuildMarsh(ref MapData map, IEnumerable<ITerrainDef> terrainDefs)
             //{
@@ -328,46 +360,45 @@ namespace Fengj.Map
                 }
             }
 
+            public static Dictionary<TerrainType, double> calcPercent(MapBuildType mapType)
+            {
+                switch (mapType)
+                {
+                    case MapBuildType.MAP_PLAIN:
+                        return new Dictionary<TerrainType, double>(){
+                            { TerrainType.PLAIN, 0.87 },
+                            { TerrainType.HILL, 0.099 },
+                            { TerrainType.MOUNT, 0.001 },
+                            { TerrainType.LAKE, 0.03 },
+                        };
+                    case MapBuildType.MAP_SMALL_HILL:
+                        return new Dictionary<TerrainType, double>(){
+                            { TerrainType.PLAIN, 0.47 },
+                            { TerrainType.HILL, 0.35 },
+                            { TerrainType.MOUNT, 0.15 },
+                            { TerrainType.LAKE, 0.03 },
+                        };
 
-            //public static Dictionary<TerrainType, double> calcPercent(MapBuildType mapType)
-            //{
-            //    switch (mapType)
-            //    {
-            //        case MapBuildType.MAP_PLAIN:
-            //            return new Dictionary<TerrainType, double>(){
-            //                { TerrainType.PLAIN, 0.87 },
-            //                { TerrainType.HILL, 0.099 },
-            //                { TerrainType.MOUNT, 0.001 },
-            //                { TerrainType.LAKE, 0.03 },
-            //            };
-            //        case MapBuildType.MAP_SMALL_HILL:
-            //            return new Dictionary<TerrainType, double>(){
-            //                { TerrainType.PLAIN, 0.47 },
-            //                { TerrainType.HILL, 0.35 },
-            //                { TerrainType.MOUNT, 0.15 },
-            //                { TerrainType.LAKE, 0.03 },
-            //            };
+                    case MapBuildType.MAP_BIG_HILL:
+                        return new Dictionary<TerrainType, double>(){
+                            { TerrainType.PLAIN, 0.27 },
+                            { TerrainType.HILL, 0.5 },
+                            { TerrainType.MOUNT, 0.2 },
+                            { TerrainType.LAKE, 0.03 },
+                        };
 
-            //        case MapBuildType.MAP_BIG_HILL:
-            //            return new Dictionary<TerrainType, double>(){
-            //                { TerrainType.PLAIN, 0.27 },
-            //                { TerrainType.HILL, 0.5 },
-            //                { TerrainType.MOUNT, 0.2 },
-            //                { TerrainType.LAKE, 0.03 },
-            //            };
+                    case MapBuildType.MAP_MOUNT:
+                        return new Dictionary<TerrainType, double>(){
+                            { TerrainType.PLAIN, 0.17 },
+                            { TerrainType.HILL, 0.4 },
+                            { TerrainType.MOUNT, 0.4 },
+                            { TerrainType.LAKE, 0.03},
+                        };
 
-            //        case MapBuildType.MAP_MOUNT:
-            //            return new Dictionary<TerrainType, double>(){
-            //                { TerrainType.PLAIN, 0.17 },
-            //                { TerrainType.HILL, 0.4 },
-            //                { TerrainType.MOUNT, 0.4 },
-            //                { TerrainType.LAKE, 0.03},
-            //            };
-
-            //        default:
-            //            throw new Exception();
-            //    }
-            //}
+                    default:
+                        throw new Exception();
+                }
+            }
         }
     }
 }
