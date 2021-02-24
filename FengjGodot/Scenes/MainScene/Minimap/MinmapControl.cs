@@ -21,12 +21,12 @@ public class MinmapControl : Panel
 		viewRect = GetNode<Control>("ViewportContainer/Viewport/Map/ViewRect");
 	}
 
-	internal void SetGmObj(MapData gmObj)
+	internal void SetGmObj(MapData2 gmObj)
 	{
 		map.SetGmObj(gmObj);
 
-		GD.Print(map.GetParent<Viewport>().Size / 2 - map.Size / 2);
-		map.Position = map.GetParent<Viewport>().Size / 2 - map.Size / 2;
+		//GD.Print(map.GetParent<Viewport>().Size / 2 - map.Size / 2);
+		//map.Position = map.GetParent<Viewport>().Size / 2 - map.Size / 2;
 	}
 
 	private void _on_ButtonMinimap_pressed()
@@ -38,8 +38,8 @@ public class MinmapControl : Panel
 	{
 		if (this.Visible)
 		{
-			viewRect.RectSize = viewRectSizeOffset * map.Size;
-			viewRect.SetPosition(map.Size * viewPositionOffset - viewRect.RectSize/2);		
+			viewRect.RectSize = viewRectSizeOffset * map.tileMap.CellSize;
+			viewRect.SetPosition(viewPositionOffset * map.tileMap.CellSize - viewRect.RectSize/2);		
 		}
 	}
 }                                                                     

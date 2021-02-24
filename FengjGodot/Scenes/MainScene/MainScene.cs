@@ -46,13 +46,13 @@ public class MainScene : Control
 	private void _on_ButtonMinmap_pressed()
 	{
 		var minimapControl = GetNode<MinmapControl>("CanvasLayer/Minmap");
-		minimapControl.viewPositionOffset = (map.camera.Position) / map.Size;
+		minimapControl.viewPositionOffset = map.camera.Position / map.tileMap.CellSize * map.camera.Zoom;
 
-		GD.Print("offset", minimapControl.viewPositionOffset);
+		//GD.Print("offset", minimapControl.viewPositionOffset);
 
-		minimapControl.viewRectSizeOffset = map.camera.GetViewportRect().Size / map.Size * map.camera.Zoom ;
+		minimapControl.viewRectSizeOffset = map.camera.GetViewportRect().Size / map.tileMap.CellSize * map.camera.Zoom ;
 
-		minimapControl.Visible = true;
+		//minimapControl.Visible = true;
 	}
 }
 

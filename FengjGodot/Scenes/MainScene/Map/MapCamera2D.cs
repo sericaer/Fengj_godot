@@ -20,9 +20,9 @@ public class MapCamera2D : Camera2D
 	public override void _Ready()
 	{
 
-		var viewPortRect = GetViewportRect();
+		//var viewPortRect = GetViewportRect();
 
-		this.Position = viewPortRect.Size / 2;
+		//this.Position = viewPortRect.Size / 2;
 		
 	}
 
@@ -73,7 +73,7 @@ public class MapCamera2D : Camera2D
 	{
 		if (Zoom.x > 1)
 		{
-			Zoom -= new Vector2(0.1f, 0.1f);
+			Zoom *= new Vector2(0.5f, 0.5f);
 
 			GD.Print("camera.Zoom", Zoom);
 		}
@@ -82,9 +82,9 @@ public class MapCamera2D : Camera2D
 
 	internal void ZoomInc()
 	{
-		if (Zoom.x < 50)
+		if (Zoom.x < 32)
 		{
-			Zoom += new Vector2(0.1f, 0.1f);
+			Zoom *= new Vector2(2f, 2f);
 
 			GD.Print("camera.Zoom", Zoom);
 		}

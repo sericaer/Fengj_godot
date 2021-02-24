@@ -1,14 +1,14 @@
-﻿using Fengj.Map;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fengj.Facade
+namespace HexMath
 {
-    class RunData
+    public interface Coord<T>
     {
-        public MapData2 map;
+        T Add(T b);
+        T Sub(T b);
     }
 }

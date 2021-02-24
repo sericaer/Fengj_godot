@@ -1,4 +1,5 @@
 ﻿using Fengj.API;
+using HexMath;
 using ReactiveMarbles.PropertyChanged;
 using System;
 using System.Collections.Generic;
@@ -13,19 +14,21 @@ namespace Fengj.Map
     }
 
 
-    interface ICell : IMatrixElem
+    interface ICell
     {
+        AxialCoord axialCoord { get; set; }
+
         TerrainType terrainType { get; set; }
 
         ITerrainDef terrainDef { get; }
         int detectLevel { get; set; }
 
-        List<IComponent> components { get; }
+        //List<IComponent> components { get; }
 
-        IEnumerable<ICell> GetNeighbours(int distance = 1);
+        //IEnumerable<ICell> GetNeighbours(int distance = 1);
 
-        Dictionary<DIRECTION, ICell> GetNeighboursWithDirect();
-        bool HasComponent(TerrainCMPType rIVER);
+        //Dictionary<DIRECTION, ICell> GetNeighboursWithDirect();
+        //bool HasComponent(TerrainCMPType rIVER);
     }
 
     public class TerrainComponent : IComponent
@@ -40,11 +43,13 @@ namespace Fengj.Map
 
     class Cell : ICell, INotifyPropertyChanged
     {
-        public static MapData map;
+        public static MapData2 map;
 
         public static Func<TerrainType, string, ITerrainDef> funcGetTerrainDef;
 
-        public (int x, int y) vectIndex { get; set; }
+        public AxialCoord axialCoord { get; set; }
+
+        //public (int x, int y) vectIndex { get; set; }
 
         public TerrainType terrainType { get; set; }
 
@@ -60,29 +65,32 @@ namespace Fengj.Map
 
         private List<IComponent> _components;
 
-        public Cell(ITerrainDef def): this(def.type, def.code)
+        public Cell(AxialCoord axialCoord, ITerrainDef def)
         {
-        }
+            this.axialCoord = axialCoord;
 
-        public Cell(TerrainType type, string code)
-        {
-            this.terrainType = type;
-            this.terrainCode = code;
+            this.terrainType = def.type;
+            this.terrainCode = def.code;
             this.detectLevel = 0;
 
             this._components = new List<IComponent>();
             Intergrate();
         }
 
-        public Dictionary<DIRECTION, ICell> GetNeighboursWithDirect()
+        public Cell(TerrainType type, string code)
         {
-            return map.GetNears(vectIndex.x, vectIndex.y);
+
         }
 
-        public IEnumerable<ICell> GetNeighbours(int distance)
-        {
-            return map.GetCellsWithDistance(vectIndex.x, vectIndex.y, distance);
-        }
+        //public Dictionary<DIRECTION, ICell> GetNeighboursWithDirect()
+        //{
+        //    return map.GetNears(vectIndex.x, vectIndex.y);
+        //}
+
+        //public IEnumerable<ICell> GetNeighbours(int distance)
+        //{
+        //    return map.GetCellsWithDistance(vectIndex.x, vectIndex.y, distance);
+        //}
 
         private void Intergrate()
         {
