@@ -56,21 +56,30 @@ namespace Fengj.Map
 
                 var cell = map.GetCell(coords.RandomOne());
 
-                SetRiver(ref map, cell);
-                SetRiver(ref map, cell);
+                SetRiver(ref map, cell, 1);
+                SetRiver(ref map, cell, -1);
             }
 
-            private static void SetRiver(ref MapData2 map, Cell cell)
+            private static void SetRiver(ref MapData2 map, Cell cell, int direct)
             {
+                var random = new GTRandom();
+
                 cell.components.Add(new TerrainComponent(TerrainCMPType.RIVER));
 
                 var currMap = map;
+
+                if (cell.axialCoord.Length() >= currMap.maxDist)
+                {
+                    LOG.INFO("cell.axialCoord.Length() >= currMap.maxDist");
+                    return;
+                }
+
                 var nextCells = cell.axialCoord.GetNeighbors()
-                                    .Where(x=>x.Length() < currMap.maxDist)
                                     .Select(x => currMap.GetCell(x));
 
                 nextCells = nextCells.Where(x => !x.HasComponent(TerrainCMPType.RIVER))
                                      .Where(x => x.axialCoord.GetNeighbors()
+                                                  .Where(n => currMap.HasCell(n))
                                                   .Select(y => currMap.GetCell(y))
                                                   .Count(z => z.HasComponent(TerrainCMPType.RIVER)) < 2);
                 if(nextCells.Count() == 0)
@@ -78,9 +87,34 @@ namespace Fengj.Map
                     return;
                 }
 
-                var nextCell = nextCells.RandomOne();
+                var norths = nextCells.Where(x => x.axialCoord.Sub(cell.axialCoord).Equals(AxialCoord.directions[1])
+                                  || x.axialCoord.Sub(cell.axialCoord).Equals(AxialCoord.directions[2])
+                                  || x.axialCoord.Sub(cell.axialCoord).Equals(AxialCoord.directions[3]));
 
-                SetRiver(ref map, nextCell);
+                var souths = nextCells.Where(x => x.axialCoord.Sub(cell.axialCoord).Equals(AxialCoord.directions[0])
+                                  || x.axialCoord.Sub(cell.axialCoord).Equals(AxialCoord.directions[4])
+                                  || x.axialCoord.Sub(cell.axialCoord).Equals(AxialCoord.directions[5]));
+
+
+                var firstCells = souths;
+                var second = norths;
+
+                if (direct == -1)
+                {
+                    firstCells = norths;
+                    second = souths;
+                }
+
+                if(second.Count() > 0)
+                {
+                    if(random.Next(0, 100) < 10 || firstCells.Count() == 0)
+                    {
+                        SetRiver(ref map, second.RandomOne(), direct);
+                        return;
+                    }
+                }
+
+                SetRiver(ref map, firstCells.RandomOne(), direct);
             }
 
 
@@ -354,7 +388,7 @@ namespace Fengj.Map
             {
                 var centerCell = new Cell(new AxialCoord(0, 0), terrainDefs.RandomOne());
 
-                for (int i = 0; i < map.maxDist; i++)
+                for (int i = 0; i <= map.maxDist; i++)
                 {
                     var coords = centerCell.axialCoord.GetRing(i);
                     foreach(var coord in coords)

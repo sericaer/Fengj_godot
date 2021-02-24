@@ -17,27 +17,34 @@ namespace Fengj.Map
 
         public Cell center => GetCell(0, 0);
 
-        private Dictionary<AxialCoord, Cell> cells;
+        public Dictionary<(int q, int r), Cell> cells;
 
         public MapData2(int maxDist)
         {
-            this.cells = new Dictionary<AxialCoord, Cell>();
+            this.cells = new Dictionary<(int q, int r), Cell>();
             this.maxDist = maxDist;
+
+            Cell.map = this;
         }
 
         public void AddCell(Cell cell)
         {
-            cells.Add(cell.axialCoord, cell);
+            cells.Add((cell.axialCoord.q, cell.axialCoord.r), cell);
         }
 
         public Cell GetCell(AxialCoord cood)
         {
-            return cells[cood];
+            return GetCell(cood.q, cood.r);
         }
 
         public Cell GetCell(int q, int r)
         {
-            return GetCell(new AxialCoord(q, r));
+            return cells[(q, r)];
+        }
+
+        public bool HasCell(AxialCoord coord)
+        {
+            return cells.ContainsKey((coord.q, coord.r));
         }
 
         //public new  void SetCell(int index,  ICell cell)

@@ -13,6 +13,7 @@ public static class Extentions
         var id = self.TileSet.FindTileByName(key);
 
         var offsetCoord = coord.ToOffsetCoord();
+
         self.SetCell(offsetCoord.col, offsetCoord.row, id);
     }
 }

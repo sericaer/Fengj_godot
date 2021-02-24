@@ -19,26 +19,26 @@ namespace HexMath
 
         public int s => (q + r) * -1;
 
-        public static bool operator ==(AxialCoord left, AxialCoord right)
-        {
-            return left.q == right.q && left.r == right.r;
-        }
-
-        public static bool operator !=(AxialCoord left, AxialCoord right)
-        {
-            return !(left == right);
-        }
-
-        //public override bool Equals(object obj)
+        //public static bool operator ==(AxialCoord left, AxialCoord right)
         //{
-        //    var other = obj as AxialCoord;
-        //    if(other == null)
-        //    {
-        //        return false;
-        //    }
-
-        //    return other == this;
+        //    return left.q == right.q && left.r == right.r;
         //}
+
+        //public static bool operator !=(AxialCoord left, AxialCoord right)
+        //{
+        //    return !(left == right);
+        //}
+
+        public override bool Equals(object obj)
+        {
+            var other = obj as AxialCoord;
+            if (other == null)
+            {
+                return false;
+            }
+
+            return (other.q == this.q && other.r == this.r);
+        }
 
         //public override int GetHashCode()
         //{

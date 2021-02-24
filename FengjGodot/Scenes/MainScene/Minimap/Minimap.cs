@@ -42,8 +42,8 @@ public class Minimap : Node2D
 		//camera.MapSize = new Vector2(gmObj.colum * tileMap.CellSize.x, gmObj.row * tileMap.CellSize.y);
 	}
 
-    private void UpdateCell(Cell cell)
-    {
+	private void UpdateCell(Cell cell)
+	{
 		//if(cell.detectLevel == 0)
 		//{
 		//	return;
