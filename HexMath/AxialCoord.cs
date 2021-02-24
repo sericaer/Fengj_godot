@@ -19,6 +19,26 @@ namespace HexMath
 
         public int s => (q + r) * -1;
 
+        public static bool operator == (AxialCoord left, AxialCoord right)
+        {
+            return left.q == right.q && left.r == right.r;
+        }
+
+        public static bool operator !=(AxialCoord left, AxialCoord right)
+        {
+            return !(left == right);
+        }
+
+        public override bool Equals(object obj)
+        {
+            return base.Equals(obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
         public AxialCoord Add(AxialCoord b)
         {
             return new AxialCoord(q + b.q, r + b.r);

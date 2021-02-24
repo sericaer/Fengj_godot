@@ -15,9 +15,9 @@ namespace Fengj.Map
 
         public int maxDist;
 
-        public Dictionary<AxialCoord, Cell> cells;
+        public Cell center => GetCell(0, 0);
 
-        public Cell center => cells[new AxialCoord(0, 0)];
+        private Dictionary<AxialCoord, Cell> cells;
 
         public MapData2(int maxDist)
         {
@@ -28,6 +28,16 @@ namespace Fengj.Map
         public void AddCell(Cell cell)
         {
             cells.Add(cell.axialCoord, cell);
+        }
+
+        public Cell GetCell(AxialCoord cood)
+        {
+            return cells[cood];
+        }
+
+        public Cell GetCell(int q, int r)
+        {
+            return GetCell(new AxialCoord(q, r));
         }
 
         //public new  void SetCell(int index,  ICell cell)

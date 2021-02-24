@@ -54,7 +54,7 @@ namespace Fengj.Map
             {
                 var coords = map.center.axialCoord.GetRingWithWidth(4, 2);
 
-                var cell = map.cells[coords.RandomOne()];
+                var cell = map.GetCell(coords.RandomOne());
 
                 SetRiver(ref map, cell);
                 SetRiver(ref map, cell);
@@ -67,12 +67,16 @@ namespace Fengj.Map
                 var currMap = map;
                 var nextCells = cell.axialCoord.GetNeighbors()
                                     .Where(x=>x.Length() < currMap.maxDist)
-                                    .Select(x => currMap.cells[x]);
+                                    .Select(x => currMap.GetCell(x));
 
                 nextCells = nextCells.Where(x => !x.HasComponent(TerrainCMPType.RIVER))
                                      .Where(x => x.axialCoord.GetNeighbors()
-                                                  .Select(y => currMap.cells[y])
+                                                  .Select(y => currMap.GetCell(y))
                                                   .Count(z => z.HasComponent(TerrainCMPType.RIVER)) < 2);
+                if(nextCells.Count() == 0)
+                {
+                    return;
+                }
 
                 var nextCell = nextCells.RandomOne();
 
