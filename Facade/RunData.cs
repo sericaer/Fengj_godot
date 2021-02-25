@@ -9,6 +9,6 @@ namespace Fengj.Facade
 {
     class RunData
     {
-        public MapData2 map;
+        public MapData map;
     }
 }

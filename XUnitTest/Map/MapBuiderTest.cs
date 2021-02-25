@@ -18,9 +18,9 @@ namespace XUnitTest.Map
         [Fact]
         public void BuildPlainTest()
         {
-            var map = new MapData2(20);
+            var map = new MapData(20);
 
-            MapData2.Buider.BuildPlain(ref map, new ITerrainDef[] { Mock.Of<ITerrainDef>(x => x.type == TerrainType.PLAIN && x.code == "plan") });
+            MapData.Buider.BuildPlain(ref map, new ITerrainDef[] { Mock.Of<ITerrainDef>(x => x.type == TerrainType.PLAIN && x.code == "plan") });
 
             foreach (var elem in map)
             {
@@ -33,7 +33,7 @@ namespace XUnitTest.Map
         {
             var random = new GTRandom();
 
-            var map = new MapData2(20);
+            var map = new MapData(20);
 
             foreach (var key in map.Keys.ToArray())
             {
@@ -47,7 +47,7 @@ namespace XUnitTest.Map
             }
 
             var percent = 0.1;
-            MapData2.Buider.BuildMount(ref map, percent, new ITerrainDef[] { Mock.Of<ITerrainDef>(x => x.type == TerrainType.MOUNT && x.code == "mount") });
+            MapData.Buider.BuildMount(ref map, percent, new ITerrainDef[] { Mock.Of<ITerrainDef>(x => x.type == TerrainType.MOUNT && x.code == "mount") });
 
             map.cells.Where(x => x.terrainType == TerrainType.MOUNT).Count().Should().Be((int)(percent * map.cells.Count()));
         }
@@ -57,7 +57,7 @@ namespace XUnitTest.Map
         {
             var random = new GTRandom();
 
-            var map = new MapData2(20);
+            var map = new MapData(20);
 
             foreach (var key in map.Keys.ToArray())
             {
@@ -80,7 +80,7 @@ namespace XUnitTest.Map
             }
 
             var percent = 0.2;
-            MapData2.Buider.BuildHill(ref map, percent, new ITerrainDef[] { Mock.Of<ITerrainDef>(x => x.type == TerrainType.HILL && x.code == "hill") });
+            MapData.Buider.BuildHill(ref map, percent, new ITerrainDef[] { Mock.Of<ITerrainDef>(x => x.type == TerrainType.HILL && x.code == "hill") });
 
             map.cells.Where(x => x.terrainType == TerrainType.HILL).Count().Should().Be((int)(percent * map.cells.Count()));
         }
@@ -89,7 +89,7 @@ namespace XUnitTest.Map
         [Fact]
         public void BuildLakeTest()
         {
-            var map = new MapData2(20);
+            var map = new MapData(20);
 
 
             foreach (var key in map.Keys.ToArray())
@@ -120,7 +120,7 @@ namespace XUnitTest.Map
             }
 
             var percent = 0.3;
-            MapData2.Buider.BuildLake(ref map, percent, new ITerrainDef[] { Mock.Of<ITerrainDef>(x => x.type == TerrainType.LAKE && x.code == "lake") });
+            MapData.Buider.BuildLake(ref map, percent, new ITerrainDef[] { Mock.Of<ITerrainDef>(x => x.type == TerrainType.LAKE && x.code == "lake") });
 
             map.cells.Where(x => x.terrainType == TerrainType.LAKE).Count().Should().Be((int)(percent * map.cells.Count()));
         }
@@ -128,7 +128,7 @@ namespace XUnitTest.Map
         [Fact]
         public void BuildRiverTest()
         {
-            var map = new MapData2(20);
+            var map = new MapData(20);
 
             foreach (var key in map.Keys.ToArray())
             {
@@ -136,7 +136,7 @@ namespace XUnitTest.Map
             }
 
 
-            MapData2.Buider.BuildRiver(ref map);
+            MapData.Buider.BuildRiver(ref map);
 
             var riverCells = map.cells.Where(x => x.components.Any(c => c.type == TerrainCMPType.RIVER)).ToArray();
 
@@ -154,7 +154,7 @@ namespace XUnitTest.Map
         [Fact]
         public void BuildMarshTest()
         {
-            var map = new MapData2(20);
+            var map = new MapData(20);
 
 
             foreach (var key in map.Keys.ToArray())
@@ -191,7 +191,7 @@ namespace XUnitTest.Map
                 map.SetCell(new Cell(lakeCells[i].axialCoord, Mock.Of<ITerrainDef>(x => x.type == TerrainType.LAKE && x.code == "lake")));
             }
 
-            MapData2.Buider.BuildMarsh(ref map, new ITerrainDef[] { Mock.Of<ITerrainDef>(x => x.type == TerrainType.MARSH && x.code == "marsh") });
+            MapData.Buider.BuildMarsh(ref map, new ITerrainDef[] { Mock.Of<ITerrainDef>(x => x.type == TerrainType.MARSH && x.code == "marsh") });
 
             var marshCells = map.cells.Where(x => x.terrainType == TerrainType.MARSH);
             marshCells.Count().Should().NotBe(0);

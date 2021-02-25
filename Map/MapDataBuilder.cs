@@ -17,16 +17,16 @@ namespace Fengj.Map
         MAP_MOUNT
     }
 
-    partial class MapData2
+    partial class MapData
     {
         public static class Buider
         {
 
-            public static MapData2 build(MapBuildType mapType, int maxDist, Dictionary<TerrainType, Dictionary<string, ITerrainDef>> terrainDefs)
+            public static MapData build(MapBuildType mapType, int maxDist, Dictionary<TerrainType, Dictionary<string, ITerrainDef>> terrainDefs)
             {
                 var terrainDict = new Dictionary<TerrainType, ITerrainDef>();
 
-                var map = new MapData2(maxDist);
+                var map = new MapData(maxDist);
 
                 BuildPlain(ref map, terrainDefs[TerrainType.PLAIN].Values);
 
@@ -54,7 +54,7 @@ namespace Fengj.Map
             }
 
 
-            public static void BuildRiver(ref MapData2 map)
+            public static void BuildRiver(ref MapData map)
             {
                 var coords = map.center.axialCoord.GetRingWithWidth(4, 2);
 
@@ -64,7 +64,7 @@ namespace Fengj.Map
                 SetRiver(ref map, cell, -1);
             }
 
-            private static void SetRiver(ref MapData2 map, ICell cell, int direct)
+            private static void SetRiver(ref MapData map, ICell cell, int direct)
             {
                 var random = new GTRandom();
 
@@ -121,7 +121,7 @@ namespace Fengj.Map
             }
 
 
-            public static void BuildMarsh(ref MapData2 map, IEnumerable<ITerrainDef> terrainDefs)
+            public static void BuildMarsh(ref MapData map, IEnumerable<ITerrainDef> terrainDefs)
             {
                 var random = new GTRandom();
 
@@ -160,7 +160,7 @@ namespace Fengj.Map
             //    //TODO BuildForest
             //}
 
-            public static int BuildHill(ref MapData2 map, double percent, IEnumerable<ITerrainDef> terrainDefs)
+            public static int BuildHill(ref MapData map, double percent, IEnumerable<ITerrainDef> terrainDefs)
             {
                 var random = new GTRandom();
 
@@ -216,7 +216,7 @@ namespace Fengj.Map
                 }
             }
 
-            public static int BuildMount(ref MapData2 map, double percent, IEnumerable<ITerrainDef> terrainDefs)
+            public static int BuildMount(ref MapData map, double percent, IEnumerable<ITerrainDef> terrainDefs)
             {
                 var random = new GTRandom();
 
@@ -266,7 +266,7 @@ namespace Fengj.Map
             }
 
 
-            public static int BuildLake(ref MapData2 map, double percent, IEnumerable<ITerrainDef> terrainDefs)
+            public static int BuildLake(ref MapData map, double percent, IEnumerable<ITerrainDef> terrainDefs)
             {
                 var random = new GTRandom();
 
@@ -317,7 +317,7 @@ namespace Fengj.Map
                 }
             }
 
-            public static void BuildPlain(ref MapData2 map, IEnumerable<ITerrainDef> terrainDefs)
+            public static void BuildPlain(ref MapData map, IEnumerable<ITerrainDef> terrainDefs)
             {
                 var cells = map.Keys.Select(x => new Cell(new AxialCoord(x.q, x.r), terrainDefs.RandomOne())).ToArray();
 

@@ -21,7 +21,7 @@ public class MinmapControl : Panel
 		viewRect = GetNode<Control>("ViewportContainer/Viewport/Map/ViewRect");
 	}
 
-	internal void SetGmObj(MapData2 gmObj)
+	internal void SetGmObj(MapData gmObj)
 	{
 		map.SetGmObj(gmObj);
 

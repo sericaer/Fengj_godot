@@ -9,7 +9,7 @@ namespace Fengj.Map
 {
     static class Extentions
     {
-        public static IEnumerable<ICell> GetNearTerrain(this ICell self, TerrainType type, int distance, MapData2 map)
+        public static IEnumerable<ICell> GetNearTerrain(this ICell self, TerrainType type, int distance, MapData map)
         {
             return self.axialCoord.GetRingWithWidth(distance, distance)
                 .Where(x=>map.HasCell(x))

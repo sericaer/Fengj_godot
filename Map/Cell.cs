@@ -38,7 +38,7 @@ namespace Fengj.Map
 
     class Cell : ICell, INotifyPropertyChanged
     {
-        public static MapData2 map;
+        public static MapData map;
 
         public static Func<TerrainType, string, ITerrainDef> funcGetTerrainDef;
 

@@ -68,7 +68,6 @@
     <Compile Include="Cell.cs" />
     <Compile Include="Extentions.cs" />
     <Compile Include="HexMatrix.cs" />
-    <Compile Include="MapData2.cs" />
     <Compile Include="MapData.cs" />
     <Compile Include="MapDataBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

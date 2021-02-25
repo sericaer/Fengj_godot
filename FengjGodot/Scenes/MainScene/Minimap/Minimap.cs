@@ -8,7 +8,7 @@ public class Minimap : Node2D
 
 	public TileMap tileMap;
 
-	internal MapData2 gmObj;
+	internal MapData gmObj;
 
 	//public Vector2 Size => new Vector2(gmObj.colum * tileMap.CellSize.x, gmObj.row * tileMap.CellSize.y) * tileMap.Scale; 
 
@@ -19,7 +19,7 @@ public class Minimap : Node2D
 	}
 
 
-	internal void SetGmObj(MapData2 map)
+	internal void SetGmObj(MapData map)
 	{
 		gmObj = map;
 

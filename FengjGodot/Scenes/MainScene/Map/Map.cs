@@ -9,7 +9,7 @@ using System.Linq;
 
 public class Map : Node2D
 {
-	internal MapData2 gmObj;
+	internal MapData gmObj;
 
 	public TileMap tileMap;
 	public TileMap riverTileMap;
@@ -46,7 +46,7 @@ public class Map : Node2D
 		riverTileMap = GetNode<TileMap>("RiverTileMap");
 	}
 
-	internal void SetGmObj(MapData2 map)
+	internal void SetGmObj(MapData map)
 	{
 		gmObj = map;
 
