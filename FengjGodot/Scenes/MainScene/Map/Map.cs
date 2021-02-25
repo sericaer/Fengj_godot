@@ -2,6 +2,7 @@ using Fengj;
 using Fengj.API;
 using Fengj.Map;
 using Godot;
+using HexMath;
 using ReactiveMarbles.PropertyChanged;
 using System;
 using System.Linq;
@@ -22,6 +23,21 @@ public class Map : Node2D
 	public override void _Ready()
 	{
 		camera = GetNode<MapCamera2D>("TileMap/Camera2D");
+		camera.FuncIsViewRectVaild = (rect) =>
+		{
+			var leftTop = rect.Position;
+			var rightBottom = rect.End;
+			var leftBottom = rect.Position + new Vector2(0, rect.Size.y);
+			var rightTop = rect.Position + new Vector2(rect.Size.x, 0);
+
+			var array = new Vector2[] { leftTop, rightBottom, leftBottom, rightTop };
+			return array.Any(p => {
+				var cellIndex = this.GetTileIndex(p);
+				var offsetCoord = new OffsetCoord((int)cellIndex.x, (int)cellIndex.y);
+				return gmObj.HasCell(offsetCoord.ToAxialCoord());
+			});
+		};
+
 		//vectotCameraBase = camera.Position;
 
 		tileMap = GetNode<TileMap>("TileMap");
@@ -106,89 +122,91 @@ public class Map : Node2D
 		}
 	}
 
-	//private Vector2 GetTileIndex(Vector2 position)
-	//{
-	//	//TODO GetTileIndex
+    private Vector2 GetTileIndex(Vector2 position)
+    {
+		return tileMap.WorldToMap(position);
 
-	//	GD.Print("mouse", position);
+		//TODO GetTileIndex
 
-	//	var offset = camera.Position - vectotCameraBase;
-	//	GD.Print("offset", offset);
+		//GD.Print("mouse", position);
 
-	//	var viewPortRect = GetViewportRect().Size / 2;
-	//	var zoomOffset = viewPortRect - (viewPortRect / camera.Zoom);
-	//	GD.Print("zoomOffset", zoomOffset);
+		//var offset = camera.Position - vectotCameraBase;
+		//GD.Print("offset", offset);
 
-	//	position = position + offset / camera.Zoom;
+		//var viewPortRect = GetViewportRect().Size / 2;
+		//var zoomOffset = viewPortRect - (viewPortRect / camera.Zoom);
+		//GD.Print("zoomOffset", zoomOffset);
 
-	//	position = position - zoomOffset;
+		//position = position + offset / camera.Zoom;
 
-	//	position = position * camera.Zoom;
+		//position = position - zoomOffset;
 
-	//	GD.Print("position", position);
+		//position = position * camera.Zoom;
 
-	//	var rectIndex = tileMap.WorldToMap(position);
+		//GD.Print("position", position);
 
-	//	GD.Print("rectIndex", rectIndex);
+		//var rectIndex = tileMap.WorldToMap(position);
 
-	//	var point = tileMap.MapToWorld(rectIndex);
-	//	var hexCenter = new Vector2(point.x + 60, point.y + 70);
+		//GD.Print("rectIndex", rectIndex);
 
-	//	GD.Print("hexCenter", hexCenter);
+		//var point = tileMap.MapToWorld(rectIndex);
+		//var hexCenter = new Vector2(point.x + 60, point.y + 70);
 
-	//	var cubVect = new Vector2(position.x - hexCenter.x, hexCenter.y - position.y);
-	//	GD.Print("cubVect", cubVect);
+		//GD.Print("hexCenter", hexCenter);
 
-	//	double angle = cubVect.Angle();
-	//	if (angle < 0)
-	//	{
-	//		angle += 2 * Math.PI;
-	//	}
-	//	GD.Print("angle", angle);
+		//var cubVect = new Vector2(position.x - hexCenter.x, hexCenter.y - position.y);
+		//GD.Print("cubVect", cubVect);
 
-	//	var realIndex = rectIndex;
+		//double angle = cubVect.Angle();
+		//if (angle < 0)
+		//{
+		//    angle += 2 * Math.PI;
+		//}
+		//GD.Print("angle", angle);
 
-	//	if (angle > Math.PI / 6 && angle < Math.PI / 2)
-	//	{
-	//		var hexDialm = 70 * Math.Cos(Math.PI / 6);
+		//var realIndex = rectIndex;
 
-	//		var dist = hexCenter.DistanceTo(position);
-	//		var calcAgle = angle - Math.PI / 6;
-	//		calcAgle = calcAgle > Math.PI / 6 ? calcAgle - Math.PI / 6 : calcAgle;
+		//if (angle > Math.PI / 6 && angle < Math.PI / 2)
+		//{
+		//    var hexDialm = 70 * Math.Cos(Math.PI / 6);
 
-	//		var maxDist = hexDialm / Math.Cos(calcAgle);
+		//    var dist = hexCenter.DistanceTo(position);
+		//    var calcAgle = angle - Math.PI / 6;
+		//    calcAgle = calcAgle > Math.PI / 6 ? calcAgle - Math.PI / 6 : calcAgle;
 
-	//		GD.Print("C 1");
+		//    var maxDist = hexDialm / Math.Cos(calcAgle);
 
-	//		if (dist > maxDist)
-	//		{
-	//			realIndex = new Vector2(rectIndex.x + 1, rectIndex.y - 1);
-	//		}
-	//	}
+		//    GD.Print("C 1");
 
-	//	if (angle > Math.PI / 2 && angle < Math.PI * 5 / 6)
-	//	{
-	//		GD.Print("C 2");
+		//    if (dist > maxDist)
+		//    {
+		//        realIndex = new Vector2(rectIndex.x + 1, rectIndex.y - 1);
+		//    }
+		//}
 
-	//		var hexDialm = 70 * Math.Cos(Math.PI / 6);
+		//if (angle > Math.PI / 2 && angle < Math.PI * 5 / 6)
+		//{
+		//    GD.Print("C 2");
 
-	//		var dist = hexCenter.DistanceTo(position);
+		//    var hexDialm = 70 * Math.Cos(Math.PI / 6);
 
-	//		GD.Print("dist", dist);
+		//    var dist = hexCenter.DistanceTo(position);
 
-	//		var calcAgle = angle - Math.PI / 2;
-	//		calcAgle = calcAgle > Math.PI / 6 ? calcAgle - Math.PI / 6 : calcAgle;
+		//    GD.Print("dist", dist);
 
-	//		var maxDist = hexDialm / Math.Cos(calcAgle);
+		//    var calcAgle = angle - Math.PI / 2;
+		//    calcAgle = calcAgle > Math.PI / 6 ? calcAgle - Math.PI / 6 : calcAgle;
 
-	//		GD.Print("maxDist", maxDist);
+		//    var maxDist = hexDialm / Math.Cos(calcAgle);
 
-	//		if (dist > maxDist)
-	//		{
-	//			realIndex = new Vector2(rectIndex.x, rectIndex.y - 1);
-	//		}
-	//	}
+		//    GD.Print("maxDist", maxDist);
 
-	//	return realIndex;
-	//}
+		//    if (dist > maxDist)
+		//    {
+		//        realIndex = new Vector2(rectIndex.x, rectIndex.y - 1);
+		//    }
+		//}
+
+		//return realIndex;
+	}
 }

@@ -3,10 +3,11 @@ using System;
 
 public class MapCamera2D : Camera2D
 {
+	public Func<Rect2, bool> FuncIsViewRectVaild;
 
 	MoveTo moveTo = MoveTo.NULL;
 
-	public Vector2 MapSize { get; internal set; }
+	//public Vector2 MapSize { get; internal set; }
 
 	enum MoveTo
 	{
@@ -17,43 +18,37 @@ public class MapCamera2D : Camera2D
 		RIGHT,
 	}
 
-	public override void _Ready()
-	{
-
-		//var viewPortRect = GetViewportRect();
-
-		//this.Position = viewPortRect.Size / 2;
-		
-	}
-
 	public override void _Process(float delta)
 	{
-		var rectSize = GetViewportRect().Size;
-
+		var viewRect = GetViewportRect();
 		switch (moveTo)
 		{
 			case MoveTo.LEFT:
-				if (this.Position.x / this.Zoom.x - rectSize.x/2 > 0)
+				viewRect.Position -= new Vector2(3 * this.Zoom.x, 0);
+				if (FuncIsViewRectVaild(viewRect))
 				{
-					this.Position -= new Vector2(3 * this.Zoom.x, 0);
+					this.Position = viewRect.Position;
 				}
 				break;
 			case MoveTo.RIGHT:
-				if (this.Position.x + rectSize.x * this.Zoom.x /2 < MapSize.x)
+				viewRect.Position += new Vector2(3 * this.Zoom.x, 0);
+				if (FuncIsViewRectVaild(viewRect))
 				{
-					this.Position += new Vector2(3 * this.Zoom.x, 0);
+					this.Position = viewRect.Position;
 				}
 				break;
 			case MoveTo.UP:
-				if (this.Position.y / this.Zoom.y - rectSize.y / 2 > 0)
+				viewRect.Position -= new Vector2(0, 3 * this.Zoom.y);
+				if (FuncIsViewRectVaild(viewRect))
 				{
-					this.Position -= new Vector2(0, 3 * this.Zoom.y);
+					this.Position = viewRect.Position;
 				}
 				break;
 			case MoveTo.DOWN:
-				if (this.Position.y + rectSize.y * this.Zoom.y / 2 < MapSize.y)
+				viewRect.Position += new Vector2(0, 3 * this.Zoom.y);
+				if (FuncIsViewRectVaild(viewRect))
 				{
-					this.Position += new Vector2(0, 3 * this.Zoom.y);
+					this.Position = viewRect.Position;
 				}
 				break;
 		}
