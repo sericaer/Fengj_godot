@@ -57,19 +57,21 @@ namespace XUnitTest.Map
         {
             var random = new GTRandom();
 
-            var map = new MapData(20);
+            var map = new MapData(50);
 
+            var terrainDef = Mock.Of<ITerrainDef>(x => x.type == TerrainType.PLAIN && x.code == "plain");
             foreach (var key in map.Keys.ToArray())
             {
-                var cell = new Cell(new AxialCoord(key.q, key.r), Mock.Of<ITerrainDef>(x => x.type == TerrainType.PLAIN && x.code == "plain"));
+                var cell = new Cell(new AxialCoord(key.q, key.r), terrainDef);
                 map.SetCell(cell);
             }
 
             int mountCount = 20;
             var mountCells = map.cells.RandomFetch(mountCount).ToArray();
+            terrainDef = Mock.Of<ITerrainDef>(x => x.type == TerrainType.MOUNT && x.code == "mount");
             for (int i = 0; i < mountCount; i++)
             {
-                map.SetCell(new Cell(mountCells[i].axialCoord, Mock.Of<ITerrainDef>(x => x.type == TerrainType.MOUNT && x.code == "mount")));
+                map.SetCell(new Cell(mountCells[i].axialCoord, terrainDef));
             }
 
             int riverCount = 20;

@@ -38,9 +38,9 @@ namespace Fengj.Map
 
                 BuildHill(ref map, Type2Percent[TerrainType.HILL], terrainDefs[TerrainType.HILL].Values);
 
-                BuildLake(ref map, Type2Percent[TerrainType.LAKE], terrainDefs[TerrainType.LAKE].Values);
+                //BuildLake(ref map, Type2Percent[TerrainType.LAKE], terrainDefs[TerrainType.LAKE].Values);
 
-                BuildMarsh(ref map, terrainDefs[TerrainType.MARSH].Values);
+                //BuildMarsh(ref map, terrainDefs[TerrainType.MARSH].Values);
 
                 ////BuildForest(ref map, 0.1);
 
@@ -172,47 +172,74 @@ namespace Fengj.Map
                 }
 
                 var seedCount = total / 20;
-                seedCount = seedCount > 5 ? 5 : seedCount;
+                seedCount = seedCount > 10 ? 10 : seedCount;
 
-                IEnumerable<ICell> seeds = map.cells.Where(x => x.terrainType == TerrainType.PLAIN &&  !x.HasComponent(TerrainCMPType.RIVER)).RandomFetch(seedCount);
-
+                var seeds = map.cells.Where(x => x.terrainType == TerrainType.PLAIN && !x.HasComponent(TerrainCMPType.RIVER)).RandomFetch(seedCount).ToList(); ;
                 foreach (var seed in seeds)
                 {
                     map.SetCell(new Cell(seed.axialCoord, terrainDefs.RandomOne()));
                 }
 
+                var currMap = map;
+
                 int curr = seeds.Count();
-                while (true)
+
+                var innerCells = map.cells.Where(x => x.terrainType == TerrainType.HILL || x.terrainType == TerrainType.MOUNT).ToArray();
+                
+                while(true)
                 {
-                    IEnumerable<ICell> bounds = map.GetBoundCells(TerrainType.MOUNT, TerrainType.HILL).Where(x=>!x.HasComponent(TerrainCMPType.RIVER));
-                    if (bounds.Count() == 0)
+                    foreach (var cell in innerCells)
                     {
-                        throw new Exception("bound is null");
-                    }
-
-                    bounds = bounds.OrderBy(_ => random.Next(0, 100));
-
-                    foreach (var bound in bounds)
-                    {
-                        int p = 100;
-                        if (bound.GetNearTerrain(TerrainType.MOUNT, 2, map).Count() > 0)
+                        var distCells = map.cells.Where(x => x.terrainType == TerrainType.PLAIN && !x.HasComponent(TerrainCMPType.RIVER)).ToArray();
+                        foreach (var distCell in distCells)
                         {
-                            p = 1;
-                        }
-
-                        if (random.Next(0, p) == 0)
-                        {
-                            map.SetCell(new Cell(bound.axialCoord, terrainDefs.RandomOne()));
-                            curr++;
-
-                            if (curr == total)
+                            var dist = distCell.axialCoord.Distance(cell.axialCoord);
+                            var p = dist / 3;
+                            if (random.Next(0, dist*dist*dist) == 0)
                             {
-                                LOG.INFO("BuildHill" + curr);
-                                return curr;
+                                map.SetCell(new Cell(distCell.axialCoord, terrainDefs.RandomOne()));
+                                curr++;
+
+                                if (curr == total)
+                                {
+                                    LOG.INFO("BuildHill" + curr);
+                                    return curr;
+                                }
                             }
                         }
                     }
                 }
+
+
+                return curr;
+                //while (true)
+                //{
+                //    IEnumerable<ICell> bounds = map.GetBoundCells(TerrainType.MOUNT, TerrainType.HILL).Where(x => !x.HasComponent(TerrainCMPType.RIVER));
+                //    if (bounds.Count() == 0)
+                //    {
+                //        throw new Exception("bound is null");
+                //    }
+
+                //    var bound = bounds.OrderBy(_ => random.Next(0, 100)).First();
+
+                //    int p = 10;
+                //    //if (bound.GetNearTerrain(TerrainType.MOUNT, 2, map).Count() > 0)
+                //    //{
+                //    //    p = 1;
+                //    //}
+
+                //    //if (random.Next(0, p) == 0)
+                //    {
+                //        map.SetCell(new Cell(bound.axialCoord, terrainDefs.RandomOne()));
+                //        curr++;
+
+                //        if (curr == total)
+                //        {
+                //            LOG.INFO("BuildHill" + curr);
+                //            return curr;
+                //        }
+                //    }
+                //}
             }
 
             public static int BuildMount(ref MapData map, double percent, IEnumerable<ITerrainDef> terrainDefs)

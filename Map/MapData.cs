@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using Fengj.API;
 using HexMath;
@@ -75,18 +76,38 @@ namespace Fengj.Map
 
         public IEnumerable<ICell> GetBoundCells(params TerrainType[] terrainType)
         {
-            var coordSet = new HashSet<AxialCoord>();
+            Stopwatch stopwatch = new Stopwatch();
+
+            var coordSet = new List<AxialCoord>();
 
             var coords = cells.Where(x => terrainType.Contains(x.terrainType)).Select(x=>x.axialCoord);
+
             foreach (var coord in coords)
             {
+
+                stopwatch.Start();
+
                 var nears = coord.GetNeighbors();
+
+
                 var bound = nears.Where(x => !coords.Contains(x) && HasCell(x));
 
-                coordSet.UnionWith(bound);
+
+
+                coordSet.AddRange(bound);
+
+
+                stopwatch.Stop();
+
+                Console.WriteLine("Time elapsed: {0}", stopwatch.Elapsed);
+
             }
 
-            return coordSet.Select(x => GetCell(x));
+            var rslt = coordSet.Distinct().Select(x => GetCell(x));
+
+
+
+            return rslt;
         }
     }
 }
