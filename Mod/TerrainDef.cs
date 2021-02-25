@@ -77,7 +77,7 @@ namespace Fengj.Modder
                 rslt.path = pngFilePath;
 
 
-                LOG.INFO("Build TerrainDef, type:{rslt.type} code:{rslt.code} path:{rslt.path}");
+                LOG.INFO($"Build TerrainDef, type:{rslt.type} code:{rslt.code} path:{rslt.path}");
                 //foreach (var elem in json["occur"] as JObject)
                 //{
                 //    rslt.occur.nearBuff.Add($"{modName}_{elem.Key}".ToUpper(), elem.Value.ToObject<double>());

@@ -93,21 +93,21 @@ public class Map : Node2D
 		{
 			if (eventMouseButton.IsPressed())
 			{
-                if (eventMouseButton.ButtonIndex == 1 || eventMouseButton.ButtonIndex == 2)
-                {
-                    var position = GetTileIndex(eventMouseButton.Position);
+				if (eventMouseButton.ButtonIndex == 1 || eventMouseButton.ButtonIndex == 2)
+				{
+					var position = GetTileIndex(eventMouseButton.Position);
 
-                    var cell = gmObj.GetCell((int)position.x, (int)position.y);
-                    if (cell.detectLevel == 0)
-                    {
-                        cell.detectLevel = 1;
-                    }
+					var cell = gmObj.GetCell((int)position.x, (int)position.y);
+					if (cell.detectLevel == 0)
+					{
+						cell.detectLevel = 1;
+					}
 
-                    GD.Print("Click", position);
-                    return;
-                }
+					GD.Print("Click", position);
+					return;
+				}
 
-                if (eventMouseButton.ButtonIndex == 4)
+				if (eventMouseButton.ButtonIndex == 4)
 				{
 					camera.ZoomDec();
 
@@ -122,8 +122,8 @@ public class Map : Node2D
 		}
 	}
 
-    private Vector2 GetTileIndex(Vector2 position)
-    {
+	private Vector2 GetTileIndex(Vector2 position)
+	{
 		return tileMap.WorldToMap(position);
 
 		//TODO GetTileIndex

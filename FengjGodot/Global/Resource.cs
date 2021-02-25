@@ -18,7 +18,7 @@ static class GlobalResource
 			tileSet.TileSetName(id, terrain.path);
 			tileSet.TileSetTexture(id, ResourceLoader.Load<Texture>(terrain.path));
 
-			GD.Print($"BuildTileSet {0} {1}", id, terrain.path);
+			GD.Print($"BuildTileSet {0} {1}", id.ToString(), terrain.path);
 		}
 	}
 }

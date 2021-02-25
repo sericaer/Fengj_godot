@@ -74,7 +74,6 @@ namespace Fengj.Map
 
                 if (cell.axialCoord.Length() >= currMap.maxDist)
                 {
-                    LOG.INFO("cell.axialCoord.Length() >= currMap.maxDist");
                     return;
                 }
 
