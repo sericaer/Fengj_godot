@@ -23,12 +23,7 @@ namespace Fengj.Map
         ITerrainDef terrainDef { get; }
         int detectLevel { get; set; }
 
-        //List<IComponent> components { get; }
-
-        //IEnumerable<ICell> GetNeighbours(int distance = 1);
-
-        //Dictionary<DIRECTION, ICell> GetNeighboursWithDirect();
-        //bool HasComponent(TerrainCMPType rIVER);
+        List<IComponent> components { get; }
     }
 
     public class TerrainComponent : IComponent
@@ -77,11 +72,6 @@ namespace Fengj.Map
             Intergrate();
         }
 
-        public Cell(TerrainType type, string code)
-        {
-
-        }
-
         //public Dictionary<DIRECTION, ICell> GetNeighboursWithDirect()
         //{
         //    return map.GetNears(vectIndex.x, vectIndex.y);
@@ -95,11 +85,6 @@ namespace Fengj.Map
         private void Intergrate()
         {
             this.WhenPropertyChanges(x => x.detectLevel).Subscribe(_ => map.changedCell = this);
-        }
-
-        public bool HasComponent(TerrainCMPType type)
-        {
-            return components.Any(x => x.type == type);
         }
     }
 }

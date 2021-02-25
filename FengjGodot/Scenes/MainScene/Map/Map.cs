@@ -52,7 +52,7 @@ public class Map : Node2D
 
 		tileMap.TileSet = GlobalResource.tileSet;
 
-		foreach (var cell in gmObj.cells)
+		foreach (var cell in gmObj.dictCell)
 		{
 			//if(cell.detectLevel != 0)
 			{
@@ -93,21 +93,21 @@ public class Map : Node2D
 		{
 			if (eventMouseButton.IsPressed())
 			{
-				//if (eventMouseButton.ButtonIndex == 1 || eventMouseButton.ButtonIndex == 2)
-				//{
-				//    var position = GetTileIndex(eventMouseButton.Position);
+                if (eventMouseButton.ButtonIndex == 1 || eventMouseButton.ButtonIndex == 2)
+                {
+                    var position = GetTileIndex(eventMouseButton.Position);
 
-				//    var cell = gmObj.GetCell((int)position.x, (int)position.y);
-				//    if (cell.detectLevel == 0)
-				//    {
-				//        cell.detectLevel = 1;
-				//    }
+                    var cell = gmObj.GetCell((int)position.x, (int)position.y);
+                    if (cell.detectLevel == 0)
+                    {
+                        cell.detectLevel = 1;
+                    }
 
-				//    GD.Print("Click", position);
-				//    return;
-				//}
+                    GD.Print("Click", position);
+                    return;
+                }
 
-				if (eventMouseButton.ButtonIndex == 4)
+                if (eventMouseButton.ButtonIndex == 4)
 				{
 					camera.ZoomDec();
 

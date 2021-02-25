@@ -5,6 +5,8 @@ public class MapCamera2D : Camera2D
 {
 	public Func<Rect2, bool> FuncIsViewRectVaild;
 
+	public Vector2 offset;
+
 	MoveTo moveTo = MoveTo.NULL;
 
 	//public Vector2 MapSize { get; internal set; }
@@ -18,7 +20,12 @@ public class MapCamera2D : Camera2D
 		RIGHT,
 	}
 
-	public override void _Process(float delta)
+    public override void _Ready()
+    {
+		this.Position = offset;
+    }
+
+    public override void _Process(float delta)
 	{
 		var viewRect = GetViewportRect();
 		switch (moveTo)

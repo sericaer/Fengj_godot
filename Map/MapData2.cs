@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -7,75 +8,85 @@ using HexMath;
 
 namespace Fengj.Map
 {
-    partial class MapData2 : INotifyPropertyChanged
+    partial class MapData2 : INotifyPropertyChanged, IEnumerable<KeyValuePair<(int q, int r), ICell>>
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public Cell changedCell { get; set; }
-
         public int maxDist;
 
-        public Cell center => GetCell(0, 0);
+        public ICell changedCell { get; set; }
 
-        public Dictionary<(int q, int r), Cell> cells;
+        public ICell center => GetCell(0, 0);
+
+        public Dictionary<(int q, int r), ICell> dictCell;
+
+        public IEnumerable<(int q, int r)> Keys => dictCell.Keys;
+
+        public IEnumerable<ICell> cells => dictCell.Values;
 
         public MapData2(int maxDist)
         {
-            this.cells = new Dictionary<(int q, int r), Cell>();
+            Cell.map = this;
+
             this.maxDist = maxDist;
 
-            Cell.map = this;
+            this.dictCell = new Dictionary<(int q, int r), ICell>();
+
+            var centerCoord = new AxialCoord(0, 0);
+            for (int i = 0; i <= this.maxDist; i++)
+            {
+                var coords = centerCoord.GetRing(i);
+                foreach (var coord in coords)
+                {
+                    dictCell.Add((coord.q, coord.r), null);
+                }
+            }
         }
 
-        public void AddCell(Cell cell)
+        public void SetCell(ICell cell)
         {
-            cells.Add((cell.axialCoord.q, cell.axialCoord.r), cell);
+            dictCell[(cell.axialCoord.q, cell.axialCoord.r)] = cell;
         }
 
-        public Cell GetCell(AxialCoord cood)
+        public ICell GetCell(AxialCoord cood)
         {
             return GetCell(cood.q, cood.r);
         }
 
-        public Cell GetCell(int q, int r)
+        public ICell GetCell(int q, int r)
         {
-            return cells[(q, r)];
+            return dictCell[(q, r)];
         }
 
         public bool HasCell(AxialCoord coord)
         {
-            return cells.ContainsKey((coord.q, coord.r));
+            return dictCell.ContainsKey((coord.q, coord.r));
         }
 
-        //public new  void SetCell(int index,  ICell cell)
-        //{
-        //    cell.vectIndex = (index / colum, index % colum);
-        //    base.SetCell(index, cell);
-        //}
+        public IEnumerator<KeyValuePair<(int q, int r), ICell>> GetEnumerator()
+        {
+            return ((IEnumerable<KeyValuePair<(int q, int r), ICell>>)dictCell).GetEnumerator();
+        }
 
-        //public new void SetCell(int x, int y, ICell cell)
-        //{
-        //    cell.vectIndex = (x, y);
-        //    base.SetCell(x*colum+y, cell);
-        //}
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return ((IEnumerable)dictCell).GetEnumerator();
+        }
 
-        //public void ReplaceCell(ICell oldCell, ICell cell)
-        //{
-        //    cell.vectIndex = oldCell.vectIndex;
-        //    base.SetCell(oldCell.vectIndex.x, oldCell.vectIndex.y, cell);
-        //}
+        public IEnumerable<ICell> GetBoundCells(params TerrainType[] terrainType)
+        {
+            var coordSet = new HashSet<AxialCoord>();
 
-        //public IEnumerable<ICell> GetBoundCells(params TerrainType[] terrainType)
-        //{
-        //    var rslt = new List<ICell>();
+            var coords = cells.Where(x => terrainType.Contains(x.terrainType)).Select(x=>x.axialCoord);
+            foreach (var coord in coords)
+            {
+                var nears = coord.GetNeighbors();
+                var bound = nears.Where(x => !coords.Contains(x) && HasCell(x));
 
-        //    var content = cells.Where(x => terrainType.Contains(x.terrainType));
-        //    foreach (var cell in content)
-        //    {
-        //        var nears = cell.GetNeighboursWithDirect().Where(x => x.Value != null);
-        //        rslt.AddRange(nears.Select(x => x.Value).Where(x => !terrainType.Contains(x.terrainType)));
-        //    }
-        //    return rslt.Distinct();
-        //}
+                coordSet.UnionWith(bound);
+            }
+
+            return coordSet.Select(x => GetCell(x));
+        }
     }
 }

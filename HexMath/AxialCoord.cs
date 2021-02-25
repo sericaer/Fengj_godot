@@ -40,10 +40,10 @@ namespace HexMath
             return (other.q == this.q && other.r == this.r);
         }
 
-        //public override int GetHashCode()
-        //{
-        //    return base.GetHashCode();
-        //}
+        public override int GetHashCode()
+        {
+            return q * 10000 + r;
+        }
 
         public AxialCoord Add(AxialCoord b)
         {
