@@ -32,9 +32,8 @@ public class Map : Node2D
 
 			var array = new Vector2[] { leftTop, rightBottom, leftBottom, rightTop };
 			return array.Any(p => {
-				var cellIndex = this.GetTileIndex(p);
-				var offsetCoord = new OffsetCoord((int)cellIndex.x, (int)cellIndex.y);
-				return gmObj.HasCell(offsetCoord.ToAxialCoord());
+				var offsetCoord = this.GetTileIndex(p);
+				return gmObj.HasCell(offsetCoord);
 			});
 		};
 
@@ -95,15 +94,16 @@ public class Map : Node2D
 			{
 				if (eventMouseButton.ButtonIndex == 1 || eventMouseButton.ButtonIndex == 2)
 				{
-					var position = GetTileIndex(eventMouseButton.Position);
+					var position = eventMouseButton.Position;
+					//var coord = GetTileIndex(eventMouseButton.Position);
 
-					var cell = gmObj.GetCell((int)position.x, (int)position.y);
-					if (cell.detectLevel == 0)
-					{
-						cell.detectLevel = 1;
-					}
+					////var cell = gmObj.GetCell((int)position.x, (int)position.y);
+					////if (cell.detectLevel == 0)
+					////{
+					////	cell.detectLevel = 1;
+					////}
 
-					GD.Print("Click", position);
+					//GD.Print($"Click {position}, Coord {coord}");
 					return;
 				}
 
@@ -122,9 +122,15 @@ public class Map : Node2D
 		}
 	}
 
-	private Vector2 GetTileIndex(Vector2 position)
+	private AxialCoord GetTileIndex(Vector2 position)
 	{
-		return tileMap.WorldToMap(position);
+		//todo
+
+		Layout flat = new Layout(Layout.flat, new Point(10.0, 15.0), new Point(camera.Position.x, camera.Position.y));
+
+		var aixalCoord = flat.PixelToHex(new Point(position.x, position.y));
+
+		return aixalCoord;
 
 		//TODO GetTileIndex
 

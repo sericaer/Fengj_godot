@@ -15,8 +15,15 @@ namespace Fengj.Utility
 
         public static IEnumerable<T> RandomFetch<T>(this IEnumerable<T> iter, int count)
         {
+            if(count > iter.Count())
+            {
+                throw new Exception();
+            }
+
             var random = new GTRandom();
-            return Enumerable.Range(0, count).Select(_ => iter.ElementAt(random.Next(0, iter.Count())));
+            var index = Enumerable.Range(0, iter.Count()).OrderBy(_ => random.Next(0, 100)).Take(count);
+
+            return index.Select(x => iter.ElementAt(x));
         }
     }
 }
