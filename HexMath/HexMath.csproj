@@ -46,6 +46,7 @@
     <Compile Include="CoordConvert.cs" />
     <Compile Include="Extentions.cs" />
     <Compile Include="OffsetCoord.cs" />
+    <Compile Include="Orientation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
