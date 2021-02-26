@@ -38,9 +38,9 @@ namespace Fengj.Map
 
                 BuildHill(ref map, Type2Percent[TerrainType.HILL], terrainDefs[TerrainType.HILL].Values);
 
-                //BuildLake(ref map, Type2Percent[TerrainType.LAKE], terrainDefs[TerrainType.LAKE].Values);
+                BuildLake(ref map, Type2Percent[TerrainType.LAKE], terrainDefs[TerrainType.LAKE].Values);
 
-                //BuildMarsh(ref map, terrainDefs[TerrainType.MARSH].Values);
+                BuildMarsh(ref map, terrainDefs[TerrainType.MARSH].Values);
 
                 ////BuildForest(ref map, 0.1);
 
@@ -133,7 +133,7 @@ namespace Fengj.Map
                     }
                 }
 
-                var riverCells = map.cells.Where(x => x.HasComponent(TerrainCMPType.RIVER)).ToArray();
+                var riverCells = map.cells.Where(x =>x.terrainType == TerrainType.PLAIN && x.HasComponent(TerrainCMPType.RIVER)).ToArray();
                 foreach (var cell in riverCells)
                 {
                     if (random.Next(0, 100) < 95)
@@ -200,10 +200,10 @@ namespace Fengj.Map
 
                 while (true)
                 {
-                    var nears = hillCells.SelectMany(x => x.GetNearTerrain(TerrainType.PLAIN, 1, currMap)).Distinct().Where(x => !x.HasComponent(TerrainCMPType.RIVER)).ToArray();
+                    var nears = hillCells.SelectMany(x => x.GetNearTerrain(TerrainType.PLAIN, 2, currMap)).Distinct().Where(x => !x.HasComponent(TerrainCMPType.RIVER)).ToArray();
                     foreach (var near in nears)
                     {
-                        if (random.Next(0, 3) == 0)
+                        if (random.Next(0, 100) == 0)
                         {
                             var lakeCell = new Cell(near.axialCoord, terrainDefs.RandomOne());
                             lakeCell.components.AddRange(near.components);
