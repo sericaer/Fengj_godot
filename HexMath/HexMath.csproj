@@ -49,6 +49,7 @@
     <Compile Include="Coord.cs" />
     <Compile Include="CoordConvert.cs" />
     <Compile Include="Extentions.cs" />
+    <Compile Include="FractionalHex.cs" />
     <Compile Include="Layout.cs" />
     <Compile Include="OffsetCoord.cs" />
     <Compile Include="Orientation.cs" />
