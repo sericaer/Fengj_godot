@@ -1,218 +1,59 @@
-using Fengj;
+﻿using Fengj;
 using Fengj.API;
 using Fengj.Map;
 using Godot;
 using HexMath;
 using ReactiveMarbles.PropertyChanged;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 public class Map : Node2D
 {
-	internal MapData gmObj;
+    public TileMap MaskMap;
+    public TileMap terrainMap;
+    public TileMap riverMap;
 
-	public TileMap tileMap;
-	public TileMap riverTileMap;
+    public override void _Ready()
+    {
+        MaskMap = GetNode<TileMap>("MaskMap");
+        terrainMap = GetNode<TileMap>("TerrainMap");
+        riverMap = GetNode<TileMap>("RiverMap");
 
-	public MapCamera2D camera;
+        terrainMap.TileSet = new TileSet();
+    }
 
-	//public Vector2 vectotCameraBase;
+    internal void SetTerrainTileSet(TileSet tileSet)
+    {
+        terrainMap.TileSet = tileSet;
+    }
 
-	//public Vector2 Size => new Vector2(gmObj.colum * tileMap.CellSize.x, gmObj.row * tileMap.CellSize.y) * tileMap.Scale;
+    internal void SetCell(ICell cell)
+    {
+        switch(cell.detectType)
+        {
+            case DetectType.UN_VISIBLE:
+                MaskMap.SetCell(cell.axialCoord, "MASK");
+                break;
+            case DetectType.VISION_VISIBLE:
+                MaskMap.SetCell(cell.axialCoord, "VISION");
+                break;
+            case DetectType.TERRAIN_VISIBLE:
+                MaskMap.ClearCell(cell.axialCoord);
+                terrainMap.SetCell(cell.axialCoord, cell.terrainDef.path);
 
-	public override void _Ready()
-	{
-		camera = GetNode<MapCamera2D>("TileMap/Camera2D");
-		camera.FuncIsViewRectVaild = (rect) =>
-		{
-			var leftTop = rect.Position;
-			var rightBottom = rect.End;
-			var leftBottom = rect.Position + new Vector2(0, rect.Size.y);
-			var rightTop = rect.Position + new Vector2(rect.Size.x, 0);
+                if (cell.HasComponent(TerrainCMPType.RIVER))
+                {
+                    riverMap.SetCell(cell.axialCoord, "RIVER");
+                }
+                break;
+            default:
+                throw new Exception();
+        }
+    }
 
-			var array = new Vector2[] { leftTop, rightBottom, leftBottom, rightTop };
-			return array.Any(p => {
-				var offsetCoord = this.GetTileIndex(p);
-				return gmObj.HasCell(offsetCoord);
-			});
-		};
-
-		//vectotCameraBase = camera.Position;
-
-		tileMap = GetNode<TileMap>("TileMap");
-		tileMap.TileSet = new TileSet();
-
-		riverTileMap = GetNode<TileMap>("RiverTileMap");
-	}
-
-	internal void SetGmObj(MapData map)
-	{
-		gmObj = map;
-
-		tileMap.TileSet = GlobalResource.tileSet;
-
-		foreach (var cell in gmObj.dictCell)
-		{
-			//if(cell.detectLevel != 0)
-			{
-				tileMap.SetCells(cell.Value.axialCoord, cell.Value.terrainDef.path);
-				if (cell.Value.components.Any(x => x.type == TerrainCMPType.RIVER))
-				{
-					riverTileMap.SetCells(cell.Value.axialCoord, "RIVER");
-				}
-			}
-		}
-
-		//gmObj.WhenPropertyChanges(x => x.changedCell).Subscribe(y=>UpdateCell(y.Value));
-
-		//var point = tileMap.MapToWorld(new Vector2(gmObj.row/2,gmObj.colum/2));
-		//camera.Position = point;
-		//camera.MapSize = new Vector2(gmObj.colum* tileMap.CellSize.x, gmObj.row * tileMap.CellSize.y);
-	}
-
-	private void UpdateCell(Cell cell)
-	{
-		//if(cell.detectLevel == 0)
-		//{
-		//	return;
-		//}
-
-		tileMap.SetCells(cell.axialCoord, cell.terrainDef.path);
-	}
-
-	//internal bool isPointIn(Vector2 pos)
-	//{
-	//	var index = GetTileIndex(pos);
-	//	return ((index.x > 0 && index.x < gmObj.row) && (index.y > 0 && index.y < gmObj.colum));
-	//}
-
-	public override void _UnhandledInput(InputEvent @event)
-	{
-		if (@event is InputEventMouseButton eventMouseButton)
-		{
-			if (eventMouseButton.IsPressed())
-			{
-				if (eventMouseButton.ButtonIndex == 1 || eventMouseButton.ButtonIndex == 2)
-				{
-					var position = eventMouseButton.Position;
-					//var coord = GetTileIndex(eventMouseButton.Position);
-
-					////var cell = gmObj.GetCell((int)position.x, (int)position.y);
-					////if (cell.detectLevel == 0)
-					////{
-					////	cell.detectLevel = 1;
-					////}
-
-					//GD.Print($"Click {position}, Coord {coord}");
-					return;
-				}
-
-				if (eventMouseButton.ButtonIndex == 4)
-				{
-					camera.ZoomDec();
-
-				}
-
-				if (eventMouseButton.ButtonIndex == 5)
-				{
-					camera.ZoomInc();
-				}
-
-			}
-		}
-	}
-
-	private AxialCoord GetTileIndex(Vector2 position)
-	{
-		//todo
-
-		Layout flat = new Layout(Layout.flat, new Point(10.0, 15.0), new Point(camera.Position.x, camera.Position.y));
-
-		var aixalCoord = flat.PixelToHex(new Point(position.x, position.y));
-
-		return aixalCoord;
-
-		//TODO GetTileIndex
-
-		//GD.Print("mouse", position);
-
-		//var offset = camera.Position - vectotCameraBase;
-		//GD.Print("offset", offset);
-
-		//var viewPortRect = GetViewportRect().Size / 2;
-		//var zoomOffset = viewPortRect - (viewPortRect / camera.Zoom);
-		//GD.Print("zoomOffset", zoomOffset);
-
-		//position = position + offset / camera.Zoom;
-
-		//position = position - zoomOffset;
-
-		//position = position * camera.Zoom;
-
-		//GD.Print("position", position);
-
-		//var rectIndex = tileMap.WorldToMap(position);
-
-		//GD.Print("rectIndex", rectIndex);
-
-		//var point = tileMap.MapToWorld(rectIndex);
-		//var hexCenter = new Vector2(point.x + 60, point.y + 70);
-
-		//GD.Print("hexCenter", hexCenter);
-
-		//var cubVect = new Vector2(position.x - hexCenter.x, hexCenter.y - position.y);
-		//GD.Print("cubVect", cubVect);
-
-		//double angle = cubVect.Angle();
-		//if (angle < 0)
-		//{
-		//    angle += 2 * Math.PI;
-		//}
-		//GD.Print("angle", angle);
-
-		//var realIndex = rectIndex;
-
-		//if (angle > Math.PI / 6 && angle < Math.PI / 2)
-		//{
-		//    var hexDialm = 70 * Math.Cos(Math.PI / 6);
-
-		//    var dist = hexCenter.DistanceTo(position);
-		//    var calcAgle = angle - Math.PI / 6;
-		//    calcAgle = calcAgle > Math.PI / 6 ? calcAgle - Math.PI / 6 : calcAgle;
-
-		//    var maxDist = hexDialm / Math.Cos(calcAgle);
-
-		//    GD.Print("C 1");
-
-		//    if (dist > maxDist)
-		//    {
-		//        realIndex = new Vector2(rectIndex.x + 1, rectIndex.y - 1);
-		//    }
-		//}
-
-		//if (angle > Math.PI / 2 && angle < Math.PI * 5 / 6)
-		//{
-		//    GD.Print("C 2");
-
-		//    var hexDialm = 70 * Math.Cos(Math.PI / 6);
-
-		//    var dist = hexCenter.DistanceTo(position);
-
-		//    GD.Print("dist", dist);
-
-		//    var calcAgle = angle - Math.PI / 2;
-		//    calcAgle = calcAgle > Math.PI / 6 ? calcAgle - Math.PI / 6 : calcAgle;
-
-		//    var maxDist = hexDialm / Math.Cos(calcAgle);
-
-		//    GD.Print("maxDist", maxDist);
-
-		//    if (dist > maxDist)
-		//    {
-		//        realIndex = new Vector2(rectIndex.x, rectIndex.y - 1);
-		//    }
-		//}
-
-		//return realIndex;
-	}
+    internal void UpdateCell(ICell cell)
+    {
+        SetCell(cell);
+    }
 }

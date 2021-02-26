@@ -8,7 +8,7 @@ using System.Linq;
 public class MainScene : Control
 {
 
-	Map map;
+	MapRoot mapRoot;
 
 	Facade facade;
 	public override void _Ready()
@@ -24,9 +24,8 @@ public class MainScene : Control
 
 		facade.CreateRunData(new RunInit() { mapBuildType = Fengj.Map.MapBuildType.MAP_PLAIN, mapSize = (90, 90)});
 
-		map = GetNode<Map>("WordMap/ViewportContainer/Viewport/Map");
-		GD.Print(facade.runData.map);
-		map.SetGmObj(facade.runData.map);
+		mapRoot = GetNode<MapRoot>("WordMap/ViewportContainer/Viewport/Map");
+		mapRoot.SetGmObj(facade.runData.map);
 
 		var minmap = GetNode<MinmapControl>("CanvasLayer/Minmap");
 		minmap.SetGmObj(facade.runData.map);
@@ -34,23 +33,23 @@ public class MainScene : Control
 
 	private void _on_ButtonDirect_mouse_entered(String direct)
 	{
-		map.camera.StartMove(direct);
+		mapRoot.camera.StartMove(direct);
 	}
 
 
 	private void _on_ButtonDirect_mouse_exited()
 	{
-		map.camera.StopMove();
+		mapRoot.camera.StopMove();
 	}
 
 	private void _on_ButtonMinmap_pressed()
 	{
 		var minimapControl = GetNode<MinmapControl>("CanvasLayer/Minmap");
-		minimapControl.viewPositionOffset = map.camera.Position / map.tileMap.CellSize * map.camera.Zoom;
+		minimapControl.viewPositionOffset = mapRoot.camera.Position / mapRoot.map.terrainMap.CellSize * mapRoot.camera.Zoom;
 
 		//GD.Print("offset", minimapControl.viewPositionOffset);
 
-		minimapControl.viewRectSizeOffset = map.camera.GetViewportRect().Size / map.tileMap.CellSize * map.camera.Zoom ;
+		minimapControl.viewRectSizeOffset = mapRoot.camera.GetViewportRect().Size / mapRoot.map.terrainMap.CellSize * mapRoot.camera.Zoom ;
 
 		//minimapControl.Visible = true;
 	}

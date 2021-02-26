@@ -49,6 +49,6 @@ public class Minimap : Node2D
 		//	return;
 		//}
 
-		tileMap.SetCells(cell.axialCoord, cell.terrainDef.type.ToString());
+		tileMap.SetCell(cell.axialCoord, cell.terrainDef.type.ToString());
 	}
 }
