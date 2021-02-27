@@ -115,6 +115,7 @@ __meta__ = {
 }
 
 [node name="ButtonMinmap" type="Button" parent="CanvasLayer/VBoxContainer/Center"]
+visible = false
 margin_left = 1333.0
 margin_top = 836.0
 margin_right = 1440.0

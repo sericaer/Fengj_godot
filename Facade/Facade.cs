@@ -50,7 +50,7 @@ namespace Fengj.Facade
         {
             runData = new RunData();
 
-            runData.map = MapData.Buider.build(runInit.mapBuildType, 50, modder.dictTerrainDefs);
+            runData.map = MapData.Buider.build(runInit.mapBuildType, 60, modder.dictTerrainDefs);
         }
     }
 }

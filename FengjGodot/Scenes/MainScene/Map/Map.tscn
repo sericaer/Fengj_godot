@@ -14,9 +14,10 @@ cell_size = Vector2( 112, 130 )
 cell_half_offset = 1
 cell_y_sort = true
 format = 1
-tile_data = PoolIntArray( 65535, 1, 0, 0, 1, 0, 1, 1, 0, 65536, 1, 0 )
+tile_data = PoolIntArray( -1, 1, 0, -65536, 1, 0, -65535, 1, 0, 65535, 1, 0, 0, 1, 0, 1, 1, 0, 65536, 1, 0 )
 
 [node name="Camera2D" type="Camera2D" parent="TileMap"]
+position = Vector2( 76.5, 80 )
 current = true
 limit_left = -1000000
 limit_top = -1000000
