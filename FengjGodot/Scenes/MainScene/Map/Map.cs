@@ -138,9 +138,10 @@ public class Map : Node2D
 
 		//var offset =  camera.basePosition - camera.Position;
 		var viewSize = camera.GetViewport().Size;
-
+		GD.Print($"viewSize {viewSize}");
 		GD.Print($"GetTileIndex {position}");
-		Layout flat = new Layout(Layout.flat, new Point(76.5, 76.5), new Point(viewSize.x/2, viewSize.y/2));
+
+		Layout flat = new Layout(Layout.flat, new Point(76.5 / camera.Zoom.x, 76.5/camera.Zoom.y), new Point(viewSize.x/2, viewSize.y/2));
 
 		var aixalCoord = flat.PixelToHex(new Point(position.x, position.y));
 

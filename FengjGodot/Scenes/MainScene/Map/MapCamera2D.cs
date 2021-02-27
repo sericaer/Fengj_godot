@@ -5,7 +5,7 @@ public class MapCamera2D : Camera2D
 {
 	public Func<Rect2, bool> FuncIsViewRectVaild;
 
-	public Vector2 basePosition = new Vector2(76.5f, 80);
+	public Vector2 basePosition => new Vector2(76.5f, 80) ;
 
 	MoveTo moveTo = MoveTo.NULL;
 
