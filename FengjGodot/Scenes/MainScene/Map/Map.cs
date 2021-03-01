@@ -36,15 +36,20 @@ public class Map : Node2D
                 MaskMap.SetCell(cell.axialCoord, "MASK");
                 break;
             case DetectType.VISION_VISIBLE:
-                MaskMap.SetCell(cell.axialCoord, "VISION");
+                {
+                    var key = $"{cell.terrainType}_VISION";
+                    MaskMap.SetCell(cell.axialCoord, key);
+                }
                 break;
             case DetectType.TERRAIN_VISIBLE:
-                MaskMap.ClearCell(cell.axialCoord);
-                terrainMap.SetCell(cell.axialCoord, cell.terrainDef.path);
-
-                if (cell.HasComponent(TerrainCMPType.RIVER))
                 {
-                    riverMap.SetCell(cell.axialCoord, "RIVER");
+                    MaskMap.ClearCell(cell.axialCoord);
+                    terrainMap.SetCell(cell.axialCoord, cell.terrainDef.path);
+
+                    if (cell.HasComponent(TerrainCMPType.RIVER))
+                    {
+                        riverMap.SetCell(cell.axialCoord, "RIVER");
+                    }
                 }
                 break;
             default:
