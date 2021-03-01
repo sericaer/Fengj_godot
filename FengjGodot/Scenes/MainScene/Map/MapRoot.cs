@@ -16,19 +16,31 @@ public class MapRoot : Node2D
 
 	public override void _Ready()
 	{
-		camera = GetNode<MapCamera2D>("TileMap/Camera2D");
+		camera = GetNode<MapCamera2D>("Camera2D");
 		camera.FuncIsViewRectVaild = (rect) =>
 		{
+			var cellSizeOffset = map.terrainMap.CellSize;
+
 			var leftTop = rect.Position;
 			var rightBottom = rect.End;
 			var leftBottom = rect.Position + new Vector2(0, rect.Size.y);
 			var rightTop = rect.Position + new Vector2(rect.Size.x, 0);
 
+			leftTop += cellSizeOffset;
+			rightBottom -= cellSizeOffset;
+			leftBottom += cellSizeOffset * new Vector2(1, -1);
+			rightTop += cellSizeOffset * new Vector2(-1, 1);
+
 			var array = new Vector2[] { leftTop, rightBottom, leftBottom, rightTop };
-			return array.Any(p => {
+			return array.Any(p =>
+			{
+
 				var offsetCoord = this.GetTileIndex(p);
+				GD.Print($"p:{p} offsetCoord;{offsetCoord.q},{offsetCoord.r} dist:{offsetCoord.Length()}");
 				return gmObj.HasCell(offsetCoord);
 			});
+
+
 		};
 
 		map = GetNode<Map>("Map");
@@ -62,7 +74,7 @@ public class MapRoot : Node2D
 				if (eventMouseButton.ButtonIndex == 1 || eventMouseButton.ButtonIndex == 2)
 				{
 					var position = eventMouseButton.Position;
-					//var coord = GetTileIndex(eventMouseButton.Position);
+					var coord = GetTileIndex(eventMouseButton.Position - camera.offsetPosition);
 
 					////var cell = gmObj.GetCell((int)position.x, (int)position.y);
 					////if (cell.detectLevel == 0)
@@ -70,7 +82,7 @@ public class MapRoot : Node2D
 					////	cell.detectLevel = 1;
 					////}
 
-					//GD.Print($"Click {position}, Coord {coord}");
+					GD.Print($"Click {position}, Coord {coord.q},{coord.r}");
 					return;
 				}
 
@@ -93,7 +105,11 @@ public class MapRoot : Node2D
 	{
 		//todo
 
-		Layout flat = new Layout(Layout.flat, new Point(10.0, 15.0), new Point(camera.Position.x, camera.Position.y));
+		var viewSize = camera.GetViewport().Size;
+		GD.Print($"viewSize {viewSize}");
+		GD.Print($"GetTileIndex {position}");
+
+		Layout flat = new Layout(Layout.flat, new Point(76.5 / camera.Zoom.x, 76.5 / camera.Zoom.y), new Point(viewSize.x / 2, viewSize.y / 2));
 
 		var aixalCoord = flat.PixelToHex(new Point(position.x, position.y));
 

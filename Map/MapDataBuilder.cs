@@ -26,17 +26,17 @@ namespace Fengj.Map
             {
                 var terrainDict = new Dictionary<TerrainType, ITerrainDef>();
 
-                var map = new MapData(maxDist);
+                var map = new MapData(3);
 
                 BuildPlain(ref map, terrainDefs[TerrainType.PLAIN].Values);
 
-                BuildRiver(ref map);
+                //BuildRiver(ref map);
 
-                var Type2Percent = calcPercent(mapType);
+                //var Type2Percent = calcPercent(mapType);
 
-                BuildMount(ref map, Type2Percent[TerrainType.MOUNT], terrainDefs[TerrainType.MOUNT].Values);
+                //BuildMount(ref map, Type2Percent[TerrainType.MOUNT], terrainDefs[TerrainType.MOUNT].Values);
 
-                BuildHill(ref map, Type2Percent[TerrainType.HILL], terrainDefs[TerrainType.HILL].Values);
+                //BuildHill(ref map, Type2Percent[TerrainType.HILL], terrainDefs[TerrainType.HILL].Values);
 
                 //BuildLake(ref map, Type2Percent[TerrainType.LAKE], terrainDefs[TerrainType.LAKE].Values);
 
@@ -133,7 +133,7 @@ namespace Fengj.Map
                     }
                 }
 
-                var riverCells = map.cells.Where(x => x.HasComponent(TerrainCMPType.RIVER)).ToArray();
+                var riverCells = map.cells.Where(x =>x.terrainType == TerrainType.PLAIN && x.HasComponent(TerrainCMPType.RIVER)).ToArray();
                 foreach (var cell in riverCells)
                 {
                     if (random.Next(0, 100) < 95)
@@ -200,10 +200,10 @@ namespace Fengj.Map
 
                 while (true)
                 {
-                    var nears = hillCells.SelectMany(x => x.GetNearTerrain(TerrainType.PLAIN, 1, currMap)).Distinct().Where(x => !x.HasComponent(TerrainCMPType.RIVER)).ToArray();
+                    var nears = hillCells.SelectMany(x => x.GetNearTerrain(TerrainType.PLAIN, 2, currMap)).Distinct().Where(x => !x.HasComponent(TerrainCMPType.RIVER)).ToArray();
                     foreach (var near in nears)
                     {
-                        if (random.Next(0, 3) == 0)
+                        if (random.Next(0, 100) == 0)
                         {
                             var lakeCell = new Cell(near.axialCoord, terrainDefs.RandomOne());
                             lakeCell.components.AddRange(near.components);

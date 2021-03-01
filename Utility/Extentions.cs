@@ -21,7 +21,7 @@ namespace Fengj.Utility
             }
 
             var random = new GTRandom();
-            var index = Enumerable.Range(0, iter.Count()).OrderBy(_ => random.Next(0, 100)).Take(count);
+            var index = Enumerable.Range(0, iter.Count()).OrderBy(_ => random.Next(0, 10000)).Take(count);
 
             return index.Select(x => iter.ElementAt(x));
         }
