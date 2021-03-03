@@ -51,14 +51,15 @@ namespace Fengj.Facade
             runData = new RunData();
 
 //<<<<<<< HEAD
-            runData.map = MapData.Buider.build(runInit.mapBuildType, 50, modder.dictTerrainDefs);
-            var detectdCells = runData.map.center.axialCoord.GetRingWithWidth(0, 3).Select(x => runData.map.GetCell(x));
-            foreach (var cell in detectdCells)
-            {
-                cell.SetDetectType(DetectType.TERRAIN_VISIBLE);
-            }
+            //runData.map = MapData.Buider.build(runInit.mapBuildType, 50, modder.dictTerrainDefs);
+            //var detectdCells = runData.map.center.axialCoord.GetRingWithWidth(0, 3).Select(x => runData.map.GetCell(x));
+            //foreach (var cell in detectdCells)
+            //{
+            //    cell.SetDetectType(DetectType.TERRAIN_VISIBLE);
+            //}
 //=======
-//            runData.map = MapData.Buider.build(runInit.mapBuildType, 10, modder.dictTerrainDefs);
+            runData.map = MapData.Buider.build(runInit.mapBuildType, 10, modder.dictTerrainDefs);
+            runData.map.center.SetDetectType(DetectType.TERRAIN_VISIBLE);
 //>>>>>>> master
         }
     }

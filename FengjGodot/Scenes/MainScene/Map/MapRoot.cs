@@ -13,10 +13,24 @@ public class MapRoot : Node2D
 
 	public Map map;
 	public MapCamera2D camera;
+	public MapControl control;
 
 	public override void _Ready()
 	{
 		camera = GetNode<MapCamera2D>("Camera2D");
+		map = GetNode<Map>("Map");
+		control = GetNode<MapControl>("CanvasLayer/Control");
+
+		control.funcCalcPos = (axialCoord) =>
+		{
+			var viewSize = camera.GetViewport().Size;
+
+			Layout flat = new Layout(Layout.flat, new Point(76.5 / camera.Zoom.x, 76.5 / camera.Zoom.y), new Point(viewSize.x / 2, viewSize.y / 2));
+
+			var point = flat.HexToPixel(axialCoord);
+			return new Vector2((float)point.x, (float)point.y);
+		};
+
 		camera.FuncIsViewRectVaild = (rect) =>
 		{
 			var cellSizeOffset = map.terrainMap.CellSize;
@@ -43,20 +57,15 @@ public class MapRoot : Node2D
 
 		};
 
-		map = GetNode<Map>("Map");
+		
 	}
 
 	internal void SetGmObj(MapData mapData)
 	{
 		gmObj = mapData;
 
-		map.SetTerrainTileSet(GlobalResource.tileSet);
-		foreach (var cell in gmObj.cells)
-		{
-			map.SetCell(cell);
-		}
-
-		gmObj.WhenPropertyChanges(x => x.changedCell).Subscribe(y => map.UpdateCell(y.Value));
+		map.SetGmObj(gmObj);
+		control.SetGmObj(gmObj);
 	}
 
 	//internal bool isPointIn(Vector2 pos)
@@ -106,8 +115,6 @@ public class MapRoot : Node2D
 		//todo
 
 		var viewSize = camera.GetViewport().Size;
-		GD.Print($"viewSize {viewSize}");
-		GD.Print($"GetTileIndex {position}");
 
 		Layout flat = new Layout(Layout.flat, new Point(76.5 / camera.Zoom.x, 76.5 / camera.Zoom.y), new Point(viewSize.x / 2, viewSize.y / 2));
 

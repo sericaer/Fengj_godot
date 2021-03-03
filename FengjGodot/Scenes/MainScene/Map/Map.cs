@@ -10,6 +10,8 @@ using System.Linq;
 
 public class Map : Node2D
 {
+	internal MapData gmObj;
+
 	public TileMap MaskMap;
 	public TileMap terrainMap;
 	public TileMap riverMap;
@@ -30,14 +32,6 @@ public class Map : Node2D
 
 	internal void SetCell(ICell cell)
 	{
-		//MaskMap.ClearCell(cell.axialCoord);
-		//terrainMap.SetCell(cell.axialCoord, cell.terrainDef.path);
-
-		//if (cell.HasComponent(TerrainCMPType.RIVER))
-		//{
-		//	riverMap.SetCell(cell.axialCoord, "RIVER");
-		//}
-
 		switch (cell.detectType)
 		{
 			case DetectType.UN_VISIBLE:
@@ -63,6 +57,20 @@ public class Map : Node2D
 			default:
 				throw new Exception();
 		}
+	}
+
+	internal void SetGmObj(MapData mapData)
+	{
+		gmObj = mapData;
+
+		SetTerrainTileSet(GlobalResource.tileSet);
+
+		foreach (var cell in gmObj.cells)
+		{
+			SetCell(cell);
+		}
+
+		gmObj.WhenPropertyChanges(x => x.changedCell).Subscribe(y => UpdateCell(y.Value));
 	}
 
 	internal void UpdateCell(ICell cell)
