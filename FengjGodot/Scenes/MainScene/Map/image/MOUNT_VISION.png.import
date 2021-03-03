@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/PLAIN_VISION.png-f2cad403593c6d34cbe9c00238d613ee.stex"
+path="res://.import/MOUNT_VISION.png-f87e6d44670ecf9f91e694866b7247c7.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Scenes/MainScene/Map/PLAIN_VISION.png"
-dest_files=[ "res://.import/PLAIN_VISION.png-f2cad403593c6d34cbe9c00238d613ee.stex" ]
+source_file="res://Scenes/MainScene/Map/image/MOUNT_VISION.png"
+dest_files=[ "res://.import/MOUNT_VISION.png-f87e6d44670ecf9f91e694866b7247c7.stex" ]
 
 [params]
 

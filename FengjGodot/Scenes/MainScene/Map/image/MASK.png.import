@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/MASK.png-9c1a1e2603181b2bb0dd916a06bc24f5.stex"
+path="res://.import/MASK.png-fad40de10334f33b33a3243ae72ee1c0.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Scenes/MainScene/Map/MASK.png"
-dest_files=[ "res://.import/MASK.png-9c1a1e2603181b2bb0dd916a06bc24f5.stex" ]
+source_file="res://Scenes/MainScene/Map/image/MASK.png"
+dest_files=[ "res://.import/MASK.png-fad40de10334f33b33a3243ae72ee1c0.stex" ]
 
 [params]
 

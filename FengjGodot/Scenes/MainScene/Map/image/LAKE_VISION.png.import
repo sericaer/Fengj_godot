@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/MOUNT_VISION.png-4671108aea6ef90cda65fadc3172953c.stex"
+path="res://.import/LAKE_VISION.png-6e376e7a93ad89aeb71dc5e4af6a40b2.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Scenes/MainScene/Map/MOUNT_VISION.png"
-dest_files=[ "res://.import/MOUNT_VISION.png-4671108aea6ef90cda65fadc3172953c.stex" ]
+source_file="res://Scenes/MainScene/Map/image/LAKE_VISION.png"
+dest_files=[ "res://.import/LAKE_VISION.png-6e376e7a93ad89aeb71dc5e4af6a40b2.stex" ]
 
 [params]
 

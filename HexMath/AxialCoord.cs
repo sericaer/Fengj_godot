@@ -135,7 +135,8 @@ namespace HexMath
 
         public IEnumerable<AxialCoord> GetRingWithWidth(int distance, int width)
         {
-            return Enumerable.Range(distance, width).Select(x => GetRing(distance)).SelectMany(x=>x);
+            var range = Enumerable.Range(distance, width);
+            return range.Select(x => GetRing(x)).SelectMany(y=>y);
         }
     }
 }
