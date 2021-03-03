@@ -25,7 +25,7 @@ public class MapRoot : Node2D
 		{
 			var viewSize = camera.GetViewport().Size;
 
-			Layout flat = new Layout(Layout.flat, new Point(76.5 / camera.Zoom.x, 76.5 / camera.Zoom.y), new Point(viewSize.x / 2, viewSize.y / 2));
+			Layout flat = new Layout(Layout.flat, new Point(75 / camera.Zoom.x, 75 / camera.Zoom.y), new Point(viewSize.x / 2 + camera.offsetPosition.x, viewSize.y / 2 + camera.offsetPosition.y));
 
 			var point = flat.HexToPixel(axialCoord);
 			return new Vector2((float)point.x, (float)point.y);
@@ -55,9 +55,10 @@ public class MapRoot : Node2D
 			});
 
 
+
 		};
 
-		
+		camera.Connect("ViewPortChanged", this, nameof(_on_CameraViewPortChanged));
 	}
 
 	internal void SetGmObj(MapData mapData)
@@ -116,7 +117,7 @@ public class MapRoot : Node2D
 
 		var viewSize = camera.GetViewport().Size;
 
-		Layout flat = new Layout(Layout.flat, new Point(76.5 / camera.Zoom.x, 76.5 / camera.Zoom.y), new Point(viewSize.x / 2, viewSize.y / 2));
+		Layout flat = new Layout(Layout.flat, new Point(75 / camera.Zoom.x, 75 / camera.Zoom.y), new Point(viewSize.x / 2, viewSize.y / 2));
 
 		var aixalCoord = flat.PixelToHex(new Point(position.x, position.y));
 
@@ -204,5 +205,11 @@ public class MapRoot : Node2D
 		//}
 
 		//return realIndex;
+	}
+
+	void _on_CameraViewPortChanged()
+	{
+		control.UpdatePos(camera.offsetPosition);
+
 	}
 }

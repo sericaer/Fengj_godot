@@ -7,6 +7,9 @@
 [node name="Control" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_top = 40.0
+margin_right = 0.00012207
+margin_bottom = 6.10352e-05
 mouse_filter = 2
 script = ExtResource( 2 )
 __meta__ = {
@@ -16,8 +19,6 @@ __meta__ = {
 [node name="WordMap" type="Control" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_top = 40.0
-margin_bottom = 2.0
 mouse_filter = 2
 __meta__ = {
 "_edit_use_anchors_": false
@@ -33,7 +34,7 @@ __meta__ = {
 }
 
 [node name="Viewport" type="Viewport" parent="WordMap/ViewportContainer"]
-size = Vector2( 1440, 862 )
+size = Vector2( 1440, 860 )
 size_override_stretch = true
 handle_input_locally = false
 render_target_update_mode = 3

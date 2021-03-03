@@ -45,7 +45,7 @@ cell_size = Vector2( 112, 130 )
 cell_half_offset = 1
 cell_y_sort = true
 format = 1
-tile_data = PoolIntArray( -131071, 2, 0, -65536, 2, 0, -65535, 0, 0, -65534, 2, 0, -65533, 2, 0, 0, 3, 0, 1, 0, 0, 2, 2, 0, 3, 2, 0, 4, 2, 0, 5, 2, 0, 65536, 0, 0, 65537, 2, 0, 65538, 2, 0, 65539, 2, 0, 65540, 2, 0, 131072, 2, 0, 131073, 2, 0, 131074, 2, 0 )
+tile_data = PoolIntArray( 2, 0, 0, 65536, 0, 0, 65538, 0, 0 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

@@ -30,17 +30,17 @@ namespace Fengj.Map
 
                 BuildPlain(ref map, terrainDefs[TerrainType.PLAIN].Values);
 
-                //BuildRiver(ref map);
+                BuildRiver(ref map);
 
-                //var Type2Percent = calcPercent(mapType);
+                var Type2Percent = calcPercent(mapType);
 
-                //BuildMount(ref map, Type2Percent[TerrainType.MOUNT], terrainDefs[TerrainType.MOUNT].Values);
+                BuildMount(ref map, Type2Percent[TerrainType.MOUNT], terrainDefs[TerrainType.MOUNT].Values);
 
-                //BuildHill(ref map, Type2Percent[TerrainType.HILL], terrainDefs[TerrainType.HILL].Values);
+                BuildHill(ref map, Type2Percent[TerrainType.HILL], terrainDefs[TerrainType.HILL].Values);
 
-                //BuildLake(ref map, Type2Percent[TerrainType.LAKE], terrainDefs[TerrainType.LAKE].Values);
+                BuildLake(ref map, Type2Percent[TerrainType.LAKE], terrainDefs[TerrainType.LAKE].Values);
 
-                //BuildMarsh(ref map, terrainDefs[TerrainType.MARSH].Values);
+                BuildMarsh(ref map, terrainDefs[TerrainType.MARSH].Values);
 
                 ////BuildForest(ref map, 0.1);
 
