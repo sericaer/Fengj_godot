@@ -59,7 +59,7 @@ namespace Fengj.Facade
             //}
 //=======
             runData.map = MapData.Buider.build(runInit.mapBuildType, 10, modder.dictTerrainDefs);
-            runData.map.center.SetDetectType(DetectType.TERRAIN_VISIBLE);
+            runData.map.center.detectType = DetectType.TERRAIN_VISIBLE;
 //>>>>>>> master
         }
     }

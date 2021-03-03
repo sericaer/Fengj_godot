@@ -28,11 +28,9 @@ namespace Fengj.Map
 
         ITerrainDef terrainDef { get; }
 
-        DetectType detectType { get;}
+        DetectType detectType { get; set; }
 
         List<IComponent> components { get; }
-
-        void SetDetectType(DetectType type);
     }
 
     public class TerrainComponent : IComponent
@@ -63,12 +61,32 @@ namespace Fengj.Map
 
         public ITerrainDef terrainDef => funcGetTerrainDef(terrainType, terrainCode);
 
-        public DetectType detectType { get; set; }
+        public DetectType detectType
+        {
+            get
+            {
+                return _detectType;
+            }
+            set
+            {
+                _detectType = value;
+
+                if (detectType == DetectType.TERRAIN_VISIBLE)
+                {
+                    var nearUnVisibleCells = axialCoord.GetRingWithWidth(1, 2).Select(x => map.GetCell(x)).Where(x => x.detectType == DetectType.UN_VISIBLE);
+                    foreach (var cell in nearUnVisibleCells)
+                    {
+                        cell.detectType = DetectType.VISION_VISIBLE;
+                    }
+                }
+            }
+        }
 
         public List<IComponent> components => _components;
 
-
         private List<IComponent> _components;
+
+        private DetectType _detectType;
 
         public Cell(AxialCoord axialCoord, ITerrainDef def)
         {
@@ -85,20 +103,6 @@ namespace Fengj.Map
         private void Intergrate()
         {
             this.WhenPropertyChanges(x => x.detectType).Subscribe(_ => map.changedCell = this);
-        }
-
-        public void SetDetectType(DetectType type)
-        {
-            this.detectType = type;
-
-            if(detectType == DetectType.TERRAIN_VISIBLE)
-            {
-                var nearUnVisibleCells = axialCoord.GetRingWithWidth(1,2).Select(x => map.GetCell(x)).Where(x => x.detectType == DetectType.UN_VISIBLE);
-                foreach(var cell in nearUnVisibleCells)
-                {
-                    cell.SetDetectType(DetectType.VISION_VISIBLE);
-                }
-            }
         }
     }
 }

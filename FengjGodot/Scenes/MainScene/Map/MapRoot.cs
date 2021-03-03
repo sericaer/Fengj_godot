@@ -84,14 +84,14 @@ public class MapRoot : Node2D
 				{
 					var position = eventMouseButton.Position;
 					var coord = GetTileIndex(eventMouseButton.Position - camera.offsetPosition);
-
-					////var cell = gmObj.GetCell((int)position.x, (int)position.y);
-					////if (cell.detectLevel == 0)
-					////{
-					////	cell.detectLevel = 1;
-					////}
-
 					GD.Print($"Click {position}, Coord {coord.q},{coord.r}");
+
+					var cell = gmObj.GetCell(coord);
+					if (cell.detectType == DetectType.VISION_VISIBLE)
+					{
+						cell.detectType = DetectType.TERRAIN_VISIBLE;
+					}
+
 					return;
 				}
 
