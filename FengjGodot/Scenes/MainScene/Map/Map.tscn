@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Scenes/MainScene/Map/Map.cs" type="Script" id=1]
 [ext_resource path="res://Scenes/MainScene/Map/MapCamera2D.cs" type="Script" id=2]
 [ext_resource path="res://Scenes/MainScene/Map/river.tres" type="TileSet" id=3]
 [ext_resource path="res://test.tres" type="TileSet" id=4]
 [ext_resource path="res://Scenes/MainScene/Map/MapRoot.cs" type="Script" id=5]
+[ext_resource path="res://Scenes/MainScene/Map/mask.tres" type="TileSet" id=6]
 
 [node name="MapRoot" type="Node2D"]
 script = ExtResource( 5 )
@@ -38,8 +39,9 @@ cell_y_sort = true
 format = 1
 
 [node name="MaskMap" type="TileMap" parent="Map"]
-tile_set = ExtResource( 3 )
+tile_set = ExtResource( 6 )
 cell_size = Vector2( 112, 130 )
 cell_half_offset = 1
 cell_y_sort = true
 format = 1
+tile_data = PoolIntArray( -131071, 2, 0, -65536, 2, 0, -65535, 0, 0, -65534, 2, 0, -65533, 2, 0, 0, 3, 0, 1, 0, 0, 2, 2, 0, 3, 2, 0, 4, 2, 0, 5, 2, 0, 65536, 0, 0, 65537, 2, 0, 65538, 2, 0, 65539, 2, 0, 65540, 2, 0, 131072, 2, 0, 131073, 2, 0, 131074, 2, 0 )

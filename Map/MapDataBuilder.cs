@@ -26,7 +26,7 @@ namespace Fengj.Map
             {
                 var terrainDict = new Dictionary<TerrainType, ITerrainDef>();
 
-                var map = new MapData(3);
+                var map = new MapData(maxDist);
 
                 BuildPlain(ref map, terrainDefs[TerrainType.PLAIN].Values);
 
