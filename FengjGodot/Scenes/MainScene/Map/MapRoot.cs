@@ -53,12 +53,7 @@ public class MapRoot : Node2D
 				GD.Print($"p:{p} offsetCoord;{offsetCoord.q},{offsetCoord.r} dist:{offsetCoord.Length()}");
 				return gmObj.HasCell(offsetCoord);
 			});
-
-
-
 		};
-
-		camera.Connect("ViewPortChanged", this, nameof(_on_CameraViewPortChanged));
 	}
 
 	internal void SetGmObj(MapData mapData)
@@ -205,11 +200,5 @@ public class MapRoot : Node2D
 		//}
 
 		//return realIndex;
-	}
-
-	void _on_CameraViewPortChanged()
-	{
-		control.UpdatePos(camera.offsetPosition);
-
 	}
 }

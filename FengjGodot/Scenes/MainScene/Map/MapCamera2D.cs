@@ -3,9 +3,6 @@ using System;
 
 public class MapCamera2D : Camera2D
 {
-	[Signal]
-	public delegate void ViewPortChanged();
-
 	public Func<Rect2, bool> FuncIsViewRectVaild;
 
 	public Vector2 basePosition => new Vector2(76.5f, 80) ;
@@ -13,8 +10,6 @@ public class MapCamera2D : Camera2D
 	MoveTo moveTo = MoveTo.NULL;
 
 	public Vector2 offsetPosition => basePosition - Position;
-
-	//public Vector2 MapSize { get; internal set; }
 
 	enum MoveTo
 	{
@@ -42,7 +37,6 @@ public class MapCamera2D : Camera2D
 				if (FuncIsViewRectVaild(rect))
 				{
 					this.Position -= new Vector2(3 * this.Zoom.x, 0);
-					EmitSignal(nameof(ViewPortChanged));
 				}
 				break;
 			case MoveTo.RIGHT:

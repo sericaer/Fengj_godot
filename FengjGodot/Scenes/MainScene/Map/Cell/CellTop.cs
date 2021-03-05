@@ -19,10 +19,4 @@ public class CellTop : PanelContainer
 		gmObj = cell;
 		label.Text = $"{cell.axialCoord.q}-{cell.axialCoord.r}";
 	}
-
-	//  // Called every frame. 'delta' is the elapsed time since the previous frame.
-	//  public override void _Process(float delta)
-	//  {
-	//      
-	//  }
 }

@@ -47,6 +47,7 @@ format = 1
 tile_data = PoolIntArray( 2, 0, 0, 65536, 0, 0, 65538, 0, 0 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+follow_viewport_enable = true
 
 [node name="Control" type="Control" parent="CanvasLayer"]
 margin_right = 40.0

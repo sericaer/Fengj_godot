@@ -34,17 +34,4 @@ public class MapControl : Control
 
 		}
 	}
-
-	internal void UpdatePos(Vector2 offsetPosition)
-	{
-
-		foreach (var child in this.GetChildren())
-		{
-			if (child is CellTop)
-			{
-				var cellTop = child as CellTop;
-				cellTop.SetPosition(funcCalcPos(cellTop.gmObj.axialCoord) - cellTop.GetRect().Size / 2);
-			}
-		}
-	}
 }
