@@ -30,9 +30,7 @@ public class MapControl : Control
 			cellTop.ForceUpdateTransform();
 			GD.Print(cellTop.GetRect().Size / 2);
 
-			cellTop.SetGlobalPosition(new Vector2(0, 0) - cellTop.GetRect().Size/2);
-
-			GD.Print(cellTop.GetPosition());
+			cellTop.SetGlobalPosition(funcCalcPos(cell.axialCoord) - cellTop.GetRect().Size / 2);
 		}
 	}
 }
