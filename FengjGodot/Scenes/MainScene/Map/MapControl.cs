@@ -32,6 +32,7 @@ public class MapControl : Control
 
 			cellTop.SetPosition(funcCalcPos(cell.axialCoord) - cellTop.GetRect().Size/2);
 
+			GD.Print(cellTop.GetPosition());
 		}
 	}
 }

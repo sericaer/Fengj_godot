@@ -22,6 +22,10 @@ public class Map : Node2D
 		terrainMap = GetNode<TileMap>("TerrainMap");
 		riverMap = GetNode<TileMap>("RiverMap");
 
+		MaskMap.Clear();
+		terrainMap.Clear();
+		riverMap.Clear();
+
 		terrainMap.TileSet = new TileSet();
 	}
 
@@ -32,31 +36,31 @@ public class Map : Node2D
 
 	internal void SetCell(ICell cell)
 	{
-		switch (cell.detectType)
-		{
-			case DetectType.UN_VISIBLE:
-				MaskMap.SetCell(cell.axialCoord, "MASK");
-				break;
-			case DetectType.VISION_VISIBLE:
-				{
-					var key = $"{cell.terrainType}_VISION";
-					MaskMap.SetCell(cell.axialCoord, key);
-				}
-				break;
-			case DetectType.TERRAIN_VISIBLE:
-				{
-					MaskMap.ClearCell(cell.axialCoord);
-					terrainMap.SetCell(cell.axialCoord, cell.terrainDef.path);
+		//switch (cell.detectType)
+		//{
+		//	case DetectType.UN_VISIBLE:
+		//		MaskMap.SetCell(cell.axialCoord, "MASK");
+		//		break;
+		//	case DetectType.VISION_VISIBLE:
+		//		{
+		//			var key = $"{cell.terrainType}_VISION";
+		//			MaskMap.SetCell(cell.axialCoord, key);
+		//		}
+		//		break;
+		//	case DetectType.TERRAIN_VISIBLE:
+		//		{
+		//			MaskMap.ClearCell(cell.axialCoord);
+		//			terrainMap.SetCell(cell.axialCoord, cell.terrainDef.path);
 
-					if (cell.HasComponent(TerrainCMPType.RIVER))
-					{
-						riverMap.SetCell(cell.axialCoord, "RIVER");
-					}
-				}
-				break;
-			default:
-				throw new Exception();
-		}
+		//			if (cell.HasComponent(TerrainCMPType.RIVER))
+		//			{
+		//				riverMap.SetCell(cell.axialCoord, "RIVER");
+		//			}
+		//		}
+		//		break;
+		//	default:
+		//		throw new Exception();
+		//}
 	}
 
 	internal void SetGmObj(MapData mapData)

@@ -18,6 +18,7 @@ limit_left = -1000000
 limit_top = -1000000
 limit_right = 1000000
 limit_bottom = 1000000
+smoothing_enabled = true
 script = ExtResource( 2 )
 
 [node name="Map" type="Node2D" parent="."]
