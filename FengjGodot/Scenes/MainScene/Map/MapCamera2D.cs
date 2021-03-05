@@ -5,11 +5,7 @@ public class MapCamera2D : Camera2D
 {
 	public Func<Rect2, bool> FuncIsViewRectVaild;
 
-	public Vector2 basePosition => new Vector2(76.5f, 80) ;
-
 	MoveTo moveTo = MoveTo.NULL;
-
-	public Vector2 offsetPosition => basePosition - Position;
 
 	enum MoveTo
 	{
@@ -27,9 +23,7 @@ public class MapCamera2D : Camera2D
 
 	public override void _Process(float delta)
 	{
-		var rect = GetViewportRect();
-		rect.Position = offsetPosition * -1;
-
+		var rect = GetViewPortGlobalRect();
 		switch (moveTo)
 		{
 			case MoveTo.LEFT:
@@ -63,6 +57,15 @@ public class MapCamera2D : Camera2D
 		}
 	}
 
+	public Rect2 GetViewPortGlobalRect()
+	{
+		var rect = GetViewportRect();
+		rect.Size *= this.Zoom;
+		rect.Position = Position;
+
+		return rect;
+	}
+
 	internal void StartMove(string direct)
 	{
 		Enum.TryParse(direct, out moveTo);
@@ -80,6 +83,7 @@ public class MapCamera2D : Camera2D
 			Zoom *= new Vector2(0.5f, 0.5f);
 
 			GD.Print("camera.Zoom", Zoom);
+			GD.Print("GetViewportRect", GetViewPortGlobalRect().Size);
 		}
 		return;
 	}
@@ -91,6 +95,7 @@ public class MapCamera2D : Camera2D
 			Zoom *= new Vector2(2f, 2f);
 
 			GD.Print("camera.Zoom", Zoom);
+			GD.Print("GetViewportRect", GetViewPortGlobalRect().Size);
 		}
 	}
 }

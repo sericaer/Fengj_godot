@@ -5,7 +5,7 @@ using Fengj.Facade;
 using Fengj.Modder;
 using System.Linq;
 
-public class MainScene : Control
+public class MainScene : Node2D
 {
 
 	MapRoot mapRoot;
@@ -24,15 +24,16 @@ public class MainScene : Control
 
 		facade.CreateRunData(new RunInit() { mapBuildType = Fengj.Map.MapBuildType.MAP_PLAIN, mapSize = (90, 90)});
 
-		mapRoot = GetNode<MapRoot>("WordMap/ViewportContainer/Viewport/Map");
+		mapRoot = GetNode<MapRoot>("Map");
 		mapRoot.SetGmObj(facade.runData.map);
 
-		var minmap = GetNode<MinmapControl>("CanvasLayer/Minmap");
-		minmap.SetGmObj(facade.runData.map);
+		//var minmap = GetNode<MinmapControl>("CanvasLayer/Minmap");
+		//minmap.SetGmObj(facade.runData.map);
 	}
 
 	private void _on_ButtonDirect_mouse_entered(String direct)
 	{
+		GD.Print("_on_ButtonDirect_mouse_entered");
 		mapRoot.camera.StartMove(direct);
 	}
 
@@ -54,6 +55,3 @@ public class MainScene : Control
 		//minimapControl.Visible = true;
 	}
 }
-
-
-

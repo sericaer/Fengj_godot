@@ -22,9 +22,13 @@ public class MapRoot : Node2D
 	{
 		camera = GetNode<MapCamera2D>("Camera2D");
 		map = GetNode<Map>("Map");
-		control = GetNode<MapControl>("CanvasLayer/Control");
 
-		layout = new Layout(Layout.flat, new Point(75, 75), new Point(camera.basePosition.x, camera.basePosition.y));
+		var canvasLayer = GetNode<CanvasLayer>("CanvasLayer");
+		canvasLayer.Offset = Position;
+
+		control = canvasLayer.GetNode<MapControl>("Control");
+
+		layout = new Layout(Layout.flat, new Point(75, 75), new Point(0, 0));
 
 		control.funcCalcPos = (axialCoord) =>
 		{
