@@ -36,28 +36,11 @@ public class MapRoot : Node2D
 			return new Vector2((float)point.x, (float)point.y);
 		};
 
-		camera.FuncIsViewRectVaild = (rect) =>
+		camera.FuncIsViewRectVaild = (pos) =>
 		{
-			var cellSizeOffset = map.terrainMap.CellSize;
-
-			var leftTop = rect.Position;
-			var rightBottom = rect.End;
-			var leftBottom = rect.Position + new Vector2(0, rect.Size.y);
-			var rightTop = rect.Position + new Vector2(rect.Size.x, 0);
-
-			leftTop += cellSizeOffset;
-			rightBottom -= cellSizeOffset;
-			leftBottom += cellSizeOffset * new Vector2(1, -1);
-			rightTop += cellSizeOffset * new Vector2(-1, 1);
-
-			var array = new Vector2[] { leftTop, rightBottom, leftBottom, rightTop };
-			return array.Any(p =>
-			{
-
-				var offsetCoord = this.GetTileIndex(p);
-				GD.Print($"p:{p} offsetCoord;{offsetCoord.q},{offsetCoord.r} dist:{offsetCoord.Length()}");
-				return gmObj.HasCell(offsetCoord);
-			});
+			var offsetCoord = this.GetTileIndex(pos);
+			GD.Print($"p:{pos} offsetCoord;{offsetCoord.q},{offsetCoord.r} dist:{offsetCoord.Length()}");
+			return gmObj.HasCell(offsetCoord);
 		};
 	}
 
@@ -78,15 +61,15 @@ public class MapRoot : Node2D
 			
 				if (eventMouseButton.ButtonIndex == 1 || eventMouseButton.ButtonIndex == 2)
 				{
-					var position = camera.GetGlobalMousePosition();
+					var position = camera.GetLocalMousePosition() + camera.Position ;
 					var coord = GetTileIndex(position);
 					GD.Print($"Click {position}, Coord {coord.q},{coord.r}");
 
-					//var cell = gmObj.GetCell(coord);
-					//if (cell.detectType == DetectType.VISION_VISIBLE)
-					//{
-					//	cell.detectType = DetectType.TERRAIN_VISIBLE;
-					//}
+					var cell = gmObj.GetCell(coord);
+					if (cell.detectType == DetectType.VISION_VISIBLE)
+					{
+						cell.detectType = DetectType.TERRAIN_VISIBLE;
+					}
 
 					return;
 				}

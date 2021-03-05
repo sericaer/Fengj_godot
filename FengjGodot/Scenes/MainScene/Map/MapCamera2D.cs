@@ -3,7 +3,7 @@ using System;
 
 public class MapCamera2D : Camera2D
 {
-	public Func<Rect2, bool> FuncIsViewRectVaild;
+	public Func<Vector2, bool> FuncIsViewRectVaild;
 
 	MoveTo moveTo = MoveTo.NULL;
 
@@ -16,44 +16,33 @@ public class MapCamera2D : Camera2D
 		RIGHT,
 	}
 
-	public override void _Ready()
-	{
-		//this.Position = offset;
-	}
 
 	public override void _Process(float delta)
 	{
-		var rect = GetViewPortGlobalRect();
+		var changed = new Vector2();
 		switch (moveTo)
 		{
+			case MoveTo.NULL:
+				return;
 			case MoveTo.LEFT:
-				rect.Position -= new Vector2(3 * this.Zoom.x, 0);
-				if (FuncIsViewRectVaild(rect))
-				{
-					this.Position -= new Vector2(3 * this.Zoom.x, 0);
-				}
+				changed = new Vector2(-3 * this.Zoom.x, 0);
 				break;
 			case MoveTo.RIGHT:
-				rect.Position += new Vector2(3 * this.Zoom.x, 0);
-				if (FuncIsViewRectVaild(rect))
-				{
-					this.Position += new Vector2(3 * this.Zoom.x, 0);
-				}
+				changed = new Vector2(3 * this.Zoom.x, 0);
 				break;
 			case MoveTo.UP:
-				rect.Position -= new Vector2(0, 3 * this.Zoom.y);
-				if (FuncIsViewRectVaild(rect))
-				{
-					this.Position -= new Vector2(0, 3 * this.Zoom.y);
-				}
+				changed = new Vector2(0, -3 * this.Zoom.y);
 				break;
 			case MoveTo.DOWN:
-				rect.Position += new Vector2(0, 3 * this.Zoom.y);
-				if (FuncIsViewRectVaild(rect))
-				{
-					this.Position += new Vector2(0, 3 * this.Zoom.y);
-				}
+				changed = new Vector2(0, 3 * this.Zoom.y);
 				break;
+			default:
+				throw new Exception();
+		}
+
+		if (FuncIsViewRectVaild(this.Position + changed * 5))
+		{
+			this.Position += changed;
 		}
 	}
 

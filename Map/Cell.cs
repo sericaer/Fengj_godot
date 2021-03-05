@@ -73,7 +73,10 @@ namespace Fengj.Map
 
                 if (detectType == DetectType.TERRAIN_VISIBLE)
                 {
-                    var nearUnVisibleCells = axialCoord.GetRingWithWidth(1, 2).Select(x => map.GetCell(x)).Where(x => x.detectType == DetectType.UN_VISIBLE);
+                    var nearUnVisibleCells = axialCoord.GetRingWithWidth(1, 2)
+                        .Where(x=> map.HasCell(x))
+                        .Select(x => map.GetCell(x))
+                        .Where(x => x.detectType == DetectType.UN_VISIBLE);
                     foreach (var cell in nearUnVisibleCells)
                     {
                         cell.detectType = DetectType.VISION_VISIBLE;
