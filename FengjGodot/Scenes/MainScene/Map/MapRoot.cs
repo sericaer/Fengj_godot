@@ -42,6 +42,11 @@ public class MapRoot : Node2D
 			GD.Print($"p:{pos} offsetCoord;{offsetCoord.q},{offsetCoord.r} dist:{offsetCoord.Length()}");
 			return gmObj.HasCell(offsetCoord);
 		};
+
+		camera.ViewPortGlobalRectChanged = (rect) =>
+		{
+			control.OnViewPortGlobalRectChanged(rect);
+		};
 	}
 
 	internal void SetGmObj(MapData mapData)
@@ -49,7 +54,9 @@ public class MapRoot : Node2D
 		gmObj = mapData;
 
 		map.SetGmObj(gmObj);
+
 		control.SetGmObj(gmObj);
+		control.OnViewPortGlobalRectChanged(camera.GetViewPortGlobalRect());
 	}
 
 	public override void _UnhandledInput(InputEvent @event)

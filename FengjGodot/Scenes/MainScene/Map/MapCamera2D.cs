@@ -4,6 +4,7 @@ using System;
 public class MapCamera2D : Camera2D
 {
 	public Func<Vector2, bool> FuncIsViewRectVaild;
+	public Action<Rect2> ViewPortGlobalRectChanged;
 
 	MoveTo moveTo = MoveTo.NULL;
 
@@ -43,6 +44,8 @@ public class MapCamera2D : Camera2D
 		if (FuncIsViewRectVaild(this.Position + changed * 5))
 		{
 			this.Position += changed;
+
+			ViewPortGlobalRectChanged(GetViewPortGlobalRect());
 		}
 	}
 
@@ -50,7 +53,7 @@ public class MapCamera2D : Camera2D
 	{
 		var rect = GetViewportRect();
 		rect.Size *= this.Zoom;
-		rect.Position = Position;
+		rect.Position = Position - rect.Size/2;
 
 		return rect;
 	}
@@ -71,8 +74,7 @@ public class MapCamera2D : Camera2D
 		{
 			Zoom *= new Vector2(0.5f, 0.5f);
 
-			GD.Print("camera.Zoom", Zoom);
-			GD.Print("GetViewportRect", GetViewPortGlobalRect().Size);
+			ViewPortGlobalRectChanged(GetViewPortGlobalRect());
 		}
 		return;
 	}
@@ -83,8 +85,7 @@ public class MapCamera2D : Camera2D
 		{
 			Zoom *= new Vector2(2f, 2f);
 
-			GD.Print("camera.Zoom", Zoom);
-			GD.Print("GetViewportRect", GetViewPortGlobalRect().Size);
+			ViewPortGlobalRectChanged(GetViewPortGlobalRect());
 		}
 	}
 }
