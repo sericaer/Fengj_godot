@@ -36,6 +36,11 @@ public class MapRoot : Node2D
 			return new Vector2((float)point.x, (float)point.y);
 		};
 
+		control.funcCalcAxialCoord = (pos) =>
+		{
+			return layout.PixelToHex(new Point(pos.x, pos.y));
+		};
+
 		camera.FuncIsViewRectVaild = (pos) =>
 		{
 			var offsetCoord = this.GetTileIndex(pos);

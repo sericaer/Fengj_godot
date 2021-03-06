@@ -72,7 +72,7 @@ public class MapCamera2D : Camera2D
 	{
 		if (Zoom.x > 1)
 		{
-			Zoom *= new Vector2(0.5f, 0.5f);
+			Zoom -= new Vector2(0.1f, 0.1f);
 
 			ViewPortGlobalRectChanged(GetViewPortGlobalRect());
 		}
@@ -83,7 +83,7 @@ public class MapCamera2D : Camera2D
 	{
 		if (Zoom.x < 32)
 		{
-			Zoom *= new Vector2(2f, 2f);
+			Zoom += new Vector2(0.1f, 0.1f);
 
 			ViewPortGlobalRectChanged(GetViewPortGlobalRect());
 		}

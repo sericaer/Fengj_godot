@@ -12,53 +12,72 @@ public class MapControl : Control
 	internal Func<AxialCoord, Vector2> funcCalcPos;
 	internal Func<Vector2, AxialCoord> funcCalcAxialCoord;
 
+	private Dictionary<(int q, int r), CellTop> cellTopDict;
+
+	public override void _Ready()
+	{
+		cellTopDict = new Dictionary<(int q, int r), CellTop>();
+	}
+
 	internal void SetGmObj(MapData mapData)
 	{
 		gmObj = mapData;
-        //foreach(var cell in gmObj.cells)
-        {
+		//foreach(var cell in gmObj.cells)
+		{
 
 
-            var cell = mapData.center;
+			var cell = mapData.center;
 
-            AddCellTop(cell);
-        }
-    }
+			AddCellTop(cell);
+		}
+	}
 
-    private void AddCellTop(ICell cell)
-    {
-        var cellTop = ResourceLoader.Load<PackedScene>("res://Scenes/MainScene/Map/Cell/CellTop.tscn").Instance() as CellTop;
-        AddChild(cellTop);
+	private void AddCellTop(ICell cell)
+	{
+		var cellTop = ResourceLoader.Load<PackedScene>("res://Scenes/MainScene/Map/Cell/CellTop.tscn").Instance() as CellTop;
+		AddChild(cellTop);
 
-        cellTop.SetGmObj(cell);
-        cellTop.ForceUpdateTransform();
-        GD.Print(cellTop.GetRect().Size / 2);
+		cellTop.SetGmObj(cell);
+		cellTop.ForceUpdateTransform();
+		GD.Print(cellTop.GetRect().Size / 2);
 
-        cellTop.SetGlobalPosition(funcCalcPos(cell.axialCoord) - cellTop.GetRect().Size / 2);
-    }
+		cellTop.SetGlobalPosition(funcCalcPos(cell.axialCoord) - cellTop.GetRect().Size / 2);
 
-    internal void OnViewPortGlobalRectChanged(Rect2 rect)
-    {
+		cellTopDict.Add((cell.axialCoord.q, cell.axialCoord.r), cellTop);
+	}
+
+	internal void OnViewPortGlobalRectChanged(Rect2 rect)
+	{
 		var center = rect.Position + rect.Size / 2;
 
 		var coordCenter = funcCalcAxialCoord(center);
 
+		List<(int q, int r)> list = new List<(int q, int r)>();
 		for(int i=0; i<10; i++)
-        {
+		{
 			var coords = coordCenter.GetRing(i);
 
-            var inViewCoords = coords.Where(y => rect.HasPoint(funcCalcPos(y)));
-            if(inViewCoords.Count() == 0)
-            {
-                break;
-            }
+			var inViewCoords = coords.Where(y => rect.HasPoint(funcCalcPos(y)));
+			if(inViewCoords.Count() == 0)
+			{
+				GD.Print($"not show {i}");
+				break;
+			}
 
-            foreach(var coord in inViewCoords)
-            {
-                var cell = gmObj.GetCell(coord);
-                AddCellTop(cell);
-            }
-        }
-		
+			list.AddRange(inViewCoords.Select(x=>(x.q, x.r)));
+		}
+
+
+		var olds = cellTopDict.Keys.ToArray();
+		foreach (var needdel in olds.Except(list))
+		{
+			cellTopDict[needdel].QueueFree();
+			cellTopDict.Remove(needdel);
+		}
+
+		foreach (var needadd in list.Except(olds))
+		{
+			AddCellTop(gmObj.GetCell(needadd.q, needadd.r));
+		}
 	}
 }
