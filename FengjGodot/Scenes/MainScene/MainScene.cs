@@ -24,7 +24,10 @@ public class MainScene : Node2D
 
 		facade.CreateRunData(new RunInit() { mapBuildType = Fengj.Map.MapBuildType.MAP_PLAIN, mapSize = (90, 90)});
 
-		mapRoot = GetNode<MapRoot>("Map");
+		mapRoot = GetNode<MapRoot>("MapRoot");
+
+		GD.Print(mapRoot);
+
 		mapRoot.SetGmObj(facade.runData.map);
 
 		//var minmap = GetNode<MinmapControl>("CanvasLayer/Minmap");

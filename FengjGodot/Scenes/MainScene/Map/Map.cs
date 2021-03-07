@@ -21,12 +21,6 @@ public class Map : Node2D
 		MaskMap = GetNode<TileMap>("MaskMap");
 		terrainMap = GetNode<TileMap>("TerrainMap");
 		riverMap = GetNode<TileMap>("RiverMap");
-
-		MaskMap.Clear();
-		terrainMap.Clear();
-		riverMap.Clear();
-
-		terrainMap.TileSet = new TileSet();
 	}
 
 	internal void SetTerrainTileSet(TileSet tileSet)
@@ -65,6 +59,10 @@ public class Map : Node2D
 
 	internal void SetGmObj(MapData mapData)
 	{
+		MaskMap.Clear();
+		terrainMap.Clear();
+		riverMap.Clear();
+
 		gmObj = mapData;
 
 		SetTerrainTileSet(GlobalResource.tileSet);
