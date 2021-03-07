@@ -46,15 +46,17 @@ public class MainScene : Node2D
 		mapRoot.camera.StopMove();
 	}
 
-	private void _on_ButtonMinmap_pressed()
+	private void _on_ButtonMiniMap_pressed()
 	{
 		var minimapControl = GetNode<MinmapControl>("CanvasLayer/Minmap");
-		minimapControl.viewPositionOffset = mapRoot.camera.Position / mapRoot.map.terrainMap.CellSize * mapRoot.camera.Zoom;
+		minimapControl.SetGmObj(facade.runData.map);
+
+		//minimapControl.viewPositionOffset = mapRoot.camera.Position / mapRoot.map.terrainMap.CellSize * mapRoot.camera.Zoom;
 
 		//GD.Print("offset", minimapControl.viewPositionOffset);
 
-		minimapControl.viewRectSizeOffset = mapRoot.camera.GetViewportRect().Size / mapRoot.map.terrainMap.CellSize * mapRoot.camera.Zoom ;
+		//minimapControl.viewRectSizeOffset = mapRoot.camera.GetViewportRect().Size / mapRoot.map.terrainMap.CellSize * mapRoot.camera.Zoom ;
 
-		//minimapControl.Visible = true;
+		minimapControl.Visible = true;
 	}
 }

@@ -17,8 +17,8 @@ public class MinmapControl : Panel
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		map = GetNode<Minimap>("ViewportContainer/Viewport/Map");
-		viewRect = GetNode<Control>("ViewportContainer/Viewport/Map/ViewRect");
+		map = GetNode<Minimap>("ViewportContainer/Viewport/MinMap");
+		//viewRect = GetNode<Control>("ViewportContainer/Viewport/Map/ViewRect");
 	}
 
 	internal void SetGmObj(MapData gmObj)
@@ -38,8 +38,8 @@ public class MinmapControl : Panel
 	{
 		if (this.Visible)
 		{
-			viewRect.RectSize = viewRectSizeOffset * map.tileMap.CellSize;
-			viewRect.SetPosition(viewPositionOffset * map.tileMap.CellSize - viewRect.RectSize/2);		
+			//viewRect.RectSize = viewRectSizeOffset * map.tileMap.CellSize;
+			//viewRect.SetPosition(viewPositionOffset * map.tileMap.CellSize - viewRect.RectSize/2);		
 		}
 	}
 }                                                                     
