@@ -57,7 +57,7 @@ public class MapCamera2D : Camera2D
 	{
 		var rect = GetViewportRect();
 		rect.Size *= this.Zoom;
-		rect.Position = Position - rect.Size/2;
+		rect.Position = Position;
 
 		return rect;
 	}

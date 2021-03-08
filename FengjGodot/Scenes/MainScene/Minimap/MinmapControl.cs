@@ -20,6 +20,7 @@ public class MinmapControl : Panel
 	{
 		map.SetGmObj(gmObj);
 
+		GD.Print($"mapViewPortRect.Position{mapViewPortRect.Position}");
 		UpdateViewRect(mapViewPortRect);
 	}
 
