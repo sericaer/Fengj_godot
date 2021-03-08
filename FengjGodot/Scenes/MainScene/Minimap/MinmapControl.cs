@@ -8,39 +8,25 @@ public class MinmapControl : Panel
 	public Vector2 viewRectSizeOffset { get; set; }
 
 	private Minimap map;
-	private Control viewRect;
 
-	// Declare member variables here. Examples:
-	// private int a = 2;
-	// private string b = "text";
-
-	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		map = GetNode<Minimap>("ViewportContainer/Viewport/MinMap");
-		//viewRect = GetNode<Control>("ViewportContainer/Viewport/Map/ViewRect");
+		
 	}
 
-	internal void SetGmObj(MapData gmObj)
+	internal void SetGmObj(MapData gmObj, Rect2 mapViewPortRect)
 	{
 		map.SetGmObj(gmObj);
 
-		//GD.Print(map.GetParent<Viewport>().Size / 2 - map.Size / 2);
-		//map.Position = map.GetParent<Viewport>().Size / 2 - map.Size / 2;
+		var viewRect = GetNode<Control>("ViewportContainer/Viewport/MinMap/ViewRect");
+		viewRect.RectSize = mapViewPortRect.Size * map.tileMap.Scale;
+		viewRect.SetPosition(mapViewPortRect.Position * map.tileMap.Scale - viewRect.RectSize / 2);
 	}
 
 	private void _on_ButtonMinimap_pressed()
 	{
 		this.Visible = false;
-	}
-
-	private void _on_Minmap_visibility_changed()
-	{
-		if (this.Visible)
-		{
-			//viewRect.RectSize = viewRectSizeOffset * map.tileMap.CellSize;
-			//viewRect.SetPosition(viewPositionOffset * map.tileMap.CellSize - viewRect.RectSize/2);		
-		}
 	}
 }                                                                     
 

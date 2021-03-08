@@ -29,9 +29,6 @@ public class MainScene : Node2D
 		GD.Print(mapRoot);
 
 		mapRoot.SetGmObj(facade.runData.map);
-
-		//var minmap = GetNode<MinmapControl>("CanvasLayer/Minmap");
-		//minmap.SetGmObj(facade.runData.map);
 	}
 
 	private void _on_ButtonDirect_mouse_entered(String direct)
@@ -49,13 +46,7 @@ public class MainScene : Node2D
 	private void _on_ButtonMiniMap_pressed()
 	{
 		var minimapControl = GetNode<MinmapControl>("CanvasLayer/Minmap");
-		minimapControl.SetGmObj(facade.runData.map);
-
-		//minimapControl.viewPositionOffset = mapRoot.camera.Position / mapRoot.map.terrainMap.CellSize * mapRoot.camera.Zoom;
-
-		//GD.Print("offset", minimapControl.viewPositionOffset);
-
-		//minimapControl.viewRectSizeOffset = mapRoot.camera.GetViewportRect().Size / mapRoot.map.terrainMap.CellSize * mapRoot.camera.Zoom ;
+		minimapControl.SetGmObj(facade.runData.map, mapRoot.GetViewportGlobalRect());
 
 		minimapControl.Visible = true;
 	}

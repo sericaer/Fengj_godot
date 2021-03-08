@@ -54,7 +54,13 @@ public class MapRoot : Node2D
 		};
 	}
 
-	internal void SetGmObj(MapData mapData)
+    internal Rect2 GetViewportGlobalRect()
+    {
+		return camera.GetViewPortGlobalRect();
+
+	}
+
+    internal void SetGmObj(MapData mapData)
 	{
 		gmObj = mapData;
 
