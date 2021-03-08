@@ -27,7 +27,7 @@ public class MinmapControl : Panel
 	internal void UpdateViewRect(Rect2 mapViewPortRect)
 	{
 		viewRect.RectSize = mapViewPortRect.Size * map.tileMap.Scale;
-		viewRect.SetPosition(mapViewPortRect.Position * map.tileMap.Scale - viewRect.RectSize / 2);
+		viewRect.SetPosition((mapViewPortRect.Position + mapViewPortRect.Size/2) * map.tileMap.Scale - viewRect.RectSize / 2);
 	}
 
 	private void _on_ButtonMinimap_pressed()
