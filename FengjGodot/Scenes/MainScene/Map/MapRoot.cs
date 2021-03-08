@@ -41,11 +41,6 @@ public class MapRoot : Node2D
 		});
 	}
 
-    internal Rect2 GetViewportGlobalRect()
-    {
-		return camera.GetViewPortGlobalRect();
-	}
-
     internal void SetGmObj(MapData mapData)
 	{
 		gmObj = mapData;
@@ -67,11 +62,11 @@ public class MapRoot : Node2D
 		{
 			if (eventMouseButton.IsPressed())
 			{
-			
+
 				if (eventMouseButton.ButtonIndex == 1 || eventMouseButton.ButtonIndex == 2)
 				{
-					var position = camera.GetLocalMousePosition() + camera.Position ;
-					var coord = GetTileIndex(position);
+					var position = camera.GetLocalMousePosition() + camera.Position;
+					var coord = layout.PixelVectorToHex(position);
 					GD.Print($"Click {position}, Coord {coord.q},{coord.r}");
 
 					var cell = gmObj.GetCell(coord);
@@ -98,15 +93,8 @@ public class MapRoot : Node2D
 		}
 	}
 
-	private AxialCoord GetTileIndex(Vector2 position)
-	{
-		var aixalCoord = layout.PixelToHex(new Point(position.x, position.y));
-
-		return aixalCoord;
-	}
-
 	private void _on_Camera2D_ViewPortChanged(Rect2 rect)
-    {
+	{
 		control.OnViewPortGlobalRectChanged(rect);
 	}
 }

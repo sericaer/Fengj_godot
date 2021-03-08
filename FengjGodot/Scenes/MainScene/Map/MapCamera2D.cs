@@ -96,13 +96,6 @@ public class MapCamera2D : Camera2D
 		return;
 	}
 
-    internal void SetViewPortGlobalPosition(Vector2 pos)
-    {
-		this.Position = pos;
-
-		EmitSignal(nameof(ViewPortChanged), GetViewPortGlobalRect());
-	}
-
     internal void ZoomInc()
 	{
 		if (Zoom.x < 32)

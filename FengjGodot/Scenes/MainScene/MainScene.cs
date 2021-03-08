@@ -30,18 +30,14 @@ public class MainScene : Node2D
 		mapRoot.SetGmObj(facade.runData.map);
 
 		minimapControl = GetNode<MinmapControl>("CanvasLayer/MinMap");
-
-		minimapControl.Connect("MouseButtonPressed", mapRoot, "TryChangedViewportPosition");
-		mapRoot.Connect("ViewPortRectChanged", minimapControl, "OnViewPortRectChanged");
-
+		
+		minimapControl.Connect("MouseButtonPressed", this, "_on_MiniMapMouseButton_pressed");
 	}
 
 	private void _on_ButtonDirect_mouse_entered(String direct)
 	{
-		GD.Print("_on_ButtonDirect_mouse_entered");
 		mapRoot.camera.StartMove(direct);
 	}
-
 
 	private void _on_ButtonDirect_mouse_exited()
 	{
@@ -50,7 +46,14 @@ public class MainScene : Node2D
 
 	private void _on_ButtonMiniMap_pressed()
 	{
-		minimapControl.SetGmObj(facade.runData.map, mapRoot.GetViewportGlobalRect());
+		minimapControl.SetGmObj(facade.runData.map, mapRoot.camera.GetViewPortGlobalRect());
 		minimapControl.Visible = true;
+	}
+
+	private void _on_MiniMapMouseButton_pressed(Vector2 pos)
+    {
+		mapRoot.camera.Position = pos;
+		minimapControl.UpdateViewRect(mapRoot.camera.GetViewPortGlobalRect());
+
 	}
 }
