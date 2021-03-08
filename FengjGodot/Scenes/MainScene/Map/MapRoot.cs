@@ -54,6 +54,13 @@ public class MapRoot : Node2D
 		};
 	}
 
+    internal bool SetViewportPosition(Vector2 pos)
+    {
+		camera.SetViewPortGlobalPosition(pos);
+
+		return true;
+    }
+
     internal Rect2 GetViewportGlobalRect()
     {
 		return camera.GetViewPortGlobalRect();
@@ -68,6 +75,11 @@ public class MapRoot : Node2D
 
 		control.SetGmObj(gmObj);
 		control.OnViewPortGlobalRectChanged(camera.GetViewPortGlobalRect());
+	}
+
+	internal void OnViewPortRectMoved(Vector2 pos)
+    {
+		camera.Position = pos;
 	}
 
 	public override void _UnhandledInput(InputEvent @event)

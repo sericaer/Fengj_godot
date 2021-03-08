@@ -79,7 +79,17 @@ public class MapCamera2D : Camera2D
 		return;
 	}
 
-	internal void ZoomInc()
+    internal void SetViewPortGlobalPosition(Vector2 pos)
+    {
+		if (FuncIsViewRectVaild(pos))
+		{
+			this.Position = pos;
+
+			ViewPortGlobalRectChanged(GetViewPortGlobalRect());
+		}
+	}
+
+    internal void ZoomInc()
 	{
 		if (Zoom.x < 32)
 		{

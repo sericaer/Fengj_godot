@@ -78,7 +78,7 @@ size_flags_horizontal = 12
 size_flags_vertical = 12
 text = "ButtonMiniMap"
 
-[node name="Minmap" parent="CanvasLayer" instance=ExtResource( 3 )]
+[node name="MinMap" parent="CanvasLayer" instance=ExtResource( 3 )]
 visible = false
 [connection signal="mouse_entered" from="CanvasLayer/GUI/Center/ButtonDirectLeft" to="." method="_on_ButtonDirect_mouse_entered" binds= [ "LEFT" ]]
 [connection signal="mouse_exited" from="CanvasLayer/GUI/Center/ButtonDirectLeft" to="." method="_on_ButtonDirect_mouse_exited"]

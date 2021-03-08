@@ -9,8 +9,10 @@ public class MainScene : Node2D
 {
 
 	MapRoot mapRoot;
+	MinmapControl minimapControl;
 
 	Facade facade;
+
 	public override void _Ready()
 	{
 		Facade.logger = (str) => GD.Print(str);
@@ -25,10 +27,13 @@ public class MainScene : Node2D
 		facade.CreateRunData(new RunInit() { mapBuildType = Fengj.Map.MapBuildType.MAP_PLAIN, mapSize = (90, 90)});
 
 		mapRoot = GetNode<MapRoot>("MapRoot");
-
-		GD.Print(mapRoot);
-
 		mapRoot.SetGmObj(facade.runData.map);
+
+		minimapControl = GetNode<MinmapControl>("CanvasLayer/MinMap");
+		minimapControl.FuncViewRectMoved = (pos) =>
+		{
+			return mapRoot.SetViewportPosition(pos);
+		};
 	}
 
 	private void _on_ButtonDirect_mouse_entered(String direct)
@@ -45,9 +50,7 @@ public class MainScene : Node2D
 
 	private void _on_ButtonMiniMap_pressed()
 	{
-		var minimapControl = GetNode<MinmapControl>("CanvasLayer/Minmap");
 		minimapControl.SetGmObj(facade.runData.map, mapRoot.GetViewportGlobalRect());
-
 		minimapControl.Visible = true;
 	}
 }

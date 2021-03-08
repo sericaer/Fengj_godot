@@ -4,10 +4,10 @@ using System;
 
 public class MinmapControl : Panel
 {
-	public Vector2 viewPositionOffset { get; set; }
-	public Vector2 viewRectSizeOffset { get; set; }
+	public Func<Vector2, bool> FuncViewRectMoved;
 
 	private Minimap map;
+	private Control viewRect;
 
 	public override void _Ready()
 	{
@@ -19,14 +19,40 @@ public class MinmapControl : Panel
 	{
 		map.SetGmObj(gmObj);
 
-		var viewRect = GetNode<Control>("ViewportContainer/Viewport/MinMap/ViewRect");
+		viewRect = GetNode<Control>("ViewportContainer/Viewport/MinMap/CanvasLayer/ViewRect");
 		viewRect.RectSize = mapViewPortRect.Size * map.tileMap.Scale;
-		viewRect.SetPosition(mapViewPortRect.Position * map.tileMap.Scale - viewRect.RectSize / 2);
+		viewRect.SetPosition(mapViewPortRect.Position * map.tileMap.Scale);
 	}
 
 	private void _on_ButtonMinimap_pressed()
 	{
 		this.Visible = false;
+	}
+
+	public override void _UnhandledInput(InputEvent @event)
+	{
+		if(!Visible)
+        {
+			return;
+        }
+
+		if (@event is InputEventMouseButton eventMouseButton)
+		{
+			if (eventMouseButton.IsPressed())
+			{
+				if (eventMouseButton.ButtonIndex == 1 || eventMouseButton.ButtonIndex == 2)
+				{
+					var mousePos = GetLocalMousePosition();
+					var pos = (mousePos  - GetViewportRect().Size / 2) / map.tileMap.Scale;
+
+					if(FuncViewRectMoved(pos))
+                    {
+						viewRect.SetPosition(mousePos);
+					}
+				}
+
+			}
+		}
 	}
 }                                                                     
 
