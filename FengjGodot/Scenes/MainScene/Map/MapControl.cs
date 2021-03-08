@@ -7,10 +7,10 @@ using System.Linq;
 
 public class MapControl : Control
 {
+
 	internal MapData gmObj;
 
-	internal Func<AxialCoord, Vector2> funcCalcPos;
-	internal Func<Vector2, AxialCoord> funcCalcAxialCoord;
+	internal Layout layout { get; set; }
 
 	private Dictionary<(int q, int r), CellTop> cellTopDict;
 
@@ -22,14 +22,6 @@ public class MapControl : Control
 	internal void SetGmObj(MapData mapData)
 	{
 		gmObj = mapData;
-		//foreach(var cell in gmObj.cells)
-		{
-
-
-			var cell = mapData.center;
-
-			AddCellTop(cell);
-		}
 	}
 
 	private void AddCellTop(ICell cell)
@@ -39,9 +31,8 @@ public class MapControl : Control
 
 		cellTop.SetGmObj(cell);
 		cellTop.ForceUpdateTransform();
-		GD.Print(cellTop.GetRect().Size / 2);
 
-		cellTop.SetGlobalPosition(funcCalcPos(cell.axialCoord) - cellTop.GetRect().Size / 2);
+		cellTop.SetGlobalPosition(layout.HexToPixelVector2(cell.axialCoord) - cellTop.GetRect().Size / 2);
 
 		cellTopDict.Add((cell.axialCoord.q, cell.axialCoord.r), cellTop);
 	}
@@ -50,14 +41,14 @@ public class MapControl : Control
 	{
 		var center = rect.Position + rect.Size / 2;
 
-		var coordCenter = funcCalcAxialCoord(center);
+		var coordCenter = layout.PixelVectorToHex(center);
 
 		List<(int q, int r)> list = new List<(int q, int r)>();
 		for(int i=0; i<10; i++)
 		{
 			var coords = coordCenter.GetRing(i);
 
-			var inViewCoords = coords.Where(y => rect.HasPoint(funcCalcPos(y)));
+			var inViewCoords = coords.Where(y => rect.HasPoint(layout.HexToPixelVector2(y)));
 			if(inViewCoords.Count() == 0)
 			{
 				GD.Print($"not show {i}");

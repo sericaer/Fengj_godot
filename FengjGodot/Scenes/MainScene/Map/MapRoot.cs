@@ -15,7 +15,6 @@ public class MapRoot : Node2D
 	public MapCamera2D camera;
 	public MapControl control;
 
-
 	public Layout layout;
 
 	public override void _Ready()
@@ -29,42 +28,22 @@ public class MapRoot : Node2D
 		control = canvasLayer.GetNode<MapControl>("Control");
 
 		layout = new Layout(Layout.flat, new Point(75, 75), new Point(0, 0));
+		control.layout = layout;
 
-		control.funcCalcPos = (axialCoord) =>
+		gmObj.WhenPropertyChanges(x => x.changedCell).Subscribe(y =>
 		{
-			var point = layout.HexToPixel(axialCoord);
-			return new Vector2((float)point.x, (float)point.y);
-		};
+			map.UpdateCell(y.Value);
 
-		control.funcCalcAxialCoord = (pos) =>
-		{
-			return layout.PixelToHex(new Point(pos.x, pos.y));
-		};
-
-		camera.FuncIsViewRectVaild = (pos) =>
-		{
-			var offsetCoord = this.GetTileIndex(pos);
-			GD.Print($"p:{pos} offsetCoord;{offsetCoord.q},{offsetCoord.r} dist:{offsetCoord.Length()}");
-			return gmObj.HasCell(offsetCoord);
-		};
-
-		camera.ViewPortGlobalRectChanged = (rect) =>
-		{
-			control.OnViewPortGlobalRectChanged(rect);
-		};
+			if(y.Value.detectType == DetectType.TERRAIN_VISIBLE)
+			{ 
+				camera.UpdateMoveLimit(layout.HexToPixelVector2(y.Value.axialCoord));
+			};
+		});
 	}
-
-    internal bool SetViewportPosition(Vector2 pos)
-    {
-		camera.SetViewPortGlobalPosition(pos);
-
-		return true;
-    }
 
     internal Rect2 GetViewportGlobalRect()
     {
 		return camera.GetViewPortGlobalRect();
-
 	}
 
     internal void SetGmObj(MapData mapData)
@@ -77,8 +56,8 @@ public class MapRoot : Node2D
 		control.OnViewPortGlobalRectChanged(camera.GetViewPortGlobalRect());
 	}
 
-	internal void OnViewPortRectMoved(Vector2 pos)
-    {
+	internal void TryChangedViewportPosition(Vector2 pos)
+	{
 		camera.Position = pos;
 	}
 
@@ -124,5 +103,10 @@ public class MapRoot : Node2D
 		var aixalCoord = layout.PixelToHex(new Point(position.x, position.y));
 
 		return aixalCoord;
+	}
+
+	private void _on_Camera2D_ViewPortChanged(Rect2 rect)
+    {
+		control.OnViewPortGlobalRectChanged(rect);
 	}
 }

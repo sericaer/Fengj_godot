@@ -10,8 +10,6 @@ using System.Linq;
 
 public class Map : Node2D
 {
-	internal MapData gmObj;
-
 	public TileMap MaskMap;
 	public TileMap terrainMap;
 	public TileMap riverMap;
@@ -63,16 +61,12 @@ public class Map : Node2D
 		terrainMap.Clear();
 		riverMap.Clear();
 
-		gmObj = mapData;
-
 		SetTerrainTileSet(GlobalResource.tileSet);
 
-		foreach (var cell in gmObj.cells)
+		foreach (var cell in mapData.cells)
 		{
 			SetCell(cell);
 		}
-
-		gmObj.WhenPropertyChanges(x => x.changedCell).Subscribe(y => UpdateCell(y.Value));
 	}
 
 	internal void UpdateCell(ICell cell)

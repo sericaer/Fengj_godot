@@ -30,10 +30,10 @@ public class MainScene : Node2D
 		mapRoot.SetGmObj(facade.runData.map);
 
 		minimapControl = GetNode<MinmapControl>("CanvasLayer/MinMap");
-		minimapControl.FuncViewRectMoved = (pos) =>
-		{
-			return mapRoot.SetViewportPosition(pos);
-		};
+
+		minimapControl.Connect("MouseButtonPressed", mapRoot, "TryChangedViewportPosition");
+		mapRoot.Connect("ViewPortRectChanged", minimapControl, "OnViewPortRectChanged");
+
 	}
 
 	private void _on_ButtonDirect_mouse_entered(String direct)

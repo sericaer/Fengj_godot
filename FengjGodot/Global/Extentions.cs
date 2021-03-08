@@ -23,4 +23,15 @@ public static class Extentions
 
         self.SetCell(offsetCoord.col, offsetCoord.row, -1);
     }
+
+    public static Vector2 HexToPixelVector2(this Layout self, AxialCoord coord)
+    {
+        var point = self.HexToPixel(coord);
+        return new Vector2((float)point.x, (float)point.y);
+    }
+
+    public static AxialCoord PixelVectorToHex(this Layout self, Vector2 vector2)
+    {
+        return self.PixelToHex(new Point(vector2.x, vector2.y));
+    }
 }

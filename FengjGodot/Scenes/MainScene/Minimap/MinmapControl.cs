@@ -4,24 +4,34 @@ using System;
 
 public class MinmapControl : Panel
 {
-	public Func<Vector2, bool> FuncViewRectMoved;
+    [Signal]
+    public delegate void MouseButtonPressed(Vector2 pos);
 
-	private Minimap map;
+    private Minimap map;
 	private Control viewRect;
 
 	public override void _Ready()
 	{
 		map = GetNode<Minimap>("ViewportContainer/Viewport/MinMap");
-		
+		viewRect = GetNode<Control>("ViewportContainer/Viewport/MinMap/CanvasLayer/ViewRect");
 	}
 
 	internal void SetGmObj(MapData gmObj, Rect2 mapViewPortRect)
 	{
 		map.SetGmObj(gmObj);
 
-		viewRect = GetNode<Control>("ViewportContainer/Viewport/MinMap/CanvasLayer/ViewRect");
+		UpdateViewRect(mapViewPortRect);
+	}
+
+    private void UpdateViewRect(Rect2 mapViewPortRect)
+    {
 		viewRect.RectSize = mapViewPortRect.Size * map.tileMap.Scale;
-		viewRect.SetPosition(mapViewPortRect.Position * map.tileMap.Scale);
+		viewRect.SetPosition(mapViewPortRect.Position * map.tileMap.Scale - viewRect.RectSize / 2);
+	}
+
+    internal void OnViewPortRectChanged(Rect2 mapViewPortRect)
+    {
+		UpdateViewRect(mapViewPortRect);
 	}
 
 	private void _on_ButtonMinimap_pressed()
@@ -29,30 +39,27 @@ public class MinmapControl : Panel
 		this.Visible = false;
 	}
 
-	public override void _UnhandledInput(InputEvent @event)
-	{
-		if(!Visible)
+    public override void _UnhandledInput(InputEvent @event)
+    {
+        if (!Visible)
         {
-			return;
+            return;
         }
 
-		if (@event is InputEventMouseButton eventMouseButton)
-		{
-			if (eventMouseButton.IsPressed())
-			{
-				if (eventMouseButton.ButtonIndex == 1 || eventMouseButton.ButtonIndex == 2)
-				{
-					var mousePos = GetLocalMousePosition();
-					var pos = (mousePos  - GetViewportRect().Size / 2) / map.tileMap.Scale;
+        if (@event is InputEventMouseButton eventMouseButton)
+        {
+            if (eventMouseButton.IsPressed())
+            {
+                if (eventMouseButton.ButtonIndex == 1 || eventMouseButton.ButtonIndex == 2)
+                {
+                    var mousePos = GetLocalMousePosition();
+                    var pos = (mousePos - GetViewportRect().Size / 2) / map.tileMap.Scale;
 
-					if(FuncViewRectMoved(pos))
-                    {
-						viewRect.SetPosition(mousePos);
-					}
-				}
+                    EmitSignal(nameof(MouseButtonPressed), pos);
+                }
 
-			}
-		}
-	}
+            }
+        }
+    }
 }                                                                     
 

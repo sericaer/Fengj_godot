@@ -3,10 +3,10 @@ using System;
 
 public class MapCamera2D : Camera2D
 {
-	public Func<Vector2, bool> FuncIsViewRectVaild;
-	public Action<Rect2> ViewPortGlobalRectChanged;
+	[Signal]
+	public delegate void ViewPortChanged(Rect2 rect);
 
-	MoveTo moveTo = MoveTo.NULL;
+	private MoveTo moveTo = MoveTo.NULL;
 
 	enum MoveTo
 	{
@@ -41,12 +41,9 @@ public class MapCamera2D : Camera2D
 				throw new Exception();
 		}
 
-		if (FuncIsViewRectVaild(this.Position + changed * 5))
-		{
-			this.Position += changed;
+		this.Position += changed;
 
-			ViewPortGlobalRectChanged(GetViewPortGlobalRect());
-		}
+		EmitSignal(nameof(ViewPortChanged), GetViewPortGlobalRect());
 	}
 
 	public Rect2 GetViewPortGlobalRect()
@@ -63,7 +60,27 @@ public class MapCamera2D : Camera2D
 		Enum.TryParse(direct, out moveTo);
 	}
 
-	internal void StopMove()
+    internal void UpdateMoveLimit(Vector2 pos)
+    {
+        if(LimitLeft > pos.x)
+        {
+			LimitLeft = (int)pos.x;
+		}
+		if (LimitRight < pos.x)
+		{
+			LimitRight = (int)pos.x;
+		}
+		if (LimitTop > pos.y)
+        {
+			LimitTop = (int)pos.y;
+        }
+		if(LimitBottom < pos.y)
+        {
+			LimitBottom = (int)pos.y;
+        }
+	}
+
+    internal void StopMove()
 	{
 		moveTo = MoveTo.NULL;
 	}
@@ -74,19 +91,16 @@ public class MapCamera2D : Camera2D
 		{
 			Zoom -= new Vector2(0.1f, 0.1f);
 
-			ViewPortGlobalRectChanged(GetViewPortGlobalRect());
+			EmitSignal(nameof(ViewPortChanged), GetViewPortGlobalRect());
 		}
 		return;
 	}
 
     internal void SetViewPortGlobalPosition(Vector2 pos)
     {
-		if (FuncIsViewRectVaild(pos))
-		{
-			this.Position = pos;
+		this.Position = pos;
 
-			ViewPortGlobalRectChanged(GetViewPortGlobalRect());
-		}
+		EmitSignal(nameof(ViewPortChanged), GetViewPortGlobalRect());
 	}
 
     internal void ZoomInc()
@@ -95,7 +109,7 @@ public class MapCamera2D : Camera2D
 		{
 			Zoom += new Vector2(0.1f, 0.1f);
 
-			ViewPortGlobalRectChanged(GetViewPortGlobalRect());
+			EmitSignal(nameof(ViewPortChanged), GetViewPortGlobalRect());
 		}
 	}
 }
