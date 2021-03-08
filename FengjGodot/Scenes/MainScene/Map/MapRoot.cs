@@ -29,26 +29,30 @@ public class MapRoot : Node2D
 
 		layout = new Layout(Layout.flat, new Point(75, 75), new Point(0, 0));
 		control.layout = layout;
+	}
+
+	internal void SetGmObj(MapData mapData)
+	{
+		gmObj = mapData;
+
+		map.SetGmObj(gmObj);
+		foreach(var detectedCell in gmObj.cells.Where(x=>x.detectType == DetectType.TERRAIN_VISIBLE))
+		{
+			camera.UpdateMoveLimit(layout.HexToPixelVector2(detectedCell.axialCoord));
+		}
+
+		control.SetGmObj(gmObj);
+		control.OnViewPortGlobalRectChanged(camera.GetViewPortGlobalRect());
 
 		gmObj.WhenPropertyChanges(x => x.changedCell).Subscribe(y =>
 		{
 			map.UpdateCell(y.Value);
 
-			if(y.Value.detectType == DetectType.TERRAIN_VISIBLE)
-			{ 
+			if (y.Value.detectType == DetectType.TERRAIN_VISIBLE)
+			{
 				camera.UpdateMoveLimit(layout.HexToPixelVector2(y.Value.axialCoord));
 			};
 		});
-	}
-
-    internal void SetGmObj(MapData mapData)
-	{
-		gmObj = mapData;
-
-		map.SetGmObj(gmObj);
-
-		control.SetGmObj(gmObj);
-		control.OnViewPortGlobalRectChanged(camera.GetViewPortGlobalRect());
 	}
 
 	internal void TryChangedViewportPosition(Vector2 pos)

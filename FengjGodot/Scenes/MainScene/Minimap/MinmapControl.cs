@@ -4,10 +4,10 @@ using System;
 
 public class MinmapControl : Panel
 {
-    [Signal]
-    public delegate void MouseButtonPressed(Vector2 pos);
+	[Signal]
+	public delegate void MouseButtonPressed(Vector2 pos);
 
-    private Minimap map;
+	private Minimap map;
 	private Control viewRect;
 
 	public override void _Ready()
@@ -23,8 +23,8 @@ public class MinmapControl : Panel
 		UpdateViewRect(mapViewPortRect);
 	}
 
-    internal void UpdateViewRect(Rect2 mapViewPortRect)
-    {
+	internal void UpdateViewRect(Rect2 mapViewPortRect)
+	{
 		viewRect.RectSize = mapViewPortRect.Size * map.tileMap.Scale;
 		viewRect.SetPosition(mapViewPortRect.Position * map.tileMap.Scale - viewRect.RectSize / 2);
 	}
@@ -34,27 +34,27 @@ public class MinmapControl : Panel
 		this.Visible = false;
 	}
 
-    public override void _UnhandledInput(InputEvent @event)
-    {
-        if (!Visible)
-        {
-            return;
-        }
+	public override void _UnhandledInput(InputEvent @event)
+	{
+		if (!Visible)
+		{
+			return;
+		}
 
-        if (@event is InputEventMouseButton eventMouseButton)
-        {
-            if (eventMouseButton.IsPressed())
-            {
-                if (eventMouseButton.ButtonIndex == 1 || eventMouseButton.ButtonIndex == 2)
-                {
-                    var mousePos = GetLocalMousePosition();
-                    var pos = (mousePos - GetViewportRect().Size / 2) / map.tileMap.Scale;
+		if (@event is InputEventMouseButton eventMouseButton)
+		{
+			if (eventMouseButton.IsPressed())
+			{
+				if (eventMouseButton.ButtonIndex == 1 || eventMouseButton.ButtonIndex == 2)
+				{
+					var mousePos = GetLocalMousePosition();
+					var pos = (mousePos - GetViewportRect().Size / 2) / map.tileMap.Scale;
 
-                    EmitSignal(nameof(MouseButtonPressed), pos);
-                }
+					EmitSignal(nameof(MouseButtonPressed), pos);
+				}
 
-            }
-        }
-    }
+			}
+		}
+	}
 }                                                                     
 

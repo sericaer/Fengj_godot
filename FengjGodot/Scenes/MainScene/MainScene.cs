@@ -51,7 +51,7 @@ public class MainScene : Node2D
 	}
 
 	private void _on_MiniMapMouseButton_pressed(Vector2 pos)
-    {
+	{
 		mapRoot.camera.Position = pos;
 		minimapControl.UpdateViewRect(mapRoot.camera.GetViewPortGlobalRect());
 

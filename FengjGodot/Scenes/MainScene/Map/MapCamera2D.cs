@@ -8,6 +8,8 @@ public class MapCamera2D : Camera2D
 
 	private MoveTo moveTo = MoveTo.NULL;
 
+	private (float left, float right, float top, float bottom) limit;
+
 	enum MoveTo
 	{
 		NULL,
@@ -41,9 +43,14 @@ public class MapCamera2D : Camera2D
 				throw new Exception();
 		}
 
-		this.Position += changed;
+		var newPos = this.Position + changed;
+		if ((newPos.x > limit.left && newPos.x < limit.right)
+			&&(newPos.y > limit.top && newPos.y < limit.bottom))
+		{
+			this.Position += changed;
 
-		EmitSignal(nameof(ViewPortChanged), GetViewPortGlobalRect());
+			EmitSignal(nameof(ViewPortChanged), GetViewPortGlobalRect());
+		}
 	}
 
 	public Rect2 GetViewPortGlobalRect()
@@ -60,27 +67,27 @@ public class MapCamera2D : Camera2D
 		Enum.TryParse(direct, out moveTo);
 	}
 
-    internal void UpdateMoveLimit(Vector2 pos)
-    {
-        if(LimitLeft > pos.x)
-        {
-			LimitLeft = (int)pos.x;
-		}
-		if (LimitRight < pos.x)
+	internal void UpdateMoveLimit(Vector2 pos)
+	{
+		if(limit.left > pos.x)
 		{
-			LimitRight = (int)pos.x;
+			limit.left = (int)pos.x;
 		}
-		if (LimitTop > pos.y)
-        {
-			LimitTop = (int)pos.y;
-        }
-		if(LimitBottom < pos.y)
-        {
-			LimitBottom = (int)pos.y;
-        }
+		if (limit.right < pos.x)
+		{
+			limit.right = (int)pos.x;
+		}
+		if (limit.top > pos.y)
+		{
+			limit.top = (int)pos.y;
+		}
+		if(limit.bottom < pos.y)
+		{
+			limit.bottom = (int)pos.y;
+		}
 	}
 
-    internal void StopMove()
+	internal void StopMove()
 	{
 		moveTo = MoveTo.NULL;
 	}
@@ -96,7 +103,7 @@ public class MapCamera2D : Camera2D
 		return;
 	}
 
-    internal void ZoomInc()
+	internal void ZoomInc()
 	{
 		if (Zoom.x < 32)
 		{

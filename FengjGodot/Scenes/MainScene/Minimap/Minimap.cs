@@ -22,12 +22,12 @@ public class Minimap : Node2D
 		tileMap.Clear();
 
 		foreach (var cell in gmObj.cells)
-        {
-            if(cell.detectType == DetectType.TERRAIN_VISIBLE)
-            {
-                tileMap.SetCell(cell.axialCoord, cell.terrainDef.type.ToString());
-            }
+		{
+			if(cell.detectType == DetectType.TERRAIN_VISIBLE)
+			{
+				tileMap.SetCell(cell.axialCoord, cell.terrainDef.type.ToString());
+			}
 
-        }
-    }
+		}
+	}
 }
