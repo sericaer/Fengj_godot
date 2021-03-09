@@ -48,5 +48,4 @@ text = "ButtonMinimap"
 __meta__ = {
 "_edit_use_anchors_": false
 }
-[connection signal="visibility_changed" from="." to="." method="_on_Minmap_visibility_changed"]
 [connection signal="pressed" from="ButtonMinimap" to="." method="_on_ButtonMinimap_pressed"]

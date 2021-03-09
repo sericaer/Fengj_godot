@@ -17,14 +17,14 @@ script = ExtResource( 1 )
 current = true
 
 [node name="TileMap" type="TileMap" parent="."]
-position = Vector2( -10.6, -10.6 )
+position = Vector2( -7.5, -8.4 )
 scale = Vector2( 0.1, 0.1 )
 tile_set = ExtResource( 2 )
-cell_size = Vector2( 152, 176 )
+cell_size = Vector2( 112, 130 )
 cell_half_offset = 1
 cell_y_sort = true
 format = 1
-tile_data = PoolIntArray( -1, 2, 0, -65536, 2, 0, -65535, 2, 0, 65535, 2, 0, 0, 1, 0, 1, 2, 0, 65536, 2, 0 )
+tile_data = PoolIntArray( -1, 1, 0, -65536, 1, 0, -65535, 1, 0, 65535, 1, 0, 0, 0, 0, 1, 1, 0, 65536, 1, 0 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 follow_viewport_enable = true
