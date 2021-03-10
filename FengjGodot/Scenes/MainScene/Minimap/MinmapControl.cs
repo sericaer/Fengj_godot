@@ -5,15 +5,17 @@ using System;
 public class MinmapControl : Panel
 {
 	[Signal]
-	public delegate void MouseButtonPressed(Vector2 pos);
+	public delegate void ViewRectPositionChanged(Vector2 pos);
 
 	private Minimap map;
+	private ViewportContainer viewPortContainer;
 	private Control viewRect;
 
 	public override void _Ready()
 	{
 		map = GetNode<Minimap>("ViewportContainer/Viewport/MinMap");
 		viewRect = GetNode<Control>("ViewportContainer/Viewport/MinMap/CanvasLayer/ViewRect");
+		viewPortContainer = GetNode<ViewportContainer>("ViewportContainer");
 	}
 
 	internal void SetGmObj(MapData gmObj, Rect2 mapViewPortRect)
@@ -35,13 +37,15 @@ public class MinmapControl : Panel
 		this.Visible = false;
 	}
 
-	public override void _UnhandledInput(InputEvent @event)
-	{
-		if (!Visible)
-		{
-			return;
-		}
+	private void _on_MinMap_MouseButtonPressed(Vector2 pos)
+    {
+		var realPos = pos + GetNode<Control>("ViewportContainer").RectPosition;
+		GD.Print("realPos", realPos);
+    }
 
+
+	public override void _Input(InputEvent @event)
+	{
 		if (@event is InputEventMouseButton eventMouseButton)
 		{
 			if (eventMouseButton.IsPressed())
@@ -49,11 +53,20 @@ public class MinmapControl : Panel
 				if (eventMouseButton.ButtonIndex == 1 || eventMouseButton.ButtonIndex == 2)
 				{
 					var mousePos = GetLocalMousePosition();
-					var pos = (mousePos - GetViewportRect().Size / 2) / map.tileMap.Scale;
 
-					EmitSignal(nameof(MouseButtonPressed), pos);
+					var viewPortContainerRect = viewPortContainer.GetRect();
+					if (!viewPortContainerRect.HasPoint(mousePos))
+                    {
+						return;
+                    }
+
+					var pos = viewPortContainer.GetLocalMousePosition() - viewPortContainerRect.Size / 2;
+					var readPos = pos / map.tileMap.Scale;
+
+					GD.Print("GetLocalMousePosition()", mousePos, " pos", pos, " readPos", readPos);
+
+					EmitSignal(nameof(ViewRectPositionChanged), readPos);
 				}
-
 			}
 		}
 	}

@@ -50,10 +50,9 @@ public class MainScene : Node2D
 		minimapControl.Visible = true;
 	}
 
-	private void _on_MiniMapMouseButton_pressed(Vector2 pos)
+	private void _on_MinMap_ViewRectPositionChanged(Vector2 pos)
 	{
-		mapRoot.camera.Position = pos;
+		mapRoot.camera.SetCameraPosition(pos);
 		minimapControl.UpdateViewRect(mapRoot.camera.GetViewPortGlobalRect());
-
 	}
 }

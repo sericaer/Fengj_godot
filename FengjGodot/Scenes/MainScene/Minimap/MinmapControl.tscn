@@ -24,7 +24,6 @@ margin_left = -500.0
 margin_top = -400.0
 margin_right = 500.0
 margin_bottom = 400.0
-stretch = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -48,4 +47,5 @@ text = "ButtonMinimap"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+[connection signal="MouseButtonPressed" from="ViewportContainer/Viewport/MinMap" to="." method="_on_MinMap_MouseButtonPressed"]
 [connection signal="pressed" from="ButtonMinimap" to="." method="_on_ButtonMinimap_pressed"]

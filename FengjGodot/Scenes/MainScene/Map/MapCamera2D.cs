@@ -63,7 +63,18 @@ public class MapCamera2D : Camera2D
 		return rect;
 	}
 
-	internal void StartMove(string direct)
+    internal void SetCameraPosition(Vector2 pos)
+    {
+		if ((pos.x > limit.left && pos.x < limit.right)
+			&& (pos.y > limit.top && pos.y < limit.bottom))
+		{
+			this.Position = pos;
+
+			EmitSignal(nameof(ViewPortChanged), GetViewPortGlobalRect());
+		}
+	}
+
+    internal void StartMove(string direct)
 	{
 		Enum.TryParse(direct, out moveTo);
 	}
