@@ -34,4 +34,18 @@ public static class Extentions
     {
         return self.PixelToHex(new Point(vector2.x, vector2.y));
     }
+
+    public static IEnumerable<T> GetChildren<T>(this Node node) where T : Node
+    {
+        List<T> rslt = new List<T>();
+        foreach (var child in node.GetChildren())
+        {
+            if (child is T)
+            {
+                rslt.Add(child as T);
+            }
+        }
+
+        return rslt;
+    }
 }
