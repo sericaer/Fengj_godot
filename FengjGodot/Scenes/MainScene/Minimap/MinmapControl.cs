@@ -38,10 +38,10 @@ public class MinmapControl : Panel
 	}
 
 	private void _on_MinMap_MouseButtonPressed(Vector2 pos)
-    {
+	{
 		var realPos = pos + GetNode<Control>("ViewportContainer").RectPosition;
 		GD.Print("realPos", realPos);
-    }
+	}
 
 
 	public override void _Input(InputEvent @event)
@@ -56,9 +56,9 @@ public class MinmapControl : Panel
 
 					var viewPortContainerRect = viewPortContainer.GetRect();
 					if (!viewPortContainerRect.HasPoint(mousePos))
-                    {
+					{
 						return;
-                    }
+					}
 
 					var pos = viewPortContainer.GetLocalMousePosition() - viewPortContainerRect.Size / 2;
 					var readPos = pos / map.tileMap.Scale;
