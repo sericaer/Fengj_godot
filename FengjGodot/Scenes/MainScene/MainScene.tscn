@@ -41,10 +41,15 @@ custom_styles/panel = SubResource( 1 )
 [node name="Direct" type="MarginContainer" parent="CanvasLayer/GUI/Center"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_left = 1.88988
+margin_top = -3.77977
+margin_right = 1.88989
+margin_bottom = -3.77979
 mouse_filter = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 __meta__ = {
+"_edit_lock_": true,
 "_edit_use_anchors_": false
 }
 
