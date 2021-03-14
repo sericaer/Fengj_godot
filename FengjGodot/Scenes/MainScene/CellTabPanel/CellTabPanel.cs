@@ -7,24 +7,41 @@ public class CellTabPanel : TabContainer
 	[Signal]
 	public delegate void DetectCell(Vector2 vect2);
 
-	private ICell cell;
+	private ICell gmObj;
 
-	Button detectButton;
-	
+	Control detectPanel;
+	Label terrainLabel;
+
 	internal void SetGmObj(ICell cell)
 	{
-		this.cell = cell;
+		this.gmObj = cell;
+		if(gmObj.detectType != DetectType.TERRAIN_VISIBLE)
+		{
+			detectPanel.Visible = true;
+
+			for(int i=1;i<this.GetTabCount();i++)
+			{
+				this.SetTabDisabled(i, true);
+			}
+
+			return;
+		}
+
+		terrainLabel.Text = gmObj.terrainType.ToString();
 	}
 
 	public override void _Ready()
 	{
-		detectButton = GetNode<Button>("Info/Detect/Button");
+		detectPanel = GetNode<Control>("Info/Detect");
+		terrainLabel = GetNode<Label>("Info/VBoxContainer/PanelContainer/HBoxContainer/Value");
+
+		var detectButton = detectPanel.GetNode<Button>("Button");
 		detectButton.Connect("pressed", this, nameof(_on_DetectedButton_pressed));
 	}
 
 	private void _on_DetectedButton_pressed()
 	{
-		EmitSignal(nameof(DetectCell), new object[] { new Vector2(cell.axialCoord.q, cell.axialCoord.r) });
+		EmitSignal(nameof(DetectCell), new object[] { new Vector2(gmObj.axialCoord.q, gmObj.axialCoord.r) });
 		this.QueueFree();
 	}
 

@@ -62,6 +62,7 @@ text = "LAKE"
 align = 1
 
 [node name="Detect" type="Panel" parent="Info"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_styles/panel = SubResource( 1 )

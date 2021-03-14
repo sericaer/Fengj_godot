@@ -69,8 +69,7 @@ public class MapRoot : Node2D
 		{
 			if (eventMouseButton.IsPressed())
 			{
-
-				if (eventMouseButton.ButtonIndex == 1 || eventMouseButton.ButtonIndex == 2)
+				if (eventMouseButton.ButtonIndex == 1)
 				{
 					var mousePos = camera.GetLocalMousePosition();
 
@@ -78,17 +77,25 @@ public class MapRoot : Node2D
 					var coord = layout.PixelVectorToHex(position);
 					GD.Print($"Click {position}, Coord {coord.q},{coord.r}");
 
-					map.SetSelectCell(coord);
-					EmitSignal(nameof(CellClicked), new object[] { new Vector2(coord.q, coord.r) });
-
-					//var cell = gmObj.GetCell(coord);
-					//if (cell.detectType == DetectType.VISION_VISIBLE)
-					//{
-					//	cell.detectType = DetectType.TERRAIN_VISIBLE;
-					//}
+					var cell = gmObj.GetCell(coord);
+					if (cell.detectType == DetectType.UN_VISIBLE)
+					{
+						return;
+					}
 
 					camera.Position = camera.GetGlobalMousePosition();
+
+					map.SetSelectCell(coord);
+
+					EmitSignal(nameof(CellClicked), new object[] { new Vector2(coord.q, coord.r) });
+
+					
 					return;
+				}
+
+				if (eventMouseButton.ButtonIndex == 2)
+				{
+
 				}
 
 				if (eventMouseButton.ButtonIndex == 4)

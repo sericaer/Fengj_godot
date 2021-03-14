@@ -19,9 +19,8 @@ margin_bottom = 14.0
 custom_constants/separation = 0
 
 [node name="Label" type="Label" parent="VBoxContainer"]
-margin_top = -1.0
 margin_right = 30.0
-margin_bottom = 13.0
+margin_bottom = 14.0
 rect_min_size = Vector2( 30, 14 )
 align = 1
 valign = 1
