@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Scenes/MainScene/Map/Map.cs" type="Script" id=1]
+[ext_resource path="res://Scenes/MainScene/Map/selectedCell.tres" type="TileSet" id=2]
 [ext_resource path="res://Scenes/MainScene/Map/river.tres" type="TileSet" id=3]
 [ext_resource path="res://test.tres" type="TileSet" id=4]
 [ext_resource path="res://Scenes/MainScene/Map/mask.tres" type="TileSet" id=6]
@@ -32,3 +33,12 @@ cell_half_offset = 1
 cell_y_sort = true
 format = 1
 tile_data = PoolIntArray( -65531, 1, 0, 2, 0, 0, 3, 1, 0, 4, 1, 0, 5, 0, 0, 6, 1, 0, 7, 1, 0, 65536, 0, 0, 65538, 0, 0, 65539, 0, 0, 65540, 0, 0, 65542, 0, 0, 65543, 0, 0, 65544, 1, 0, 131074, 0, 0, 131075, 0, 0, 131079, 0, 0, 131080, 1, 0, 196610, 0, 0, 196611, 0, 0, 196615, 0, 0, 196616, 1, 0, 262146, 0, 0, 262147, 0, 0, 262148, 0, 0, 262149, 0, 0, 262150, 0, 0, 262151, 1, 0, 262152, 1, 0, 327684, 0, 0, 327685, 0, 0, 327686, 1, 0 )
+
+[node name="SelectedCellMap" type="TileMap" parent="."]
+position = Vector2( -7, -2 )
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 112, 130 )
+cell_half_offset = 1
+cell_y_sort = true
+format = 1
+tile_data = PoolIntArray( 65539, 0, 0, 65540, 0, 0, 65541, 0, 0, 65543, 0, 0, 131075, 0, 0, 131076, 0, 0, 131077, 0, 0, 131078, 0, 0, 131079, 0, 0, 196612, 0, 0, 196613, 0, 0, 196614, 0, 0, 196615, 0, 0, 262147, 0, 0, 262151, 0, 0, 327684, 0, 0, 327685, 0, 0, 327686, 0, 0, 327687, 0, 0, 327688, 0, 0, 393219, 0, 0, 393220, 0, 0, 393221, 0, 0, 393222, 0, 0, 393223, 0, 0, 393224, 0, 0, 458755, 0, 0, 458756, 0, 0, 458757, 0, 0, 458758, 0, 0, 524292, 0, 0, 524294, 0, 0 )

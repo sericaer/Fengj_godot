@@ -13,12 +13,15 @@ public class Map : Node2D
 	public TileMap MaskMap;
 	public TileMap terrainMap;
 	public TileMap riverMap;
-
+	public TileMap selectedCellMap;
+		 
 	public override void _Ready()
 	{
 		MaskMap = GetNode<TileMap>("MaskMap");
 		terrainMap = GetNode<TileMap>("TerrainMap");
 		riverMap = GetNode<TileMap>("RiverMap");
+		selectedCellMap = GetNode<TileMap>("SelectedCellMap");
+
 	}
 
 	internal void SetTerrainTileSet(TileSet tileSet)
@@ -60,6 +63,7 @@ public class Map : Node2D
 		MaskMap.Clear();
 		terrainMap.Clear();
 		riverMap.Clear();
+		selectedCellMap.Clear();
 
 		SetTerrainTileSet(GlobalResource.tileSet);
 
@@ -72,5 +76,11 @@ public class Map : Node2D
 	internal void UpdateCell(ICell cell)
 	{
 		SetCell(cell);
+	}
+
+	internal void SetSelectCell(AxialCoord coord)
+	{
+		selectedCellMap.Clear();
+		selectedCellMap.SetCell(coord, "SELECT");
 	}
 }

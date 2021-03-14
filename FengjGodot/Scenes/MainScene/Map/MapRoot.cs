@@ -73,6 +73,7 @@ public class MapRoot : Node2D
 					var coord = layout.PixelVectorToHex(position);
 					GD.Print($"Click {position}, Coord {coord.q},{coord.r}");
 
+					map.SetSelectCell(coord);
 					var cell = gmObj.GetCell(coord);
 					if (cell.detectType == DetectType.VISION_VISIBLE)
 					{
