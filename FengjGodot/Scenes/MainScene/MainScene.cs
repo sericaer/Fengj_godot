@@ -10,6 +10,7 @@ public class MainScene : Node2D
 
 	MapRoot mapRoot;
 	MinmapControl minimapControl;
+	Control cencterControl;
 
 	Facade facade;
 
@@ -32,6 +33,8 @@ public class MainScene : Node2D
 		minimapControl = GetNode<MinmapControl>("CanvasLayer/MinMap");
 		
 		minimapControl.Connect("MouseButtonPressed", this, "_on_MiniMapMouseButton_pressed");
+
+		cencterControl = GetNode<Control>("CanvasLayer/GUI/Center");
 	}
 
 	private void _on_ButtonDirect_mouse_entered(String direct)
@@ -55,4 +58,22 @@ public class MainScene : Node2D
 		mapRoot.camera.SetCameraPosition(pos);
 		minimapControl.UpdateViewRect(mapRoot.camera.GetViewPortGlobalRect());
 	}
+
+	private void _on_MapRoot_CellClicked(Vector2 vect)
+	{
+		var olds = cencterControl.GetChildren<CellTabPanel>();
+		foreach (var elem in olds)
+		{
+			elem.QueueFree();
+		}
+		
+		var cellTabPanel = ResourceLoader.Load<PackedScene>("res://Scenes/MainScene/CellTabPanel/CellTabPanel.tscn").Instance() as CellTabPanel;
+		cencterControl.AddChild(cellTabPanel);
+		cellTabPanel.SetGmObj(mapRoot.gmObj.GetCell((int)vect.x, (int)vect.y));
+		cellTabPanel.Connect("DetectCell", mapRoot, nameof(MapRoot._on_DetectCell));
+
+	}
 }
+
+
+

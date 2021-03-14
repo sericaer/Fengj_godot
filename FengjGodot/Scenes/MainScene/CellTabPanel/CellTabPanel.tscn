@@ -1,0 +1,113 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Scenes/MainScene/CellTabPanel/CellTabPanel.cs" type="Script" id=1]
+
+[sub_resource type="StyleBoxFlat" id=1]
+
+[node name="CellTabPanel" type="TabContainer"]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = 70.0
+margin_top = -237.0
+margin_right = 470.0
+margin_bottom = 237.0
+rect_min_size = Vector2( 400, 450 )
+tab_align = 0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Info" type="Panel" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Info"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PanelContainer" type="PanelContainer" parent="Info/VBoxContainer"]
+margin_right = 392.0
+margin_bottom = 54.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Info/VBoxContainer/PanelContainer"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 385.0
+margin_bottom = 47.0
+
+[node name="Label" type="Label" parent="Info/VBoxContainer/PanelContainer/HBoxContainer"]
+margin_right = 80.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 80, 40 )
+text = "Terrain"
+align = 1
+valign = 1
+
+[node name="Value" type="Label" parent="Info/VBoxContainer/PanelContainer/HBoxContainer"]
+margin_left = 84.0
+margin_top = 13.0
+margin_right = 378.0
+margin_bottom = 27.0
+size_flags_horizontal = 3
+size_flags_vertical = 6
+text = "LAKE"
+align = 1
+
+[node name="Detect" type="Panel" parent="Info"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_styles/panel = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="Info/Detect"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -27.5
+margin_top = -10.0
+margin_right = 27.5
+margin_bottom = 10.0
+text = "Detect"
+
+[node name="Decision" type="Panel" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Decision"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PanelContainer" type="PanelContainer" parent="Decision/VBoxContainer"]
+margin_right = 392.0
+margin_bottom = 54.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Decision/VBoxContainer/PanelContainer"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 385.0
+margin_bottom = 47.0
+
+[node name="Label" type="Label" parent="Decision/VBoxContainer/PanelContainer/HBoxContainer"]
+margin_right = 378.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 0, 40 )
+size_flags_horizontal = 3

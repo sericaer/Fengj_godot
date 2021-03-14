@@ -9,6 +9,9 @@ using System.Linq;
 
 public class MapRoot : Node2D
 {
+	[Signal]
+	public delegate void CellClicked(Vector2 vect);
+
 	internal MapData gmObj;
 
 	public Map map;
@@ -69,17 +72,22 @@ public class MapRoot : Node2D
 
 				if (eventMouseButton.ButtonIndex == 1 || eventMouseButton.ButtonIndex == 2)
 				{
-					var position = camera.GetLocalMousePosition() + camera.Position;
+					var mousePos = camera.GetLocalMousePosition();
+
+					var position = mousePos + camera.Position;
 					var coord = layout.PixelVectorToHex(position);
 					GD.Print($"Click {position}, Coord {coord.q},{coord.r}");
 
 					map.SetSelectCell(coord);
-					var cell = gmObj.GetCell(coord);
-					if (cell.detectType == DetectType.VISION_VISIBLE)
-					{
-						cell.detectType = DetectType.TERRAIN_VISIBLE;
-					}
+					EmitSignal(nameof(CellClicked), new object[] { new Vector2(coord.q, coord.r) });
 
+					//var cell = gmObj.GetCell(coord);
+					//if (cell.detectType == DetectType.VISION_VISIBLE)
+					//{
+					//	cell.detectType = DetectType.TERRAIN_VISIBLE;
+					//}
+
+					camera.Position = camera.GetGlobalMousePosition();
 					return;
 				}
 
@@ -101,5 +109,14 @@ public class MapRoot : Node2D
 	private void _on_Camera2D_ViewPortChanged(Rect2 rect)
 	{
 		control.OnViewPortGlobalRectChanged(rect);
+	}
+
+	internal void _on_DetectCell(Vector2 vector2)
+	{
+		var cell = gmObj.GetCell((int)vector2.x, (int)vector2.y);
+		if (cell.detectType == DetectType.VISION_VISIBLE)
+		{
+			cell.detectType = DetectType.TERRAIN_VISIBLE;
+		}
 	}
 }
