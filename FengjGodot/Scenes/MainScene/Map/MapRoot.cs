@@ -51,7 +51,7 @@ public class MapRoot : Node2D
 		{
 			map.UpdateCell(y.Value);
 
-			if (y.Value.detectType == DetectType.TERRAIN_VISIBLE)
+			if (y.Value.detectType == DetectType.TERRAIN_VISIBLE || y.Value.detectType == DetectType.VISION_VISIBLE)
 			{
 				camera.UpdateMoveLimit(layout.HexToPixelVector2(y.Value.axialCoord));
 			};
