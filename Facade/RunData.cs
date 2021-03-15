@@ -1,4 +1,6 @@
 ﻿using Fengj.Map;
+using Fengj.Task;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +12,6 @@ namespace Fengj.Facade
     class RunData
     {
         public MapData map;
+        public ITaskManager taskManager;
     }
 }

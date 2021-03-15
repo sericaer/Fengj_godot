@@ -1,6 +1,7 @@
 using Fengj;
 using Fengj.API;
 using Fengj.Map;
+using Fengj.Task;
 using Godot;
 using HexMath;
 using ReactiveMarbles.PropertyChanged;
@@ -118,9 +119,9 @@ public class MapRoot : Node2D
 		control.OnViewPortGlobalRectChanged(rect);
 	}
 
-	internal void _on_DetectCell(Vector2 vector2)
+	internal void _on_DetectCell(CellTask task)
 	{
-		var cell = gmObj.GetCell((int)vector2.x, (int)vector2.y);
+		var cell = gmObj.GetCell(task.coord.q, task.coord.r);
 		if (cell.detectType == DetectType.VISION_VISIBLE)
 		{
 			control.AddDetectTask(cell.axialCoord);

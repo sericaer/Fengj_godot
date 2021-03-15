@@ -69,9 +69,9 @@ public class MainScene : Node2D
 		
 		var cellTabPanel = ResourceLoader.Load<PackedScene>("res://Scenes/MainScene/CellTabPanel/CellTabPanel.tscn").Instance() as CellTabPanel;
 		cencterControl.AddChild(cellTabPanel);
-		cellTabPanel.SetGmObj(facade.runData.map.GetCell((int)vect.x, (int)vect.y));
-		cellTabPanel.Connect("DetectCell", mapRoot, nameof(MapRoot._on_DetectCell));
+		cellTabPanel.SetGmObj(facade.runData.map.GetCell((int)vect.x, (int)vect.y), facade.runData.taskManager);
 
+		cellTabPanel.Connect("DetectCell", this, nameof(MapRoot._on_DetectCell));
 	}
 }
 

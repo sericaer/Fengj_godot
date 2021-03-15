@@ -1,4 +1,5 @@
 using Fengj.Map;
+using Fengj.Task;
 using Godot;
 using System;
 
@@ -7,15 +8,18 @@ public class CellTabPanel : TabContainer
 	[Signal]
 	public delegate void DetectCell(Vector2 vect2);
 
+	private ITaskManager taskManager;
 	private ICell gmObj;
 
 	Control detectPanel;
 	Label terrainLabel;
 
-	internal void SetGmObj(ICell cell)
+	internal void SetGmObj(ICell cell, ITaskManager taskManager)
 	{
 		this.gmObj = cell;
-		if(gmObj.detectType != DetectType.TERRAIN_VISIBLE)
+		this.taskManager = taskManager;
+
+		if (gmObj.detectType != DetectType.TERRAIN_VISIBLE)
 		{
 			detectPanel.Visible = true;
 
@@ -41,7 +45,10 @@ public class CellTabPanel : TabContainer
 
 	private void _on_DetectedButton_pressed()
 	{
-		EmitSignal(nameof(DetectCell), new object[] { new Vector2(gmObj.axialCoord.q, gmObj.axialCoord.r) });
+		var task = new CellTask(CellTask.Type.Detect, (gmObj.axialCoord.q, gmObj.axialCoord.r));
+		taskManager.AddTask(task);
+
+		EmitSignal(nameof(DetectCell), new object[] { task });
 		this.QueueFree();
 	}
 

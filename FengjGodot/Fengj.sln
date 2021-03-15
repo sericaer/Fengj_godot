@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utility", "..\Utility\Utili
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HexMath", "..\HexMath\HexMath.csproj", "{441806A3-85A5-4103-AAA8-B190EAF3EF4C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Task", "..\Task\Task.csproj", "{BD8FB7FB-2FE1-48C7-9A24-969D99EDD72C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -101,6 +103,14 @@ Global
 		{441806A3-85A5-4103-AAA8-B190EAF3EF4C}.ExportRelease|Any CPU.Build.0 = Release|Any CPU
 		{441806A3-85A5-4103-AAA8-B190EAF3EF4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{441806A3-85A5-4103-AAA8-B190EAF3EF4C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD8FB7FB-2FE1-48C7-9A24-969D99EDD72C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD8FB7FB-2FE1-48C7-9A24-969D99EDD72C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD8FB7FB-2FE1-48C7-9A24-969D99EDD72C}.ExportDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD8FB7FB-2FE1-48C7-9A24-969D99EDD72C}.ExportDebug|Any CPU.Build.0 = Debug|Any CPU
+		{BD8FB7FB-2FE1-48C7-9A24-969D99EDD72C}.ExportRelease|Any CPU.ActiveCfg = Release|Any CPU
+		{BD8FB7FB-2FE1-48C7-9A24-969D99EDD72C}.ExportRelease|Any CPU.Build.0 = Release|Any CPU
+		{BD8FB7FB-2FE1-48C7-9A24-969D99EDD72C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD8FB7FB-2FE1-48C7-9A24-969D99EDD72C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

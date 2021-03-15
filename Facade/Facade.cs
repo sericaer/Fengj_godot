@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO.Abstractions;
+using Fengj.Task;
 
 namespace Fengj.Facade
 {
@@ -57,6 +58,8 @@ namespace Fengj.Facade
             {
                 cell.detectType = DetectType.TERRAIN_VISIBLE;
             }
+
+            runData.taskManager = new TaskManager();
             //=======
             //runData.map = MapData.Buider.build(runInit.mapBuildType, 10, modder.dictTerrainDefs);
             //runData.map.center.detectType = DetectType.TERRAIN_VISIBLE;
