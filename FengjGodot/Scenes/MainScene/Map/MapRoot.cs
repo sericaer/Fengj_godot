@@ -123,6 +123,7 @@ public class MapRoot : Node2D
 		var cell = gmObj.GetCell((int)vector2.x, (int)vector2.y);
 		if (cell.detectType == DetectType.VISION_VISIBLE)
 		{
+			control.AddDetectTask(cell.axialCoord);
 			cell.detectType = DetectType.TERRAIN_VISIBLE;
 		}
 	}

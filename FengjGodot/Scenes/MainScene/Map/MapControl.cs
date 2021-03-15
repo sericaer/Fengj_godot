@@ -71,4 +71,9 @@ public class MapControl : Control
 			AddCellTop(gmObj.GetCell(needadd.q, needadd.r));
 		}
 	}
+
+	internal void AddDetectTask(AxialCoord axialCoord)
+	{
+		cellTopDict[(axialCoord.q, axialCoord.r)].AddTask();
+	}
 }
