@@ -83,7 +83,7 @@ public class MapRoot : Node2D
 						return;
 					}
 
-					camera.Position = camera.GetGlobalMousePosition();
+					camera.SetCameraPosition(camera.GetGlobalMousePosition());
 
 					map.SetSelectCell(coord);
 
