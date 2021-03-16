@@ -1,5 +1,6 @@
 ﻿using DynamicData;
 using Fengj.IO;
+using Fengj.Map;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,17 +9,19 @@ using System.Threading.Tasks;
 
 namespace Fengj.Task
 {
-    public interface ITaskManager
+    interface ITaskManager
     {
         void AddTask(ITask cellTask);
-        ITask getCellTask(int q, int r);
+
         void DaysInc();
 
         void OnRemoveItem(Action<ITask> act);
         void OnAddItem(Action<ITask> act);
+
+        CellTask getCellTask(ICell cell);
     }
 
-    public class TaskManager : ITaskManager
+    class TaskManager : ITaskManager
     {
         SourceList<ITask> tasks = new SourceList<ITask>();
 
@@ -45,22 +48,22 @@ namespace Fengj.Task
         {
             foreach (var elem in tasks.Items)
             {
-                elem.percent++;
+                elem.DaysInc();
             }
 
             var needRemove = tasks.Items.Where(x => x.isFinsihed).ToArray();
             tasks.RemoveMany(needRemove);
         }
 
-        public ITask getCellTask(int q, int r)
+        public CellTask getCellTask(ICell cell)
         {
             foreach(var elem in tasks.Items)
             {
                 if(elem is  CellTask cellTask)
                 {
-                    if(cellTask.coord.q == q && cellTask.coord.r == r)
+                    if(cellTask.cell == cell)
                     {
-                        return cellTask;
+                        return cellTask as CellTask;
                     }
                 }
             }

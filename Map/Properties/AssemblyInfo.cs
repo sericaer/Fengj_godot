@@ -39,3 +39,4 @@ using System.Runtime.InteropServices;
 [assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]
 [assembly: InternalsVisibleTo("Facade")]
 [assembly: InternalsVisibleTo("Fengj")]
+[assembly: InternalsVisibleTo("Task")]

@@ -61,18 +61,6 @@ namespace Fengj.Facade
 
             runData.taskManager = new TaskManager();
 
-
-            CellTask.finishAction = (coord, type) =>
-            {
-                var cell = runData.map.GetCell(coord.q, coord.r);
-                switch(type)
-                {
-                    case CellTask.Type.Detect:
-                        cell.detectType = DetectType.TERRAIN_VISIBLE;
-                        break;
-                }
-            };
-
             //=======
             //runData.map = MapData.Buider.build(runInit.mapBuildType, 10, modder.dictTerrainDefs);
             //runData.map.center.detectType = DetectType.TERRAIN_VISIBLE;

@@ -33,5 +33,7 @@ namespace Fengj.API
         string code { get; }
 
         string path { get; }
+
+        int detectSpeed { get; }
     }
 }

@@ -40,3 +40,4 @@ using System.Runtime.InteropServices;
 [assembly: InternalsVisibleTo("Facade")]
 [assembly: InternalsVisibleTo("Fengj")]
 [assembly: InternalsVisibleTo("Modder")]
+[assembly: InternalsVisibleTo("Task")]

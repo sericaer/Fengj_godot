@@ -27,6 +27,8 @@ namespace Fengj.Modder
 
         public string code { get;  set; }
 
+        public int detectSpeed { get; set; }
+
         public static class Builder
         {
   
@@ -71,11 +73,11 @@ namespace Fengj.Modder
 
                 rslt.modName = modName;
                 rslt.type = type;
-                //var json = JObject.Parse(SystemIO.FileSystem.File.ReadAllText(scriptFilePath));
+                var json = JObject.Parse(SystemIO.FileSystem.File.ReadAllText(scriptFilePath));
                 //rslt.occur = new Occur();
                 rslt.code = SystemIO.FileSystem.Path.GetFileNameWithoutExtension(pngFilePath);
                 rslt.path = pngFilePath;
-
+                rslt.detectSpeed = (int)json["detect_speed"];
 
                 LOG.INFO($"Build TerrainDef, type:{rslt.type} code:{rslt.code} path:{rslt.path}");
                 //foreach (var elem in json["occur"] as JObject)

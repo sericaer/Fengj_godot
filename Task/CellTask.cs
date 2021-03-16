@@ -1,4 +1,5 @@
 ﻿using Fengj.IO;
+using Fengj.Map;
 using ReactiveMarbles.PropertyChanged;
 using System;
 using System.Collections.Generic;
@@ -12,14 +13,21 @@ namespace Fengj.Task
     public interface ITask : INotifyPropertyChanged
     {
         int percent { get; set; }
+
+        int speed { get; }
+
+        IEnumerable<(string desc, int value)> speedDetail { get;}
+            
         bool isFinsihed { get; }
+
+        void DaysInc();
     }
 
-    public class CellTask : ITask
+    class CellTask : ITask
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public static Action<(int q, int r), Type> finishAction;
+        internal ICell cell;
 
         public enum Type
         {
@@ -27,24 +35,47 @@ namespace Fengj.Task
         }
 
         public (int q, int r) coord;
+
         private Type type;
-
-        public CellTask(Type type, (int q, int r) p)
-        {
-            this.type = type;
-            this.coord = p;
-            this.percent = 50;
-
-            this.WhenPropertyValueChanges(x=>x.isFinsihed).Subscribe(x=>{
-                if (x)
-                {
-                    LOG.INFO("x.isFinsihed");
-                    finishAction(p, type);
-                }
-            });
-        }
 
         public int percent { get; set; }
         public bool isFinsihed => percent == 100;
+
+        public int speed => speedDetail.Sum(x => x.value);
+
+        public IEnumerable<(string desc, int value)> speedDetail
+        {
+            get
+            {
+                var list = new List<(string desc, int value)>();
+                list.Add((cell.terrainType.ToString(), cell.terrainDef.detectSpeed));
+
+                return list;
+            }
+        }
+
+        public CellTask(Type type, ICell cell)
+        {
+            this.type = type;
+            this.cell = cell;
+            this.percent = 50;
+
+            this.WhenPropertyValueChanges(x=>x.isFinsihed).Subscribe(x=>{ if (x) { OnFinsihed();} });
+        }
+
+        public void DaysInc()
+        {
+            percent += speed;
+        }
+
+        public void OnFinsihed()
+        {
+            switch (type)
+            {
+                case Type.Detect:
+                    cell.detectType = DetectType.TERRAIN_VISIBLE;
+                    break;
+            }
+        }
     }
 }

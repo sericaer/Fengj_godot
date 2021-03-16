@@ -5,5 +5,7 @@
         "plain": 80,
         "hill": 30,
         "mount": 5
-    }
+    },
+
+    "detect_speed": 4
 }

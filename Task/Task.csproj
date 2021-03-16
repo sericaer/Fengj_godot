@@ -73,9 +73,17 @@
     <Compile Include="TaskManager.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\API\API.csproj">
+      <Project>{B82B49B2-140F-45CA-B9E8-953F2D284470}</Project>
+      <Name>API</Name>
+    </ProjectReference>
     <ProjectReference Include="..\IO\IO.csproj">
       <Project>{54a87f69-52c5-49d7-aeb2-f22d0952f36c}</Project>
       <Name>IO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Map\Map.csproj">
+      <Project>{72726818-513c-4d6b-8187-1a6a62732a1d}</Project>
+      <Name>Map</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

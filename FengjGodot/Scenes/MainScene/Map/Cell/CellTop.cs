@@ -5,7 +5,7 @@ using ReactiveMarbles.PropertyChanged;
 using System.Linq;
 using Fengj.Task;
 
-public class CellTop : PanelContainer
+class CellTop : PanelContainer
 {
 	public static ITaskManager taskManager;
 
@@ -32,7 +32,7 @@ public class CellTop : PanelContainer
 
 	internal void ShowTask()
 	{
-		var cellTask = taskManager.getCellTask(gmObj.axialCoord.q, gmObj.axialCoord.r);
+		var cellTask = taskManager.getCellTask(gmObj);
 		if (cellTask != null)
 		{
 			percent.Visible = true;

@@ -33,7 +33,8 @@ public class CellTabPanel : TabContainer
 			this.SetTabDisabled(i, true);
 		}
 
-		var task = taskManager.getCellTask(gmObj.axialCoord.q, gmObj.axialCoord.r);
+		var task = taskManager.getCellTask(gmObj);
+
 		if (task != null)
 		{
 			var progressPanel = detectPanel.GetNode<Panel>("ProgressPanel");
@@ -56,7 +57,7 @@ public class CellTabPanel : TabContainer
 
 	private void _on_DetectedButton_pressed()
 	{
-		var task = new CellTask(CellTask.Type.Detect, (gmObj.axialCoord.q, gmObj.axialCoord.r));
+		var task = new CellTask(CellTask.Type.Detect, gmObj);
 		taskManager.AddTask(task);
 
 		EmitSignal(nameof(DetectCell), new object[] { new Vector2(gmObj.axialCoord.q, gmObj.axialCoord.r) });
