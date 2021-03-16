@@ -11,6 +11,7 @@ public class MainScene : Node2D
 	MapRoot mapRoot;
 	MinmapControl minimapControl;
 	Control cencterControl;
+	TaskContainer taskContainer;
 
 	Facade facade;
 
@@ -37,6 +38,9 @@ public class MainScene : Node2D
 		minimapControl.Connect("MouseButtonPressed", this, "_on_MiniMapMouseButton_pressed");
 
 		cencterControl = GetNode<Control>("CanvasLayer/GUI/Center");
+
+		taskContainer = GetNode<TaskContainer>("CanvasLayer/GUI/Center/TaskContainer");
+		taskContainer.taskManager = facade.runData.taskManager;
 	}
 
 	private void _on_ButtonDirect_mouse_entered(String direct)

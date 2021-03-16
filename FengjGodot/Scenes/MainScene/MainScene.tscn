@@ -1,11 +1,14 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Scenes/MainScene/Map/MapRoot.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/MainScene/MainScene.cs" type="Script" id=2]
 [ext_resource path="res://Scenes/MainScene/Minimap/MinmapControl.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scenes/MainScene/Top/TimeSpeedControl/TimeSpeedControl.cs" type="Script" id=4]
+[ext_resource path="res://Scenes/MainScene/Task/TaskContainer.cs" type="Script" id=5]
 
 [sub_resource type="StyleBoxEmpty" id=1]
+
+[sub_resource type="StyleBoxFlat" id=2]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource( 2 )
@@ -61,10 +64,10 @@ custom_styles/panel = SubResource( 1 )
 [node name="Direct" type="MarginContainer" parent="CanvasLayer/GUI/Center"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 1.88988
-margin_top = -3.77977
-margin_right = 1.88989
-margin_bottom = -3.77979
+margin_left = -19.6769
+margin_top = -4.48689
+margin_right = -19.6769
+margin_bottom = -4.48688
 mouse_filter = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -116,6 +119,26 @@ margin_bottom = 860.0
 size_flags_horizontal = 12
 size_flags_vertical = 12
 text = "ButtonMiniMap"
+
+[node name="TaskContainer" type="PanelContainer" parent="CanvasLayer/GUI/Center"]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -260.0
+margin_top = -11.0
+margin_right = -260.0
+margin_bottom = -11.0
+rect_min_size = Vector2( 100, 0 )
+custom_styles/panel = SubResource( 2 )
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/GUI/Center/TaskContainer"]
+margin_right = 100.0
+custom_constants/separation = 0
 
 [node name="MinMap" parent="CanvasLayer" instance=ExtResource( 3 )]
 visible = false

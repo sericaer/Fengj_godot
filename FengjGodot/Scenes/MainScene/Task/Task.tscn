@@ -1,0 +1,28 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Scenes/MainScene/Task/Task.cs" type="Script" id=1]
+
+[node name="PanelContainer" type="PanelContainer"]
+margin_right = 115.0
+margin_bottom = 28.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 108.0
+margin_bottom = 21.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+percent_visible = false
+
+[node name="Label" type="Label" parent="."]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 108.0
+margin_bottom = 21.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
