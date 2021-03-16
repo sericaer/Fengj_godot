@@ -1,4 +1,5 @@
-﻿using ReactiveMarbles.PropertyChanged;
+﻿using Fengj.IO;
+using ReactiveMarbles.PropertyChanged;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -37,6 +38,7 @@ namespace Fengj.Task
             this.WhenPropertyValueChanges(x=>x.isFinsihed).Subscribe(x=>{
                 if (x)
                 {
+                    LOG.INFO("x.isFinsihed");
                     finishAction(p, type);
                 }
             });

@@ -125,7 +125,7 @@ public class MapRoot : Node2D
 		if (cell.detectType == DetectType.VISION_VISIBLE)
 		{
 			control.AddDetectTask(cell.axialCoord);
-			cell.detectType = DetectType.TERRAIN_VISIBLE;
+			//cell.detectType = DetectType.TERRAIN_VISIBLE;
 		}
 	}
 }
