@@ -75,6 +75,12 @@ public class MainScene : Node2D
 
 		cellTabPanel.Connect("DetectCell", mapRoot, nameof(MapRoot._on_DetectCell));
 	}
+
+	private void _on_TimeSpeedControl_DaysInc()
+    {
+		GD.Print("_on_TimeSpeedControl_DaysInc");
+		facade.runData.DaysInc();
+	}
 }
 
 

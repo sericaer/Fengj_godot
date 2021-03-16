@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Fengj.IO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,20 +11,24 @@ namespace Fengj.Task
     {
         void AddTask(ITask cellTask);
         ITask getCellTask(int q, int r);
+        void DaysInc();
     }
 
     public class TaskManager : ITaskManager
     {
         List<ITask> tasks = new List<ITask>();
 
-        public void AddTask(CellTask cellTask)
-        {
-            tasks.Add(cellTask);
-        }
-
         public void AddTask(ITask task)
         {
             tasks.Add(task);
+        }
+
+        public void DaysInc()
+        {
+            foreach (var elem in tasks)
+            {
+                elem.percent++;
+            }
         }
 
         public ITask getCellTask(int q, int r)

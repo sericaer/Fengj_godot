@@ -13,5 +13,10 @@ namespace Fengj.Facade
     {
         public MapData map;
         public ITaskManager taskManager;
+
+        internal void DaysInc()
+        {
+            taskManager.DaysInc();
+        }
     }
 }

@@ -28,6 +28,7 @@ _global_script_class_icons={
 
 config/name="Fengj"
 run/main_scene="res://Scenes/MainScene/MainScene.tscn"
+boot_splash/fullsize=false
 config/icon="res://icon.png"
 
 [display]

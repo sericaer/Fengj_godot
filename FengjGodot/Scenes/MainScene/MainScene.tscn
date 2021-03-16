@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Scenes/MainScene/Map/MapRoot.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/MainScene/MainScene.cs" type="Script" id=2]
 [ext_resource path="res://Scenes/MainScene/Minimap/MinmapControl.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/MainScene/Top/TimeSpeedControl/TimeSpeedControl.cs" type="Script" id=4]
 
 [sub_resource type="StyleBoxEmpty" id=1]
 
@@ -29,6 +30,25 @@ margin_right = 1440.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 0, 40 )
 size_flags_horizontal = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/GUI/Top"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TimeSpeedControl" type="PanelContainer" parent="CanvasLayer/GUI/Top/HBoxContainer"]
+margin_right = 14.0
+margin_bottom = 40.0
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Timer" type="Timer" parent="CanvasLayer/GUI/Top/HBoxContainer/TimeSpeedControl"]
+process_mode = 0
+autostart = true
 
 [node name="Center" type="Panel" parent="CanvasLayer/GUI"]
 margin_top = 40.0
@@ -100,6 +120,8 @@ text = "ButtonMiniMap"
 [node name="MinMap" parent="CanvasLayer" instance=ExtResource( 3 )]
 visible = false
 [connection signal="CellClicked" from="MapRoot" to="." method="_on_MapRoot_CellClicked"]
+[connection signal="DaysInc" from="CanvasLayer/GUI/Top/HBoxContainer/TimeSpeedControl" to="." method="_on_TimeSpeedControl_DaysInc"]
+[connection signal="timeout" from="CanvasLayer/GUI/Top/HBoxContainer/TimeSpeedControl/Timer" to="CanvasLayer/GUI/Top/HBoxContainer/TimeSpeedControl" method="_on_Timer_timeout"]
 [connection signal="mouse_entered" from="CanvasLayer/GUI/Center/Direct/ButtonDirectLeft" to="." method="_on_ButtonDirect_mouse_entered" binds= [ "LEFT" ]]
 [connection signal="mouse_exited" from="CanvasLayer/GUI/Center/Direct/ButtonDirectLeft" to="." method="_on_ButtonDirect_mouse_exited"]
 [connection signal="mouse_entered" from="CanvasLayer/GUI/Center/Direct/ButtonDirectRight" to="." method="_on_ButtonDirect_mouse_entered" binds= [ "RIGHT" ]]
