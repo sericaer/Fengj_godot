@@ -119,9 +119,9 @@ public class MapRoot : Node2D
 		control.OnViewPortGlobalRectChanged(rect);
 	}
 
-	internal void _on_DetectCell(CellTask task)
+	internal void _on_DetectCell(Vector2 coord)
 	{
-		var cell = gmObj.GetCell(task.coord.q, task.coord.r);
+		var cell = gmObj.GetCell((int)coord.x, (int)coord.y);
 		if (cell.detectType == DetectType.VISION_VISIBLE)
 		{
 			control.AddDetectTask(cell.axialCoord);

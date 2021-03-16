@@ -48,7 +48,7 @@ public class CellTabPanel : TabContainer
 		var task = new CellTask(CellTask.Type.Detect, (gmObj.axialCoord.q, gmObj.axialCoord.r));
 		taskManager.AddTask(task);
 
-		EmitSignal(nameof(DetectCell), new object[] { task });
+		EmitSignal(nameof(DetectCell), new object[] { new Vector2(gmObj.axialCoord.q, gmObj.axialCoord.r) });
 		this.QueueFree();
 	}
 

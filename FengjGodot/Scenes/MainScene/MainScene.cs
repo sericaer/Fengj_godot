@@ -27,6 +27,8 @@ public class MainScene : Node2D
 
 		facade.CreateRunData(new RunInit() { mapBuildType = Fengj.Map.MapBuildType.MAP_PLAIN, mapSize = (90, 90)});
 
+		CellTop.taskManager = facade.runData.taskManager;
+
 		mapRoot = GetNode<MapRoot>("MapRoot");
 		mapRoot.SetGmObj(facade.runData.map);
 
@@ -71,7 +73,7 @@ public class MainScene : Node2D
 		cencterControl.AddChild(cellTabPanel);
 		cellTabPanel.SetGmObj(facade.runData.map.GetCell((int)vect.x, (int)vect.y), facade.runData.taskManager);
 
-		cellTabPanel.Connect("DetectCell", this, nameof(MapRoot._on_DetectCell));
+		cellTabPanel.Connect("DetectCell", mapRoot, nameof(MapRoot._on_DetectCell));
 	}
 }
 

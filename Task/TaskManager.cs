@@ -8,7 +8,8 @@ namespace Fengj.Task
 {
     public interface ITaskManager
     {
-        void AddTask(CellTask cellTask);
+        void AddTask(ITask cellTask);
+        ITask getCellTask(int q, int r);
     }
 
     public class TaskManager : ITaskManager
@@ -18,6 +19,27 @@ namespace Fengj.Task
         public void AddTask(CellTask cellTask)
         {
             tasks.Add(cellTask);
+        }
+
+        public void AddTask(ITask task)
+        {
+            tasks.Add(task);
+        }
+
+        public ITask getCellTask(int q, int r)
+        {
+            foreach(var elem in tasks)
+            {
+                if(elem is  CellTask cellTask)
+                {
+                    if(cellTask.coord.q == q && cellTask.coord.r == r)
+                    {
+                        return cellTask;
+                    }
+                }
+            }
+
+            return null;
         }
     }
 }

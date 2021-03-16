@@ -1,18 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Fengj.Task
 {
-    public interface ITask
+    public interface ITask : INotifyPropertyChanged
     {
         int percent { get; set; }
     }
 
     public class CellTask : ITask
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public enum Type
         {
             Detect
@@ -25,7 +28,7 @@ namespace Fengj.Task
         {
             this.type = type;
             this.coord = p;
-            this.percent = 0;
+            this.percent = 50;
         }
 
         public int percent { get; set; }

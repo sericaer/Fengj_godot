@@ -74,6 +74,6 @@ public class MapControl : Control
 
 	internal void AddDetectTask(AxialCoord axialCoord)
 	{
-		cellTopDict[(axialCoord.q, axialCoord.r)].AddTask();
+		cellTopDict[(axialCoord.q, axialCoord.r)].ShowTask();
 	}
 }
