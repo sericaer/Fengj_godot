@@ -41,6 +41,34 @@ public class MainScene : Node2D
 		taskContainer.taskManager = facade.runData.taskManager;
 	}
 
+	public override void _Input(InputEvent @event)
+	{
+		if (@event is InputEventMouseMotion eventMouseMotion)
+		{
+			GD.Print(eventMouseMotion.Position);
+
+			String direct = "NULL";
+			if(eventMouseMotion.Position.x <= 3)
+			{
+				direct = "LEFT";
+			}
+			if (eventMouseMotion.Position.x >= GetViewportRect().Size.x-3)
+			{
+				direct = "RIGHT";
+			}
+			if (eventMouseMotion.Position.y <= 3)
+			{
+				direct = "UP";
+			}
+			if (eventMouseMotion.Position.y >= GetViewportRect().Size.y-3)
+			{
+				direct = "DOWN";
+			}
+
+			mapRoot.camera.StartMove(direct);
+		}
+	}
+
 	private void _on_ButtonDirect_mouse_entered(String direct)
 	{
 		mapRoot.camera.StartMove(direct);

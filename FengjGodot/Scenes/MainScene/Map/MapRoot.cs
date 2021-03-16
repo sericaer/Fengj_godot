@@ -109,7 +109,6 @@ public class MapRoot : Node2D
 				{
 					camera.ZoomInc();
 				}
-
 			}
 		}
 	}
