@@ -25,6 +25,7 @@ public class CellTop : PanelContainer
 	{
 		gmObj = cell;
 		label.Text = $"{cell.axialCoord.q}-{cell.axialCoord.r}";
+		percent.Visible = false;
 
 		ShowTask();
 	}
@@ -34,7 +35,16 @@ public class CellTop : PanelContainer
 		var cellTask = taskManager.getCellTask(gmObj.axialCoord.q, gmObj.axialCoord.r);
 		if (cellTask != null)
 		{
+			percent.Visible = true;
+
 			cellTask.WhenPropertyChanges(x => x.percent).Subscribe(x => percent.Text = $"{x.Value}%");
+			cellTask.WhenPropertyChanges(x => x.isFinsihed).Subscribe(x =>
+			{
+				if (x.Value)
+				{
+					percent.Visible = false;
+				}
+			});
 		}
 	}
 }

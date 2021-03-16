@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ReactiveMarbles.PropertyChanged;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -10,11 +11,14 @@ namespace Fengj.Task
     public interface ITask : INotifyPropertyChanged
     {
         int percent { get; set; }
+        bool isFinsihed { get; }
     }
 
     public class CellTask : ITask
     {
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public static Action<(int q, int r), Type> finishAction;
 
         public enum Type
         {
@@ -29,8 +33,16 @@ namespace Fengj.Task
             this.type = type;
             this.coord = p;
             this.percent = 50;
+
+            this.WhenPropertyValueChanges(x=>x.isFinsihed).Subscribe(x=>{
+                if (x)
+                {
+                    finishAction(p, type);
+                }
+            });
         }
 
         public int percent { get; set; }
+        public bool isFinsihed => percent == 100;
     }
 }

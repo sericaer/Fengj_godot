@@ -29,6 +29,8 @@ namespace Fengj.Task
             {
                 elem.percent++;
             }
+
+            tasks.RemoveAll(x => x.isFinsihed);
         }
 
         public ITask getCellTask(int q, int r)
