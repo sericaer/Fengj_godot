@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-public class Map : Node2D
+public class TileMapGroup : Node2D
 {
 	public TileMap MaskMap;
 	public TileMap terrainMap;

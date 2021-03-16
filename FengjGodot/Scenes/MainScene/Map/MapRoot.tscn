@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://Scenes/MainScene/Map/Map.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/MainScene/Map/TileMapGroup.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/MainScene/Map/MapCamera2D.cs" type="Script" id=2]
 [ext_resource path="res://Scenes/MainScene/Map/MapRoot.cs" type="Script" id=5]
 [ext_resource path="res://Scenes/MainScene/Map/MapControl.cs" type="Script" id=7]

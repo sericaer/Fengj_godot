@@ -15,7 +15,7 @@ public class MapRoot : Node2D
 
 	internal MapData gmObj;
 
-	public Map map;
+	public TileMapGroup map;
 	public MapCamera2D camera;
 	public MapControl control;
 
@@ -24,7 +24,7 @@ public class MapRoot : Node2D
 	public override void _Ready()
 	{
 		camera = GetNode<MapCamera2D>("Camera2D");
-		map = GetNode<Map>("Map");
+		map = GetNode<TileMapGroup>("Map");
 
 		var canvasLayer = GetNode<CanvasLayer>("CanvasLayer");
 		canvasLayer.Offset = Position;

@@ -1,17 +1,16 @@
-using Fengj.Task;
 using Godot;
 using System;
 using System.Linq;
 
 public class TaskContainer : PanelContainer
 {
-    internal ITaskManager taskManager
+    internal Fengj.Task.ITaskManager taskManager
     {
         set
         {
             value.OnAddItem(x =>
             {
-                var taskUI = ResourceLoader.Load<PackedScene>("res://Scenes/MainScene/Task/Task.tscn").Instance() as Task;
+                var taskUI = ResourceLoader.Load<PackedScene>("res://Scenes/MainScene/Task/TaskPanel.tscn").Instance() as TaskPanel;
                 container.AddChild(taskUI);
 
                 taskUI.gmObj = x;
@@ -21,7 +20,7 @@ public class TaskContainer : PanelContainer
             value.OnRemoveItem(x =>
             {
                 GD.Print("OnRemoveItem");
-                var needQueue = container.GetChildren<Task>().SingleOrDefault(y => y.gmObj == x);
+                var needQueue = container.GetChildren<TaskPanel>().SingleOrDefault(y => y.gmObj == x);
                 needQueue?.QueueFree();
             });
         }

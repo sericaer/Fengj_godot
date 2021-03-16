@@ -34,8 +34,6 @@ public class MainScene : Node2D
 		mapRoot.SetGmObj(facade.runData.map);
 
 		minimapControl = GetNode<MinmapControl>("CanvasLayer/MinMap");
-		
-		minimapControl.Connect("MouseButtonPressed", this, "_on_MiniMapMouseButton_pressed");
 
 		cencterControl = GetNode<Control>("CanvasLayer/GUI/Center");
 

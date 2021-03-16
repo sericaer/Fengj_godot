@@ -7,8 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Facade\**" />
+    <EmbeddedResource Remove="Facade\**" />
+    <None Remove="Facade\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="FluentAssertions" Version="5.10.3" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.1" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.9.1" />
     <PackageReference Include="Moq" Version="4.16.0" />
     <PackageReference Include="System.IO.Abstractions" Version="13.2.9" />
     <PackageReference Include="xunit" Version="2.4.1" />
@@ -30,10 +36,6 @@
     <ProjectReference Include="..\Map\Map.csproj" />
     <ProjectReference Include="..\Mod\Modder.csproj" />
     <ProjectReference Include="..\Utility\Utility.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Facade\" />
   </ItemGroup>
 
 </Project>

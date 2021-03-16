@@ -3,7 +3,7 @@ using Godot;
 using ReactiveMarbles.PropertyChanged;
 using System;
 
-public class Task : PanelContainer
+public class TaskPanel : PanelContainer
 {
     public ITask gmObj
     {

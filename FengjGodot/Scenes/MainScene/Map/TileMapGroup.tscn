@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://Scenes/MainScene/Map/Map.cs" type="Script" id=1]
+[ext_resource path="res://Scenes/MainScene/Map/TileMapGroup.cs" type="Script" id=1]
 [ext_resource path="res://Scenes/MainScene/Map/selectedCell.tres" type="TileSet" id=2]
 [ext_resource path="res://Scenes/MainScene/Map/river.tres" type="TileSet" id=3]
 [ext_resource path="res://test.tres" type="TileSet" id=4]

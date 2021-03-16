@@ -40,7 +40,6 @@ public class MinmapControl : Panel
 	private void _on_MinMap_MouseButtonPressed(Vector2 pos)
 	{
 		var realPos = pos + GetNode<Control>("ViewportContainer").RectPosition;
-		GD.Print("realPos", realPos);
 	}
 
 
