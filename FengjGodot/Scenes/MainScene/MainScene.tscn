@@ -62,12 +62,14 @@ size_flags_vertical = 3
 custom_styles/panel = SubResource( 1 )
 
 [node name="Direct" type="MarginContainer" parent="CanvasLayer/GUI/Center"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = -19.6769
-margin_top = -4.48689
-margin_right = -19.6769
-margin_bottom = -4.48688
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -720.0
+margin_top = -430.0
+margin_right = 720.0
+margin_bottom = 430.0
 mouse_filter = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3

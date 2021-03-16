@@ -38,10 +38,22 @@ namespace Fengj.Task
 
         private Type type;
 
-        public int percent { get; set; }
+        public int percent
+        {
+            get
+            {
+                return _percent;
+            }
+            set
+            {
+                _percent = value < 100 ? value : 100;
+            }
+        }
         public bool isFinsihed => percent == 100;
 
         public int speed => speedDetail.Sum(x => x.value);
+
+        private int _percent;
 
         public IEnumerable<(string desc, int value)> speedDetail
         {
