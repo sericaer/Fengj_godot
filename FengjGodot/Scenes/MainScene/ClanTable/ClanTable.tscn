@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://addons/godot_table/Table.gd" type="Script" id=1]
+[ext_resource path="res://Scenes/MainScene/ClanTable/ClanTable.cs" type="Script" id=2]
+
+[node name="Control" type="Control"]
+margin_right = 500.0
+margin_bottom = 230.0
+rect_min_size = Vector2( 500, 230 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Table" type="PanelContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+column_headers = [ "name", "origin", "num" ]
+min_row_count = 5
+rows = [ [ "--", "--", "--" ], [ "--", "--", "--" ], [ "--", "--", "--" ], [ "--", "--", "--" ], [ "--", "--", "--" ] ]

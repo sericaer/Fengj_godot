@@ -54,6 +54,10 @@
       <Project>{b82b49b2-140f-45ca-b9e8-953f2d284470}</Project>
       <Name>API</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Clan\Clan.csproj">
+      <Project>{061D7F40-267F-4C2E-83B7-FB63BD581A33}</Project>
+      <Name>Clan</Name>
+    </ProjectReference>
     <ProjectReference Include="..\HexMath\HexMath.csproj">
       <Project>{441806a3-85a5-4103-aaa8-b190eaf3ef4c}</Project>
       <Name>HexMath</Name>

@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HexMath", "..\HexMath\HexMa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Task", "..\Task\Task.csproj", "{BD8FB7FB-2FE1-48C7-9A24-969D99EDD72C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Clan", "..\Clan\Clan.csproj", "{061D7F40-267F-4C2E-83B7-FB63BD581A33}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -111,6 +113,14 @@ Global
 		{BD8FB7FB-2FE1-48C7-9A24-969D99EDD72C}.ExportRelease|Any CPU.Build.0 = Release|Any CPU
 		{BD8FB7FB-2FE1-48C7-9A24-969D99EDD72C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BD8FB7FB-2FE1-48C7-9A24-969D99EDD72C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{061D7F40-267F-4C2E-83B7-FB63BD581A33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{061D7F40-267F-4C2E-83B7-FB63BD581A33}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{061D7F40-267F-4C2E-83B7-FB63BD581A33}.ExportDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{061D7F40-267F-4C2E-83B7-FB63BD581A33}.ExportDebug|Any CPU.Build.0 = Debug|Any CPU
+		{061D7F40-267F-4C2E-83B7-FB63BD581A33}.ExportRelease|Any CPU.ActiveCfg = Release|Any CPU
+		{061D7F40-267F-4C2E-83B7-FB63BD581A33}.ExportRelease|Any CPU.Build.0 = Release|Any CPU
+		{061D7F40-267F-4C2E-83B7-FB63BD581A33}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{061D7F40-267F-4C2E-83B7-FB63BD581A33}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

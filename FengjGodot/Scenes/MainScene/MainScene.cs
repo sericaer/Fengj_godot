@@ -12,6 +12,7 @@ public class MainScene : Node2D
 	MinmapControl minimapControl;
 	Control cencterControl;
 	TaskContainer taskContainer;
+	Clan clanTop;
 
 	Facade facade;
 
@@ -39,6 +40,9 @@ public class MainScene : Node2D
 
 		taskContainer = GetNode<TaskContainer>("CanvasLayer/GUI/Center/TaskContainer");
 		taskContainer.taskManager = facade.runData.taskManager;
+
+		clanTop = GetNode<Clan>("CanvasLayer/GUI/Top/HBoxContainer/Clan");
+		clanTop.SetGmObj(facade.runData.clanManager);
 	}
 
 	public override void _Input(InputEvent @event)
@@ -67,16 +71,6 @@ public class MainScene : Node2D
 
 			mapRoot.camera.StartMove(direct);
 		}
-	}
-
-	private void _on_ButtonDirect_mouse_entered(String direct)
-	{
-		mapRoot.camera.StartMove(direct);
-	}
-
-	private void _on_ButtonDirect_mouse_exited()
-	{
-		mapRoot.camera.StopMove();
 	}
 
 	private void _on_ButtonMiniMap_pressed()
@@ -110,6 +104,13 @@ public class MainScene : Node2D
 	{
 		GD.Print("_on_TimeSpeedControl_DaysInc");
 		facade.runData.DaysInc();
+	}
+
+	private void _on_ClanTopButton_pressed()
+    {
+		var clanTable = ResourceLoader.Load<PackedScene>("res://Scenes/MainScene/ClanTable/ClanTable.tscn").Instance() as ClanTable;
+		cencterControl.AddChild(clanTable);
+		clanTable.SetGmObj(facade.runData.clanManager);
 	}
 }
 

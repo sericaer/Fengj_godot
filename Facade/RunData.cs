@@ -1,4 +1,5 @@
-﻿using Fengj.Map;
+﻿using Fengj.Clan;
+using Fengj.Map;
 using Fengj.Task;
 
 using System;
@@ -13,6 +14,7 @@ namespace Fengj.Facade
     {
         public MapData map;
         public ITaskManager taskManager;
+        public IClanManager clanManager;
 
         internal void DaysInc()
         {

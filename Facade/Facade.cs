@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO.Abstractions;
 using Fengj.Task;
+using Fengj.Clan;
 
 namespace Fengj.Facade
 {
@@ -60,6 +61,7 @@ namespace Fengj.Facade
             }
 
             runData.taskManager = new TaskManager();
+            runData.clanManager = new ClanManager();
 
             //=======
             //runData.map = MapData.Buider.build(runInit.mapBuildType, 10, modder.dictTerrainDefs);

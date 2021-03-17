@@ -18,10 +18,28 @@ _global_script_classes=[ {
 "class": "HeaderContainer",
 "language": "GDScript",
 "path": "res://addons/godot_table/HeaderContainer.gd"
+}, {
+"base": "VBoxContainer",
+"class": "RowButtonContainer",
+"language": "GDScript",
+"path": "res://addons/godot_table/RowButtonContainer.gd"
+}, {
+"base": "PanelContainer",
+"class": "Table",
+"language": "GDScript",
+"path": "res://addons/godot_table/Table.gd"
+}, {
+"base": "VBoxContainer",
+"class": "TableContainer",
+"language": "GDScript",
+"path": "res://addons/godot_table/TableContainer.gd"
 } ]
 _global_script_class_icons={
 "DataContainer": "",
-"HeaderContainer": ""
+"HeaderContainer": "",
+"RowButtonContainer": "",
+"Table": "",
+"TableContainer": ""
 }
 
 [application]
@@ -35,7 +53,6 @@ config/icon="res://icon.png"
 
 window/size/width=1440
 window/size/height=900
-window/size/fullscreen=true
 window/dpi/allow_hidpi=true
 window/stretch/mode="2d"
 window/stretch/aspect="expand"
