@@ -13,23 +13,21 @@ func clear_rows():
 func set_rows(rows, column_size):
 	datas = rows
 	self.columns = column_size
-	
-	
 	for row_index in rows.size():
-		var rowItems = []
 		for col_index in range(column_size):
 			var data = rows[row_index][col_index]
-			rowItems.append(add_new_table_data_item(row_index, col_index, data))
-			
+			add_new_table_data_item(row_index, col_index, data)
 
 func add_new_table_data_item(row, column, data):
 	var data_obj = load(template_path).instance()
 	data_obj.name = "DATA_%d_%d"%[row, column]
 	data_obj.text = String(data)
 	self.add_child(data_obj)
-	return data_obj
 
 func sort_column(cmp):
 	datas.sort_custom(cmp, "sort")
 	clear_rows()
 	set_rows(datas, self.columns)
+
+func get_row_data(index):
+	return datas[index]
