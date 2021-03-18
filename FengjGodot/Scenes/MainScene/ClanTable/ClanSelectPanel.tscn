@@ -1,0 +1,70 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Scenes/MainScene/ClanTable/ClanSelectPanel.cs" type="Script" id=1]
+[ext_resource path="res://Scenes/MainScene/ClanTable/ClanTable.tscn" type="PackedScene" id=2]
+
+[node name="ClanSelectPanel" type="VBoxContainer"]
+margin_left = 100.0
+margin_top = 220.0
+margin_right = 600.0
+margin_bottom = 640.0
+size_flags_horizontal = 0
+size_flags_vertical = 4
+custom_constants/separation = 0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DescPanel" type="Panel" parent="."]
+margin_right = 500.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 0, 80 )
+size_flags_vertical = 0
+
+[node name="Table" parent="." instance=ExtResource( 2 )]
+margin_top = 80.0
+margin_bottom = 420.0
+
+[node name="ConfirmPanel" type="Panel" parent="Table"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Table/ConfirmPanel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Table/ConfirmPanel/VBoxContainer"]
+margin_top = 151.0
+margin_right = 500.0
+margin_bottom = 165.0
+text = "111111111111111111"
+align = 1
+valign = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Table/ConfirmPanel/VBoxContainer"]
+margin_top = 169.0
+margin_right = 500.0
+margin_bottom = 189.0
+custom_constants/separation = 50
+alignment = 1
+
+[node name="ButtonConfirm" type="Button" parent="Table/ConfirmPanel/VBoxContainer/HBoxContainer"]
+margin_left = 167.0
+margin_right = 229.0
+margin_bottom = 20.0
+text = "Confirm"
+
+[node name="ButtonCancel" type="Button" parent="Table/ConfirmPanel/VBoxContainer/HBoxContainer"]
+margin_left = 279.0
+margin_right = 333.0
+margin_bottom = 20.0
+text = "Cancel"
+[connection signal="ClickClan" from="Table" to="." method="_on_Table_ClickClan"]

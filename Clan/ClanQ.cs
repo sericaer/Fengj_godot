@@ -13,5 +13,7 @@ namespace Fengj.Clan
         public string origin { get; set; }
 
         public int popNum { get; set; }
+
+        public string key => name + origin;
     }
 }

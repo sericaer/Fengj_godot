@@ -6,7 +6,7 @@
 [node name="Control" type="Control"]
 margin_right = 500.0
 margin_bottom = 230.0
-rect_min_size = Vector2( 500, 230 )
+rect_min_size = Vector2( 500, 340 )
 size_flags_horizontal = 0
 size_flags_vertical = 0
 script = ExtResource( 2 )
@@ -19,5 +19,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 1 )
 column_headers = [ "name", "origin", "num" ]
-min_row_count = 5
-rows = [ [ "--", "--", "--" ], [ "--", "--", "--" ], [ "--", "--", "--" ], [ "--", "--", "--" ], [ "--", "--", "--" ] ]
+min_row_count = 8
+rows = [ [ "--", "--", "--" ], [ "--", "--", "--" ], [ "--", "--", "--" ], [ "--", "--", "--" ], [ "--", "--", "--" ], [ "--", "--", "--" ], [ "--", "--", "--" ], [ "--", "--", "--" ] ]
+[connection signal="CLICK_ROW" from="Table" to="." method="_on_Table_CLICK_ROW"]

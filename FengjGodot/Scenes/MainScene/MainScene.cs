@@ -16,8 +16,8 @@ public class MainScene : Node2D
 
 	Facade facade;
 
-	public override void _Ready()
-	{
+    public override void _EnterTree()
+    {
 		Facade.logger = (str) => GD.Print(str);
 		Facade.InitStatic();
 
@@ -25,18 +25,24 @@ public class MainScene : Node2D
 
 		facade.CreateModder(GlobalPath.mod);
 
-		GlobalResource.BuildTileSet(facade.modder.dictTerrainDefs.Values.SelectMany(p=>p.Values));
+		GlobalResource.BuildTileSet(facade.modder.dictTerrainDefs.Values.SelectMany(p => p.Values));
 
-		facade.CreateRunData(new RunInit() { mapBuildType = Fengj.Map.MapBuildType.MAP_PLAIN, mapSize = (90, 90)});
+		facade.CreateRunData(new RunInit() { mapBuildType = Fengj.Map.MapBuildType.MAP_PLAIN, mapSize = (90, 90) });
 
 		CellTop.taskManager = facade.runData.taskManager;
+
+		DataDispatch.facade = facade;
+	}
+
+    public override void _Ready()
+	{
 
 		mapRoot = GetNode<MapRoot>("MapRoot");
 		mapRoot.SetGmObj(facade.runData.map);
 
 		minimapControl = GetNode<MinmapControl>("CanvasLayer/MinMap");
 
-		cencterControl = GetNode<Control>("CanvasLayer/GUI/Center");
+		cencterControl = GetNode<Control>("CanvasLayer/GUI/Center/PopupContainer");
 
 		taskContainer = GetNode<TaskContainer>("CanvasLayer/GUI/Center/TaskContainer");
 		taskContainer.taskManager = facade.runData.taskManager;
@@ -94,7 +100,9 @@ public class MainScene : Node2D
 		}
 		
 		var cellTabPanel = ResourceLoader.Load<PackedScene>("res://Scenes/MainScene/CellTabPanel/CellTabPanel.tscn").Instance() as CellTabPanel;
+		cellTabPanel.coord = ((int)vect.x, (int)vect.y);
 		cencterControl.AddChild(cellTabPanel);
+		
 		cellTabPanel.SetGmObj(facade.runData.map.GetCell((int)vect.x, (int)vect.y), facade.runData.taskManager);
 
 		cellTabPanel.Connect("DetectCell", mapRoot, nameof(MapRoot._on_DetectCell));

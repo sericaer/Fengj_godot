@@ -4,14 +4,12 @@
 
 [sub_resource type="StyleBoxFlat" id=1]
 
-[node name="CellTabPanel" type="TabContainer"]
-anchor_top = 0.5
-anchor_bottom = 0.5
-margin_left = 70.0
-margin_top = -237.0
-margin_right = 470.0
-margin_bottom = 237.0
-rect_min_size = Vector2( 400, 450 )
+[node name="TabContainer" type="TabContainer"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 407.0
+margin_bottom = 427.0
+rect_min_size = Vector2( 400, 420 )
 size_flags_horizontal = 0
 size_flags_vertical = 4
 tab_align = 0

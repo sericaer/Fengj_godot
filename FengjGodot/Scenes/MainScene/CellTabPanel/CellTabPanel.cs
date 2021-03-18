@@ -4,7 +4,14 @@ using Godot;
 using ReactiveMarbles.PropertyChanged;
 using System;
 
-public class CellTabPanel : TabContainer
+interface IRequireCell
+{
+	(int q, int r) coord { get; }
+
+	ICell cell { set; }
+}
+
+class CellTabPanel : TabContainer, IRequireCell
 {
 	[Signal]
 	public delegate void DetectCell(Vector2 vect2);
@@ -15,9 +22,13 @@ public class CellTabPanel : TabContainer
 	Control detectPanel;
 	Label terrainLabel;
 
-	internal void SetGmObj(ICell cell, ITaskManager taskManager)
+    public (int q, int r) coord { get; set; }
+
+    public ICell cell { set { gmObj = value; } }
+
+    internal void SetGmObj(ICell cell, ITaskManager taskManager)
 	{
-		this.gmObj = cell;
+		//this.gmObj = cell;
 		this.taskManager = taskManager;
 
 		if (gmObj.detectType == DetectType.TERRAIN_VISIBLE)
@@ -53,16 +64,25 @@ public class CellTabPanel : TabContainer
 
 		var detectButton = detectPanel.GetNode<Button>("Button");
 		detectButton.Connect("pressed", this, nameof(_on_DetectedButton_pressed));
+
+		DataDispatch.Require(this);
+		//SendMessage(this);
 	}
 
 	private void _on_DetectedButton_pressed()
 	{
-		var task = new CellTask(CellTask.Type.Detect, gmObj);
-		taskManager.AddTask(task);
 
-		EmitSignal(nameof(DetectCell), new object[] { new Vector2(gmObj.axialCoord.q, gmObj.axialCoord.r) });
-		this.QueueFree();
-	}
+
+        //var clanSelectPanel = ResourceLoader.Load<PackedScene>("res://Scenes/MainScene/ClanTable/ClanSelectPanel.tscn").Instance() as ClanSelectPanel;
+        //GetParent().AddChild(clanSelectPanel);
+        //clanSelectPanel.SetGmObj(facade.runData.clanManager);
+
+        var task = new CellTask(CellTask.Type.Detect, gmObj);
+        taskManager.AddTask(task);
+
+        EmitSignal(nameof(DetectCell), new object[] { new Vector2(gmObj.axialCoord.q, gmObj.axialCoord.r) });
+        this.QueueFree();
+    }
 }
 
 
