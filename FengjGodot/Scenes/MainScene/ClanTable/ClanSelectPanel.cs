@@ -6,12 +6,17 @@ using System.Linq;
 
 public class ClanSelectPanel : VBoxContainer
 {
+    [Signal]
+    public delegate void SelectedClan(string key);
+
     IEnumerable<IClan> clans;
 
     ClanTable table;
 
     Control confirmPanel;
-    
+
+    IClan selectedClan;
+
     public override void _Ready()
     {
         table = GetNode<ClanTable>("Table");
@@ -26,7 +31,15 @@ public class ClanSelectPanel : VBoxContainer
 
     private void _on_Table_ClickClan(string key)
     {
-        var selectClans = clans.Single(x => x.key == key);
-        GD.Print(selectClans.name);
+        selectedClan = clans.Single(x => x.key == key);
+        confirmPanel.Visible = true;
+
+        confirmPanel.GetNode<Label>("VBoxContainer/Label").Text = $"{selectedClan.origin}-{selectedClan.name}";
+    }
+
+    private void _on_ButtonConfirm_pressed()
+    {
+        EmitSignal(nameof(SelectedClan), selectedClan.key);
+        QueueFree();
     }
 }

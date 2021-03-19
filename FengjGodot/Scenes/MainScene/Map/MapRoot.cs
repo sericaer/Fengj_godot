@@ -118,13 +118,13 @@ public class MapRoot : Node2D
 		control.OnViewPortGlobalRectChanged(rect);
 	}
 
-	internal void _on_DetectCell(Vector2 coord)
-	{
-		var cell = gmObj.GetCell((int)coord.x, (int)coord.y);
-		if (cell.detectType == DetectType.VISION_VISIBLE)
-		{
-			control.AddDetectTask(cell.axialCoord);
-			//cell.detectType = DetectType.TERRAIN_VISIBLE;
-		}
-	}
+	//internal void _on_DetectCell(Vector2 coord)
+	//{
+	//	var cell = gmObj.GetCell((int)coord.x, (int)coord.y);
+	//	if (cell.detectType == DetectType.VISION_VISIBLE)
+	//	{
+	//		control.AddDetectTask(cell.axialCoord);
+	//		//cell.detectType = DetectType.TERRAIN_VISIBLE;
+	//	}
+	//}
 }

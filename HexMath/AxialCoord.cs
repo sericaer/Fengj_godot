@@ -17,6 +17,8 @@ namespace HexMath
         public readonly int q;
         public readonly int r;
 
+        public (int q, int r) tuple => (q, r);
+
         public int s => (q + r) * -1;
 
         //public static bool operator ==(AxialCoord left, AxialCoord right)

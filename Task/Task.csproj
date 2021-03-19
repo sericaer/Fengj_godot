@@ -77,6 +77,10 @@
       <Project>{B82B49B2-140F-45CA-B9E8-953F2D284470}</Project>
       <Name>API</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Clan\Clan.csproj">
+      <Project>{061d7f40-267f-4c2e-83b7-fb63bd581a33}</Project>
+      <Name>Clan</Name>
+    </ProjectReference>
     <ProjectReference Include="..\IO\IO.csproj">
       <Project>{54a87f69-52c5-49d7-aeb2-f22d0952f36c}</Project>
       <Name>IO</Name>

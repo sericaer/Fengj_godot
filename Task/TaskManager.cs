@@ -23,10 +23,22 @@ namespace Fengj.Task
 
     class TaskManager : ITaskManager
     {
-        SourceList<ITask> tasks = new SourceList<ITask>();
+        public static TaskManager inst
+        {
+            get
+            {
+                if(_inst  ==  null)
+                {
+                    throw new Exception();
+                }
+
+                return _inst;
+            }
+        }
 
         public TaskManager()
         {
+            _inst = this;
         }
 
         public void AddTask(ITask task)
@@ -70,5 +82,9 @@ namespace Fengj.Task
 
             return null;
         }
+
+        private static TaskManager _inst;
+
+        private SourceList<ITask> tasks = new SourceList<ITask>();
     }
 }

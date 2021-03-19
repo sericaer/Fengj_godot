@@ -14,10 +14,23 @@ namespace Fengj.Clan
 
     class ClanManager : IClanManager
     {
-        List<IClan> clans;
+        public static ClanManager inst
+        {
+            get
+            {
+                if(_inst == null)
+                {
+                    throw new Exception();
+                }
+
+                return _inst;
+            }
+        }
 
         public ClanManager()
         {
+            _inst = this;
+
             clans = new List<IClan>()
             {
                 new ClanG(){ name = "A", origin = "ab", popNum = 1000},
@@ -35,5 +48,8 @@ namespace Fengj.Clan
         {
             return ((IEnumerable)clans).GetEnumerator();
         }
+
+        private static ClanManager _inst;
+        private List<IClan> clans;
     }
 }

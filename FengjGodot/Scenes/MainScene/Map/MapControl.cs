@@ -1,4 +1,5 @@
 using Fengj.Map;
+using Fengj.Task;
 using Godot;
 using HexMath;
 using System;
@@ -13,6 +14,8 @@ public class MapControl : Control
 	internal Layout layout { get; set; }
 
 	private Dictionary<(int q, int r), CellTop> cellTopDict;
+	
+	private Rect2 currViewPortRect { get; set; }
 
 	public override void _Ready()
 	{
@@ -22,6 +25,18 @@ public class MapControl : Control
 	internal void SetGmObj(MapData mapData)
 	{
 		gmObj = mapData;
+
+		TaskManager.inst.OnAddItem(x =>
+		{
+			if(x is CellTask cellTask)
+            {
+				if (currViewPortRect.HasPoint(layout.HexToPixelVector2(cellTask.cell.axialCoord)))
+                {
+					cellTopDict[cellTask.cell.axialCoord.tuple].ShowTask();
+				}
+
+			}
+		});
 	}
 
 	private void AddCellTop(ICell cell)
@@ -39,6 +54,8 @@ public class MapControl : Control
 
 	internal void OnViewPortGlobalRectChanged(Rect2 rect)
 	{
+		currViewPortRect = rect;
+
 		var center = rect.Position + rect.Size / 2;
 
 		var coordCenter = layout.PixelVectorToHex(center);
@@ -72,8 +89,8 @@ public class MapControl : Control
 		}
 	}
 
-	internal void AddDetectTask(AxialCoord axialCoord)
-	{
-		cellTopDict[(axialCoord.q, axialCoord.r)].ShowTask();
-	}
+	//internal void AddDetectTask(AxialCoord axialCoord)
+	//{
+		
+	//}
 }

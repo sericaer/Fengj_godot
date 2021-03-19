@@ -1,8 +1,10 @@
+using Fengj.Clan;
 using Fengj.Map;
 using Fengj.Task;
 using Godot;
 using ReactiveMarbles.PropertyChanged;
 using System;
+using System.Linq;
 
 interface IRequireCell
 {
@@ -11,25 +13,20 @@ interface IRequireCell
 	ICell cell { set; }
 }
 
-class CellTabPanel : TabContainer, IRequireCell
+class CellTabPanel : TabContainer
 {
 	[Signal]
 	public delegate void DetectCell(Vector2 vect2);
 
-	private ITaskManager taskManager;
+	//private ITaskManager taskManager;
 	private ICell gmObj;
 
 	Control detectPanel;
 	Label terrainLabel;
 
-    public (int q, int r) coord { get; set; }
-
-    public ICell cell { set { gmObj = value; } }
-
-    internal void SetGmObj(ICell cell, ITaskManager taskManager)
+	internal void SetCellCoord((int q, int r) coord)
 	{
-		//this.gmObj = cell;
-		this.taskManager = taskManager;
+		this.gmObj = MapData.inst.GetCell(coord.q, coord.r);
 
 		if (gmObj.detectType == DetectType.TERRAIN_VISIBLE)
 		{
@@ -44,7 +41,7 @@ class CellTabPanel : TabContainer, IRequireCell
 			this.SetTabDisabled(i, true);
 		}
 
-		var task = taskManager.getCellTask(gmObj);
+		var task = TaskManager.inst.getCellTask(gmObj);
 
 		if (task != null)
 		{
@@ -64,21 +61,23 @@ class CellTabPanel : TabContainer, IRequireCell
 
 		var detectButton = detectPanel.GetNode<Button>("Button");
 		detectButton.Connect("pressed", this, nameof(_on_DetectedButton_pressed));
-
-		DataDispatch.Require(this);
-		//SendMessage(this);
 	}
 
 	private void _on_DetectedButton_pressed()
 	{
+		var clanSelectPanel = ResourceLoader.Load<PackedScene>("res://Scenes/MainScene/ClanTable/ClanSelectPanel.tscn").Instance() as ClanSelectPanel;
+		GetParent().AddChild(clanSelectPanel);
+		clanSelectPanel.SetGmObj(ClanManager.inst);
+
+		clanSelectPanel.Connect("SelectedClan", this, nameof(_on_CreateDetectTask));
+	}
 
 
-        //var clanSelectPanel = ResourceLoader.Load<PackedScene>("res://Scenes/MainScene/ClanTable/ClanSelectPanel.tscn").Instance() as ClanSelectPanel;
-        //GetParent().AddChild(clanSelectPanel);
-        //clanSelectPanel.SetGmObj(facade.runData.clanManager);
-
-        var task = new CellTask(CellTask.Type.Detect, gmObj);
-        taskManager.AddTask(task);
+	private void _on_CreateDetectTask(string clanKey)
+	{
+		var clans = ClanManager.inst.Where(x => x.key == clanKey);
+        var task = new CellTask(CellTask.Type.Detect, gmObj, clans.ToList());
+        TaskManager.inst.AddTask(task);
 
         EmitSignal(nameof(DetectCell), new object[] { new Vector2(gmObj.axialCoord.q, gmObj.axialCoord.r) });
         this.QueueFree();

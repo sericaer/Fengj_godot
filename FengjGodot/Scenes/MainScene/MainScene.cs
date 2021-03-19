@@ -100,12 +100,11 @@ public class MainScene : Node2D
 		}
 		
 		var cellTabPanel = ResourceLoader.Load<PackedScene>("res://Scenes/MainScene/CellTabPanel/CellTabPanel.tscn").Instance() as CellTabPanel;
-		cellTabPanel.coord = ((int)vect.x, (int)vect.y);
 		cencterControl.AddChild(cellTabPanel);
 		
-		cellTabPanel.SetGmObj(facade.runData.map.GetCell((int)vect.x, (int)vect.y), facade.runData.taskManager);
+		cellTabPanel.SetCellCoord(((int)vect.x, (int)vect.y));
 
-		cellTabPanel.Connect("DetectCell", mapRoot, nameof(MapRoot._on_DetectCell));
+		//cellTabPanel.Connect("DetectCell", mapRoot, nameof(MapRoot._on_DetectCell));
 	}
 
 	private void _on_TimeSpeedControl_DaysInc()

@@ -13,6 +13,21 @@ namespace Fengj.Map
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
+
+        private static MapData _inst;
+        public static MapData inst
+        {
+            get
+            {
+                if(_inst == null)
+                {
+                    throw new Exception();
+                }
+
+                return _inst;
+            }
+        }
+
         public int maxDist;
 
         public ICell changedCell { get; set; }
@@ -27,7 +42,7 @@ namespace Fengj.Map
 
         public MapData(int maxDist)
         {
-            Cell.map = this;
+            _inst = this;
 
             this.maxDist = maxDist;
 

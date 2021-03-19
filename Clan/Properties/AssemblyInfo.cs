@@ -37,3 +37,4 @@ using System.Runtime.InteropServices;
 
 [assembly: InternalsVisibleTo("Fengj")]
 [assembly: InternalsVisibleTo("Facade")]
+[assembly: InternalsVisibleTo("Task")]

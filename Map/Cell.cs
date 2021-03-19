@@ -45,8 +45,6 @@ namespace Fengj.Map
 
     class Cell : ICell, INotifyPropertyChanged
     {
-        public static MapData map;
-
         public static Func<TerrainType, string, ITerrainDef> funcGetTerrainDef;
 
         public AxialCoord axialCoord { get; set; }
@@ -74,8 +72,8 @@ namespace Fengj.Map
                 if (detectType == DetectType.TERRAIN_VISIBLE)
                 {
                     var nearUnVisibleCells = axialCoord.GetRingWithWidth(1, 2)
-                        .Where(x=> map.HasCell(x))
-                        .Select(x => map.GetCell(x))
+                        .Where(x=> MapData.inst.HasCell(x))
+                        .Select(x => MapData.inst.GetCell(x))
                         .Where(x => x.detectType == DetectType.UN_VISIBLE);
                     foreach (var cell in nearUnVisibleCells)
                     {
@@ -105,7 +103,7 @@ namespace Fengj.Map
 
         private void Intergrate()
         {
-            this.WhenPropertyChanges(x => x.detectType).Subscribe(_ => map.changedCell = this);
+            this.WhenPropertyChanges(x => x.detectType).Subscribe(_ => MapData.inst.changedCell = this);
         }
     }
 }
