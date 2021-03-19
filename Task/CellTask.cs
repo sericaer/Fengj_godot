@@ -75,7 +75,7 @@ namespace Fengj.Task
         {
             this.type = type;
             this.cell = cell;
-            this.percent = 50;
+            this.percent = 0;
             this.clans = clans;
 
             this.WhenPropertyValueChanges(x=>x.isFinsihed).Subscribe(x=>{ if (x) { OnFinsihed();} });

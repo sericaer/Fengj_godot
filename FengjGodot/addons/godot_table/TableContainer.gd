@@ -53,12 +53,16 @@ func set_header(column_headers):
 	headerContainer.clear_headers()
 	headerContainer.add_headers(column_headers)
 
-func set_rows(new_rows : Array, column_size):
+func set_rows(new_rows : Array, column_size, valid_row_count):
 	dataContainer.clear_rows()
 	dataContainer.set_rows(new_rows, column_size);
 	rowButtonContainer.set_rows(new_rows.size());
-	for rowButton in rowButtonContainer.get_children():
-		rowButton.connect("pressed", self, "_on_RowButtonContainer_CLICK_ROW", [int(rowButton.name)])
+	for i in range(rowButtonContainer.get_children().size()):
+		var rowButton = rowButtonContainer.get_child(i) as Button
+		if i<valid_row_count :
+			rowButton.connect("pressed", self, "_on_RowButtonContainer_CLICK_ROW", [int(rowButton.name)])
+		else:
+			rowButton.disabled  = true
 	
 class MyCustomSorter:
 	var sort_index = -1

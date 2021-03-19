@@ -4,21 +4,35 @@
 
 [sub_resource type="StyleBoxFlat" id=1]
 
-[node name="TabContainer" type="TabContainer"]
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 407.0
-margin_bottom = 427.0
-rect_min_size = Vector2( 400, 420 )
-size_flags_horizontal = 0
-size_flags_vertical = 4
-tab_align = 0
+[node name="MarginContainer" type="MarginContainer"]
+margin_right = 1440.0
+margin_bottom = 860.0
+mouse_filter = 2
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Info" type="Panel" parent="."]
+[node name="Panel" type="Panel" parent="."]
+margin_top = 220.0
+margin_right = 400.0
+margin_bottom = 640.0
+rect_min_size = Vector2( 400, 420 )
+size_flags_horizontal = 0
+size_flags_vertical = 4
+
+[node name="TabContainer" type="TabContainer" parent="Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_min_size = Vector2( 400, 420 )
+size_flags_horizontal = 0
+size_flags_vertical = 4
+tab_align = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Info" type="Panel" parent="Panel/TabContainer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -26,24 +40,24 @@ margin_top = 32.0
 margin_right = -4.0
 margin_bottom = -4.0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Info"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/TabContainer/Info"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="PanelContainer" type="PanelContainer" parent="Info/VBoxContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="Panel/TabContainer/Info/VBoxContainer"]
 margin_right = 392.0
 margin_bottom = 54.0
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Info/VBoxContainer/PanelContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/TabContainer/Info/VBoxContainer/PanelContainer"]
 margin_left = 7.0
 margin_top = 7.0
 margin_right = 385.0
 margin_bottom = 47.0
 
-[node name="Label" type="Label" parent="Info/VBoxContainer/PanelContainer/HBoxContainer"]
+[node name="Label" type="Label" parent="Panel/TabContainer/Info/VBoxContainer/PanelContainer/HBoxContainer"]
 margin_right = 80.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 80, 40 )
@@ -51,7 +65,7 @@ text = "Terrain"
 align = 1
 valign = 1
 
-[node name="Value" type="Label" parent="Info/VBoxContainer/PanelContainer/HBoxContainer"]
+[node name="Value" type="Label" parent="Panel/TabContainer/Info/VBoxContainer/PanelContainer/HBoxContainer"]
 margin_left = 84.0
 margin_top = 13.0
 margin_right = 378.0
@@ -61,7 +75,7 @@ size_flags_vertical = 6
 text = "LAKE"
 align = 1
 
-[node name="Detect" type="Panel" parent="Info"]
+[node name="Detect" type="Panel" parent="Panel/TabContainer/Info"]
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -70,7 +84,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Button" type="Button" parent="Info/Detect"]
+[node name="Button" type="Button" parent="Panel/TabContainer/Info/Detect"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -84,12 +98,12 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ProgressPanel" type="Panel" parent="Info/Detect"]
+[node name="ProgressPanel" type="Panel" parent="Panel/TabContainer/Info/Detect"]
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 
-[node name="ProgressBar" type="ProgressBar" parent="Info/Detect/ProgressPanel"]
+[node name="ProgressBar" type="ProgressBar" parent="Panel/TabContainer/Info/Detect/ProgressPanel"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -99,7 +113,7 @@ margin_top = -10.0
 margin_right = 125.0
 margin_bottom = 10.0
 
-[node name="Decision" type="Panel" parent="."]
+[node name="Decision" type="Panel" parent="Panel/TabContainer"]
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -108,25 +122,38 @@ margin_top = 32.0
 margin_right = -4.0
 margin_bottom = -4.0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Decision"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/TabContainer/Decision"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="PanelContainer" type="PanelContainer" parent="Decision/VBoxContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="Panel/TabContainer/Decision/VBoxContainer"]
 margin_right = 392.0
 margin_bottom = 54.0
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Decision/VBoxContainer/PanelContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/TabContainer/Decision/VBoxContainer/PanelContainer"]
 margin_left = 7.0
 margin_top = 7.0
 margin_right = 385.0
 margin_bottom = 47.0
 
-[node name="Label" type="Label" parent="Decision/VBoxContainer/PanelContainer/HBoxContainer"]
+[node name="Label" type="Label" parent="Panel/TabContainer/Decision/VBoxContainer/PanelContainer/HBoxContainer"]
 margin_right = 378.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 0, 40 )
 size_flags_horizontal = 3
+
+[node name="Button" type="Button" parent="Panel"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -20.0
+margin_bottom = 20.0
+size_flags_horizontal = 8
+size_flags_vertical = 0
+text = "C"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="pressed" from="Panel/Button" to="." method="_on_CloseButton_pressed"]

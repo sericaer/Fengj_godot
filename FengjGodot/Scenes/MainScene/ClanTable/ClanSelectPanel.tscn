@@ -22,6 +22,16 @@ margin_bottom = 80.0
 rect_min_size = Vector2( 0, 80 )
 size_flags_vertical = 0
 
+[node name="ButtonClose" type="Button" parent="DescPanel"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -20.0
+margin_bottom = 20.0
+text = "C"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Table" parent="." instance=ExtResource( 2 )]
 margin_top = 80.0
 margin_bottom = 420.0
@@ -68,5 +78,7 @@ margin_left = 279.0
 margin_right = 333.0
 margin_bottom = 20.0
 text = "Cancel"
+[connection signal="pressed" from="DescPanel/ButtonClose" to="." method="_on_ButtonClose_pressed"]
 [connection signal="ClickClan" from="Table" to="." method="_on_Table_ClickClan"]
 [connection signal="pressed" from="Table/ConfirmPanel/VBoxContainer/HBoxContainer/ButtonConfirm" to="." method="_on_ButtonConfirm_pressed"]
+[connection signal="pressed" from="Table/ConfirmPanel/VBoxContainer/HBoxContainer/ButtonCancel" to="." method="_on_ButtonCancel_pressed"]

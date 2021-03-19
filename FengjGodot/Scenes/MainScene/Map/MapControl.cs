@@ -29,9 +29,9 @@ public class MapControl : Control
 		TaskManager.inst.OnAddItem(x =>
 		{
 			if(x is CellTask cellTask)
-            {
+			{
 				if (currViewPortRect.HasPoint(layout.HexToPixelVector2(cellTask.cell.axialCoord)))
-                {
+				{
 					cellTopDict[cellTask.cell.axialCoord.tuple].ShowTask();
 				}
 

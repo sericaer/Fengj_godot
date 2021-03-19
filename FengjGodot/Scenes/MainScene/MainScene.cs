@@ -10,14 +10,14 @@ public class MainScene : Node2D
 
 	MapRoot mapRoot;
 	MinmapControl minimapControl;
-	Control cencterControl;
+	PopupContainer popupContainer;
 	TaskContainer taskContainer;
 	Clan clanTop;
 
 	Facade facade;
 
-    public override void _EnterTree()
-    {
+	public override void _EnterTree()
+	{
 		Facade.logger = (str) => GD.Print(str);
 		Facade.InitStatic();
 
@@ -30,11 +30,9 @@ public class MainScene : Node2D
 		facade.CreateRunData(new RunInit() { mapBuildType = Fengj.Map.MapBuildType.MAP_PLAIN, mapSize = (90, 90) });
 
 		CellTop.taskManager = facade.runData.taskManager;
-
-		DataDispatch.facade = facade;
 	}
 
-    public override void _Ready()
+	public override void _Ready()
 	{
 
 		mapRoot = GetNode<MapRoot>("MapRoot");
@@ -42,7 +40,7 @@ public class MainScene : Node2D
 
 		minimapControl = GetNode<MinmapControl>("CanvasLayer/MinMap");
 
-		cencterControl = GetNode<Control>("CanvasLayer/GUI/Center/PopupContainer");
+		popupContainer = GetNode<PopupContainer>("CanvasLayer/GUI/Center/PopupContainer");
 
 		taskContainer = GetNode<TaskContainer>("CanvasLayer/GUI/Center/TaskContainer");
 		taskContainer.taskManager = facade.runData.taskManager;
@@ -93,14 +91,14 @@ public class MainScene : Node2D
 
 	private void _on_MapRoot_CellClicked(Vector2 vect)
 	{
-		var olds = cencterControl.GetChildren<CellTabPanel>();
+		var olds = popupContainer.GetChildren<CellTabPanel>();
 		foreach (var elem in olds)
 		{
 			elem.QueueFree();
 		}
 		
 		var cellTabPanel = ResourceLoader.Load<PackedScene>("res://Scenes/MainScene/CellTabPanel/CellTabPanel.tscn").Instance() as CellTabPanel;
-		cencterControl.AddChild(cellTabPanel);
+		popupContainer.AddChild(cellTabPanel);
 		
 		cellTabPanel.SetCellCoord(((int)vect.x, (int)vect.y));
 
@@ -114,9 +112,9 @@ public class MainScene : Node2D
 	}
 
 	private void _on_ClanTopButton_pressed()
-    {
+	{
 		var clanTable = ResourceLoader.Load<PackedScene>("res://Scenes/MainScene/ClanTable/ClanTable.tscn").Instance() as ClanTable;
-		cencterControl.AddChild(clanTable);
+		popupContainer.AddChild(clanTable);
 		clanTable.SetGmObj(facade.runData.clanManager);
 	}
 }

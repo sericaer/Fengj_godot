@@ -6,14 +6,7 @@ using ReactiveMarbles.PropertyChanged;
 using System;
 using System.Linq;
 
-interface IRequireCell
-{
-	(int q, int r) coord { get; }
-
-	ICell cell { set; }
-}
-
-class CellTabPanel : TabContainer
+class CellTabPanel : MarginContainer
 {
 	[Signal]
 	public delegate void DetectCell(Vector2 vect2);
@@ -23,6 +16,7 @@ class CellTabPanel : TabContainer
 
 	Control detectPanel;
 	Label terrainLabel;
+	TabContainer tabContainer;
 
 	internal void SetCellCoord((int q, int r) coord)
 	{
@@ -36,9 +30,9 @@ class CellTabPanel : TabContainer
 
 		detectPanel.Visible = true;
 
-		for (int i = 1; i < this.GetTabCount(); i++)
+		for (int i = 1; i < tabContainer.GetTabCount(); i++)
 		{
-			this.SetTabDisabled(i, true);
+			tabContainer.SetTabDisabled(i, true);
 		}
 
 		var task = TaskManager.inst.getCellTask(gmObj);
@@ -56,8 +50,9 @@ class CellTabPanel : TabContainer
 
 	public override void _Ready()
 	{
-		detectPanel = GetNode<Control>("Info/Detect");
-		terrainLabel = GetNode<Label>("Info/VBoxContainer/PanelContainer/HBoxContainer/Value");
+		tabContainer = GetNode<TabContainer>("Panel/TabContainer");
+		detectPanel = tabContainer.GetNode<Control>("Info/Detect");
+		terrainLabel = tabContainer.GetNode<Label>("Info/VBoxContainer/PanelContainer/HBoxContainer/Value");
 
 		var detectButton = detectPanel.GetNode<Button>("Button");
 		detectButton.Connect("pressed", this, nameof(_on_DetectedButton_pressed));
@@ -66,7 +61,7 @@ class CellTabPanel : TabContainer
 	private void _on_DetectedButton_pressed()
 	{
 		var clanSelectPanel = ResourceLoader.Load<PackedScene>("res://Scenes/MainScene/ClanTable/ClanSelectPanel.tscn").Instance() as ClanSelectPanel;
-		GetParent().AddChild(clanSelectPanel);
+		this.AddChild(clanSelectPanel);
 		clanSelectPanel.SetGmObj(ClanManager.inst);
 
 		clanSelectPanel.Connect("SelectedClan", this, nameof(_on_CreateDetectTask));
@@ -76,13 +71,15 @@ class CellTabPanel : TabContainer
 	private void _on_CreateDetectTask(string clanKey)
 	{
 		var clans = ClanManager.inst.Where(x => x.key == clanKey);
-        var task = new CellTask(CellTask.Type.Detect, gmObj, clans.ToList());
-        TaskManager.inst.AddTask(task);
+		var task = new CellTask(CellTask.Type.Detect, gmObj, clans.ToList());
+		TaskManager.inst.AddTask(task);
 
-        EmitSignal(nameof(DetectCell), new object[] { new Vector2(gmObj.axialCoord.q, gmObj.axialCoord.r) });
-        this.QueueFree();
-    }
+		EmitSignal(nameof(DetectCell), new object[] { new Vector2(gmObj.axialCoord.q, gmObj.axialCoord.r) });
+		this.QueueFree();
+	}
+
+	private void _on_CloseButton_pressed()
+	{
+		QueueFree();
+	}
 }
-
-
-

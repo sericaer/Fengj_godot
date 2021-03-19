@@ -18,6 +18,8 @@ var preload_tableContainer : PackedScene = preload("TableContainer.tscn")
 # Shared Variables .........................
 var tableContainer : TableContainer
 
+var valid_row_count = 0
+
 func _init():
 	_init_tree()
 
@@ -42,6 +44,7 @@ func _set_column_headers(new_header):
 	tableContainer.set_header(column_headers)
 
 func set_rows(new_rows):
+	valid_row_count = new_rows.size()
 	for row in new_rows:
 		var row_columns = row.size()
 		var header_columns = column_headers.size()
@@ -53,13 +56,13 @@ func set_rows(new_rows):
 	rows = new_rows
 	check_add_min_row_count()
 	
-	tableContainer.set_rows(rows, column_headers.size())
+	tableContainer.set_rows(rows, column_headers.size(), valid_row_count)
 
 func set_min_row_count(count):
 	min_row_count = count
 	
 	if check_add_min_row_count():
-		tableContainer.set_rows(rows, column_headers.size())
+		tableContainer.set_rows(rows, column_headers.size(), valid_row_count)
 	
 func check_add_min_row_count():
 	if min_row_count < rows.size(): 

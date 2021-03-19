@@ -10,5 +10,5 @@ func set_rows(row_count):
 	for index in range(row_count):
 		var btn = Button.new()
 		btn.name = str(index)
-		btn.rect_min_size = Vector2(0, 35)
+		btn.rect_min_size = Vector2(0, 34)
 		add_child(btn)
