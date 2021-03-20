@@ -14,5 +14,7 @@ namespace Fengj.Clan
         string key { get; }
 
         int popNum { get; set; }
+
+        double detectSpeed { get; }
     }
 }
