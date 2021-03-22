@@ -5,6 +5,7 @@ using ReactiveMarbles.PropertyChanged;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,15 +16,47 @@ namespace Fengj.Task
     {
         int percent { get; set; }
 
-        int speed { get; }
+        double difficulty { get; set;}
 
-        IEnumerable<(string desc, int value)> speedDetail { get;}
+        double speed { get; }
+
+        IEnumerable<(string desc, double value)> speedDetail { get;}
 
         List<IClan> clans { get; }
 
         bool isFinsihed { get; }
 
         void DaysInc();
+    }
+
+    class Task : ITask
+    {
+        [Range(0.0, 100.0)]
+        public int percent { get; set; }
+
+        double difficulty { get; set; }
+
+        public bool isFinsihed => percent == 100;
+
+        public int speed => speedDetail.Sum(x => x.value);
+
+        public List<IClan> clans { get; set; }
+
+        private int _percent;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public IEnumerable<(string desc, int value)> speedDetail { get; set; }
+        double ITask.difficulty { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+        double ITask.speed => throw new NotImplementedException();
+
+        IEnumerable<(string desc, double value)> ITask.speedDetail => throw new NotImplementedException();
+
+        public void DaysInc()
+        {
+            percent += speed;
+        }
     }
 
     class CellTask : ITask
@@ -50,6 +83,7 @@ namespace Fengj.Task
                 _percent = value < 100 ? value : 100;
             }
         }
+
         public bool isFinsihed => percent == 100;
 
         public int speed => speedDetail.Sum(x => x.value);
@@ -69,7 +103,11 @@ namespace Fengj.Task
             }
         }
 
-        
+        public double difficulty { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+        double ITask.speed => throw new NotImplementedException();
+
+        IEnumerable<(string desc, double value)> ITask.speedDetail => throw new NotImplementedException();
 
         public CellTask(Type type, ICell cell, List<IClan> clans)
         {
