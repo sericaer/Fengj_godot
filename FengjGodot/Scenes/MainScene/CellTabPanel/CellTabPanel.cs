@@ -42,9 +42,10 @@ class CellTabPanel : MarginContainer
 			var progressPanel = detectPanel.GetNode<Panel>("ProgressPanel");
 			progressPanel.Visible = true;
 
-			var progressBar = progressPanel.GetNode<ProgressBar>("ProgressBar");
+			var progressBar = progressPanel.GetNode<ProgressBar>("VBoxContainer/ProgressBar");
 			task.WhenPropertyValueChanges(x => x.percent).Subscribe(x => progressBar.Value = x);
 			task.WhenPropertyValueChanges(x => x.isFinsihed).Subscribe(x => { if (x) detectPanel.Visible = false; });
+			task.WhenPropertyValueChanges(x => x.isCanceled).Subscribe(x => { if (x) progressPanel.Visible = false; progressBar.Value = 0; });
 		}
 	}
 
@@ -81,5 +82,11 @@ class CellTabPanel : MarginContainer
 	private void _on_CloseButton_pressed()
 	{
 		QueueFree();
+	}
+
+	private void _on_DetectCancelButton_pressed()
+    {
+		var task = TaskManager.inst.getCellTask(gmObj);
+		TaskManager.inst.Cancel(task);
 	}
 }

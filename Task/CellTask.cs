@@ -21,6 +21,8 @@ namespace Fengj.Task
 
         public bool isFinsihed => (int)percent == 100;
 
+        public bool isCanceled { get; set; }
+
         public double speed => speedDetail.Sum(x => x.value);
 
         public IEnumerable<(string desc, double value)> speedDetail { get; set; }

@@ -46,6 +46,12 @@ namespace Fengj.Task
             tasks.Add(task);
         }
 
+        public void Cancel(CellTask task)
+        {
+            task.isCanceled = true;
+            tasks.Remove(task);
+        }
+
         public void OnAddItem(Action<Task> act)
         {
             tasks.Connect().OnItemAdded(act).Subscribe();
@@ -86,5 +92,7 @@ namespace Fengj.Task
         private static TaskManager _inst;
 
         private SourceList<Task> tasks = new SourceList<Task>();
+
+
     }
 }
