@@ -14,15 +14,17 @@ __meta__ = {
 margin_left = 7.0
 margin_top = 7.0
 margin_right = 108.0
-margin_bottom = 21.0
+margin_bottom = 27.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+value = 33.0
 percent_visible = false
 
-[node name="Label" type="Label" parent="."]
+[node name="Button" type="Button" parent="."]
+self_modulate = Color( 1, 1, 1, 0 )
 margin_left = 7.0
 margin_top = 7.0
 margin_right = 108.0
-margin_bottom = 21.0
+margin_bottom = 27.0
 size_flags_horizontal = 3
 size_flags_vertical = 3

@@ -115,4 +115,5 @@ visible = false
 [connection signal="pressed" from="CanvasLayer/GUI/Top/HBoxContainer/Clan/Button" to="." method="_on_ClanTopButton_pressed"]
 [connection signal="DaysInc" from="CanvasLayer/GUI/Top/HBoxContainer/TimeSpeedControl" to="." method="_on_TimeSpeedControl_DaysInc"]
 [connection signal="timeout" from="CanvasLayer/GUI/Top/HBoxContainer/TimeSpeedControl/Timer" to="CanvasLayer/GUI/Top/HBoxContainer/TimeSpeedControl" method="_on_Timer_timeout"]
+[connection signal="TaskClick" from="CanvasLayer/GUI/Center/TaskContainer" to="." method="_on_TaskContainer_TaskClick"]
 [connection signal="ViewRectPositionChanged" from="CanvasLayer/MinMap" to="." method="_on_MinMap_ViewRectPositionChanged"]

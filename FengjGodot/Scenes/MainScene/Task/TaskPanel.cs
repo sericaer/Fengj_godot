@@ -21,11 +21,13 @@ class TaskPanel : PanelContainer
 
 
     ProgressBar progressBar;
+    public Button button;
 
     private Fengj.Task.Task _gmObj;
 
     public override void _Ready()
     {
         progressBar = GetNode<ProgressBar>("ProgressBar");
+        button = GetNode<Button>("Button");
     }
 }

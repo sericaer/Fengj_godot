@@ -90,13 +90,7 @@ public class MainScene : Node2D
 	}
 
 	private void _on_MapRoot_CellClicked(Vector2 vect)
-	{
-		var olds = popupContainer.GetChildren<CellTabPanel>();
-		foreach (var elem in olds)
-		{
-			elem.QueueFree();
-		}
-		
+	{		
 		var cellTabPanel = ResourceLoader.Load<PackedScene>("res://Scenes/MainScene/CellTabPanel/CellTabPanel.tscn").Instance() as CellTabPanel;
 		popupContainer.AddChild(cellTabPanel);
 		
@@ -116,6 +110,14 @@ public class MainScene : Node2D
 		var clanTable = ResourceLoader.Load<PackedScene>("res://Scenes/MainScene/ClanTable/ClanTable.tscn").Instance() as ClanTable;
 		popupContainer.AddChild(clanTable);
 		clanTable.SetGmObj(facade.runData.clanManager);
+	}
+
+	private void _on_TaskContainer_TaskClick(Vector2 vect)
+    {
+		var cellTabPanel = ResourceLoader.Load<PackedScene>("res://Scenes/MainScene/CellTabPanel/CellTabPanel.tscn").Instance() as CellTabPanel;
+		popupContainer.AddChild(cellTabPanel);
+
+		cellTabPanel.SetCellCoord(((int)vect.x, (int)vect.y));
 	}
 }
 

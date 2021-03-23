@@ -1,9 +1,13 @@
+using Fengj.Task;
 using Godot;
 using System;
 using System.Linq;
 
 public class TaskContainer : VBoxContainer
 {
+	[Signal]
+	public delegate void TaskClick(Vector2 vector2);
+
 	internal Fengj.Task.ITaskManager taskManager
 	{
 		set
@@ -15,6 +19,11 @@ public class TaskContainer : VBoxContainer
 
 				taskUI.gmObj = x;
 
+				if(x is CellTask cellTask)
+                {
+					var param = new Vector2(cellTask.cell.axialCoord.q, cellTask.cell.axialCoord.r);
+					taskUI.button.Connect("pressed", this, nameof(_on_TaskButtonPressed), new Godot.Collections.Array() { param });
+				}
 			});
 
 			value.OnRemoveItem(x =>
@@ -25,4 +34,9 @@ public class TaskContainer : VBoxContainer
 			});
 		}
 	}
+
+	private void _on_TaskButtonPressed(Vector2 obj)
+    {
+		EmitSignal(nameof(TaskClick), obj);
+    }
 }
