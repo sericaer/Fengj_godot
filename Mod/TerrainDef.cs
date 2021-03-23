@@ -27,12 +27,11 @@ namespace Fengj.Modder
 
         public string code { get;  set; }
 
-        public int detectSpeed { get; set; }
+        public int detectDifficulty { get; set; }
 
         public static class Builder
         {
   
-
             public static List<ITerrainDef>  BuildArray(string modName, string path)
             {
                 var rslt = new List<ITerrainDef>();
@@ -77,7 +76,7 @@ namespace Fengj.Modder
                 //rslt.occur = new Occur();
                 rslt.code = SystemIO.FileSystem.Path.GetFileNameWithoutExtension(pngFilePath);
                 rslt.path = pngFilePath;
-                rslt.detectSpeed = (int)json["detect_speed"];
+                rslt.detectDifficulty = (int)json["detect_difficulty"];
 
                 LOG.INFO($"Build TerrainDef, type:{rslt.type} code:{rslt.code} path:{rslt.path}");
                 //foreach (var elem in json["occur"] as JObject)

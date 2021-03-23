@@ -5,64 +5,38 @@ using ReactiveMarbles.PropertyChanged;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Fengj.Task
 {
-    interface ITask : INotifyPropertyChanged
+    class Task : INotifyPropertyChanged
     {
-        int percent { get; set; }
+        public event PropertyChangedEventHandler PropertyChanged;
 
-        double difficulty { get; set;}
+        public double percent { get { return _percent; } set { _percent = value > 100.0 ? 100.0 : value; } }
 
-        double speed { get; }
+        public int difficulty { get; set; }
 
-        IEnumerable<(string desc, double value)> speedDetail { get;}
+        public bool isFinsihed => (int)percent == 100;
 
-        List<IClan> clans { get; }
+        public double speed => speedDetail.Sum(x => x.value);
 
-        bool isFinsihed { get; }
-
-        void DaysInc();
-    }
-
-    class Task : ITask
-    {
-        [Range(0.0, 100.0)]
-        public int percent { get; set; }
-
-        double difficulty { get; set; }
-
-        public bool isFinsihed => percent == 100;
-
-        public int speed => speedDetail.Sum(x => x.value);
+        public IEnumerable<(string desc, double value)> speedDetail { get; set; }
 
         public List<IClan> clans { get; set; }
 
-        private int _percent;
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public IEnumerable<(string desc, int value)> speedDetail { get; set; }
-        double ITask.difficulty { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
-        double ITask.speed => throw new NotImplementedException();
-
-        IEnumerable<(string desc, double value)> ITask.speedDetail => throw new NotImplementedException();
+        private double _percent;
 
         public void DaysInc()
         {
-            percent += speed;
+            percent += speed * 100 / difficulty;
         }
     }
 
-    class CellTask : ITask
+    class CellTask : Task
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-
         internal ICell cell { get; set; }
 
         public enum Type
@@ -72,42 +46,6 @@ namespace Fengj.Task
 
         private Type type { get; set; }
 
-        public int percent
-        {
-            get
-            {
-                return _percent;
-            }
-            set
-            {
-                _percent = value < 100 ? value : 100;
-            }
-        }
-
-        public bool isFinsihed => percent == 100;
-
-        public int speed => speedDetail.Sum(x => x.value);
-
-        public List<IClan> clans { get; set; }
-
-        private int _percent;
-
-        public IEnumerable<(string desc, int value)> speedDetail
-        {
-            get
-            {
-                var list = new List<(string desc, int value)>();
-                list.Add((cell.terrainType.ToString(), cell.terrainDef.detectSpeed));
-
-                return list;
-            }
-        }
-
-        public double difficulty { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
-        double ITask.speed => throw new NotImplementedException();
-
-        IEnumerable<(string desc, double value)> ITask.speedDetail => throw new NotImplementedException();
 
         public CellTask(Type type, ICell cell, List<IClan> clans)
         {
@@ -115,13 +53,10 @@ namespace Fengj.Task
             this.cell = cell;
             this.percent = 0;
             this.clans = clans;
+            this.speedDetail = this.clans.Select(x => (x.name, x.detectSpeed));
+            this.difficulty = cell.terrainDef.detectDifficulty;
 
             this.WhenPropertyValueChanges(x=>x.isFinsihed).Subscribe(x=>{ if (x) { OnFinsihed();} });
-        }
-
-        public void DaysInc()
-        {
-            percent += speed;
         }
 
         public void OnFinsihed()

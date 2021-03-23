@@ -11,12 +11,12 @@ namespace Fengj.Task
 {
     interface ITaskManager
     {
-        void AddTask(ITask cellTask);
+        void AddTask(Task cellTask);
 
         void DaysInc();
 
-        void OnRemoveItem(Action<ITask> act);
-        void OnAddItem(Action<ITask> act);
+        void OnRemoveItem(Action<Task> act);
+        void OnAddItem(Action<Task> act);
 
         CellTask getCellTask(ICell cell);
     }
@@ -41,17 +41,17 @@ namespace Fengj.Task
             _inst = this;
         }
 
-        public void AddTask(ITask task)
+        public void AddTask(Task task)
         {
             tasks.Add(task);
         }
 
-        public void OnAddItem(Action<ITask> act)
+        public void OnAddItem(Action<Task> act)
         {
             tasks.Connect().OnItemAdded(act).Subscribe();
         }
 
-        public void OnRemoveItem(Action<ITask> act)
+        public void OnRemoveItem(Action<Task> act)
         {
             tasks.Connect().OnItemRemoved(act).Subscribe();
         }
@@ -85,6 +85,6 @@ namespace Fengj.Task
 
         private static TaskManager _inst;
 
-        private SourceList<ITask> tasks = new SourceList<ITask>();
+        private SourceList<Task> tasks = new SourceList<Task>();
     }
 }

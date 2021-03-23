@@ -16,6 +16,6 @@ namespace Fengj.Clan
 
         public string key => name + origin;
 
-        public double detectSpeed => 1.0;
+        public double detectSpeed => 3.0;
     }
 }

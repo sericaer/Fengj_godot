@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\FengjGodot\packages\PostSharp.6.6.6\build\PostSharp.props" Condition="Exists('..\FengjGodot\packages\PostSharp.6.6.6\build\PostSharp.props')" />
   <Import Project="..\FengjGodot\packages\PropertyChanged.Fody.3.3.3\build\PropertyChanged.Fody.props" Condition="Exists('..\FengjGodot\packages\PropertyChanged.Fody.3.3.3\build\PropertyChanged.Fody.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -35,17 +34,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DataAnnotationsExtensions, Version=5.0.1.27, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\FengjGodot\packages\DataAnnotationsExtensions.5.0.1.27\lib\NETFramework40\DataAnnotationsExtensions.dll</HintPath>
-    </Reference>
     <Reference Include="DynamicData, Version=7.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\FengjGodot\packages\DynamicData.7.1.1\lib\net461\DynamicData.dll</HintPath>
-    </Reference>
-    <Reference Include="PostSharp, Version=6.6.6.0, Culture=neutral, PublicKeyToken=b13fd38b8f9c99d7, processorArchitecture=MSIL">
-      <HintPath>..\FengjGodot\packages\PostSharp.Redist.6.6.6\lib\net45\PostSharp.dll</HintPath>
-    </Reference>
-    <Reference Include="PostSharp.Community.Packer, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\FengjGodot\packages\PostSharp.Community.Packer.1.2.0\lib\netstandard2.0\PostSharp.Community.Packer.dll</HintPath>
     </Reference>
     <Reference Include="PropertyChanged, Version=3.3.3.0, Culture=neutral, PublicKeyToken=ee3ee20bcf148ddd, processorArchitecture=MSIL">
       <HintPath>..\FengjGodot\packages\PropertyChanged.Fody.3.3.3\lib\net40\PropertyChanged.dll</HintPath>
@@ -54,9 +44,6 @@
       <HintPath>..\FengjGodot\packages\ReactiveMarbles.PropertyChanged.1.4.1\lib\net461\ReactiveMarbles.PropertyChanged.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\FengjGodot\packages\System.ComponentModel.Annotations.5.0.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
-    </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Reactive, Version=5.0.0.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
@@ -117,11 +104,6 @@
     <Error Condition="!Exists('..\FengjGodot\packages\Fody.6.4.0\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\FengjGodot\packages\Fody.6.4.0\build\Fody.targets'))" />
     <Error Condition="!Exists('..\FengjGodot\packages\PropertyChanged.Fody.3.3.3\build\PropertyChanged.Fody.props')" Text="$([System.String]::Format('$(ErrorText)', '..\FengjGodot\packages\PropertyChanged.Fody.3.3.3\build\PropertyChanged.Fody.props'))" />
     <Error Condition="!Exists('..\FengjGodot\packages\Microsoft.NETFramework.ReferenceAssemblies.net472.1.0.0\build\Microsoft.NETFramework.ReferenceAssemblies.net472.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\FengjGodot\packages\Microsoft.NETFramework.ReferenceAssemblies.net472.1.0.0\build\Microsoft.NETFramework.ReferenceAssemblies.net472.targets'))" />
-    <Error Condition="!Exists('..\FengjGodot\packages\PostSharp.6.6.6\build\PostSharp.props')" Text="$([System.String]::Format('$(ErrorText)', '..\FengjGodot\packages\PostSharp.6.6.6\build\PostSharp.props'))" />
-    <Error Condition="!Exists('..\FengjGodot\packages\PostSharp.6.6.6\build\PostSharp.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\FengjGodot\packages\PostSharp.6.6.6\build\PostSharp.targets'))" />
-    <Error Condition="!Exists('..\FengjGodot\packages\PostSharp.Community.Packer.1.2.0\build\PostSharp.Community.Packer.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\FengjGodot\packages\PostSharp.Community.Packer.1.2.0\build\PostSharp.Community.Packer.targets'))" />
   </Target>
   <Import Project="..\FengjGodot\packages\Microsoft.NETFramework.ReferenceAssemblies.net472.1.0.0\build\Microsoft.NETFramework.ReferenceAssemblies.net472.targets" Condition="Exists('..\FengjGodot\packages\Microsoft.NETFramework.ReferenceAssemblies.net472.1.0.0\build\Microsoft.NETFramework.ReferenceAssemblies.net472.targets')" />
-  <Import Project="..\FengjGodot\packages\PostSharp.6.6.6\build\PostSharp.targets" Condition="Exists('..\FengjGodot\packages\PostSharp.6.6.6\build\PostSharp.targets')" />
-  <Import Project="..\FengjGodot\packages\PostSharp.Community.Packer.1.2.0\build\PostSharp.Community.Packer.targets" Condition="Exists('..\FengjGodot\packages\PostSharp.Community.Packer.1.2.0\build\PostSharp.Community.Packer.targets')" />
 </Project>

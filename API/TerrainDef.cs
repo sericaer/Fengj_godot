@@ -34,6 +34,6 @@ namespace Fengj.API
 
         string path { get; }
 
-        int detectSpeed { get; }
+        int detectDifficulty { get; }
     }
 }

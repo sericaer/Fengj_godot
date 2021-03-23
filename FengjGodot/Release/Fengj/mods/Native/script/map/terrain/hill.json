@@ -1,1 +1,10 @@
-{    "height": 1.0,    "occur": {        "plain": 40,        "hill": 70,        "mount": 30    },    "detect_speed":5}
+{
+    "height": 1.0,
+    "occur": {
+        "plain": 40,
+        "hill": 70,
+        "mount": 30
+    },
+    
+    "detect_difficulty":60
+}
