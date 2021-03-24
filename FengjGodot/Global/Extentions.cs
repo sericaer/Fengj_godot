@@ -48,4 +48,20 @@ public static class Extentions
 
         return rslt;
     }
+
+    public static T GetParentRecursively<T>(this Node node) where T : Node
+    {
+        if(node == null)
+        {
+            return null;
+        }
+
+        var parent = node.GetParent();
+        if (parent is T ret)
+        {
+            return ret;
+        }
+
+        return parent.GetParentRecursively<T>();
+    }
 }

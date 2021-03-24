@@ -46,7 +46,7 @@ namespace Fengj.Task
             tasks.Add(task);
         }
 
-        public void Cancel(CellTask task)
+        public void Cancel(Task task)
         {
             task.isCanceled = true;
             tasks.Remove(task);

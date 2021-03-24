@@ -4,10 +4,8 @@
 [ext_resource path="res://Scenes/MainScene/ClanTable/ClanTable.tscn" type="PackedScene" id=2]
 
 [node name="ClanSelectPanel" type="VBoxContainer"]
-margin_left = 100.0
-margin_top = 220.0
-margin_right = 600.0
-margin_bottom = 640.0
+margin_right = 500.0
+margin_bottom = 420.0
 size_flags_horizontal = 0
 size_flags_vertical = 4
 custom_constants/separation = 0

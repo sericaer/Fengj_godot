@@ -1,0 +1,67 @@
+using Fengj.Clan;
+using Fengj.Map;
+using Fengj.Task;
+using Godot;
+using ReactiveMarbles.PropertyChanged;
+using System;
+using System.Linq;
+
+class DetectPanel : Panel
+{
+    public ICell cell { get; set; }
+
+    Fengj.Task.Task task { get; set; }
+
+    Panel progressPanel;
+    ProgressBar progressBar;
+
+    public override void _Ready()
+    {
+        progressPanel = GetNode<Panel>("ProgressPanel");
+        progressBar = progressPanel.GetNode<ProgressBar>("VBoxContainer/ProgressBar");
+    }
+
+    internal void SetCell(ICell cell)
+    {
+        this.cell = cell;
+
+        var task = TaskManager.inst.getCellTask(cell);
+        if(task != null)
+        {
+            SetTask(task);
+        }
+    }
+
+    private void SetTask(Fengj.Task.Task task)
+    {
+        progressPanel.Visible = true;
+        this.task = task;
+        this.task.WhenPropertyValueChanges(x => x.percent).Subscribe(x => progressBar.Value = x);
+        this.task.WhenPropertyValueChanges(x => x.isFinsihed).Subscribe(x => { if (x) this.Visible = false; });
+        this.task.WhenPropertyValueChanges(x => x.isCanceled).Subscribe(x => { if (x) { progressPanel.Visible = false; progressBar.Value = 0; } });
+    }
+
+    private void _on_DetectedButton_pressed()
+    {
+        var clanSelectPanel = ResourceLoader.Load<PackedScene>("res://Scenes/MainScene/ClanTable/ClanSelectPanel.tscn").Instance() as ClanSelectPanel;
+        this.GetParentRecursively<CellTabPanel>().AddChild(clanSelectPanel);
+        clanSelectPanel.SetGmObj(ClanManager.inst);
+
+        clanSelectPanel.Connect("SelectedClan", this, nameof(_on_CreateDetectTask));
+    }
+
+
+    private void _on_CreateDetectTask(string clanKey)
+    {
+        var clans = ClanManager.inst.Where(x => x.key == clanKey);
+        task = new CellTask(CellTask.Type.Detect, cell, clans.ToList());
+        TaskManager.inst.AddTask(task);
+
+        SetTask(task);
+    }
+
+    private void _on_DetectCancelButton_pressed()
+    {
+        TaskManager.inst.Cancel(task);
+    }
+}
