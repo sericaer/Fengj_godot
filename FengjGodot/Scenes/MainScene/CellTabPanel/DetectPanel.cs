@@ -5,6 +5,7 @@ using Godot;
 using ReactiveMarbles.PropertyChanged;
 using System;
 using System.Linq;
+using System.Reactive.Linq;
 
 class DetectPanel : Panel
 {
@@ -14,9 +15,11 @@ class DetectPanel : Panel
 
     Panel progressPanel;
     ProgressBar progressBar;
+    Button detectButton;
 
     public override void _Ready()
     {
+        detectButton = GetNode<Button>("DetectButton");
         progressPanel = GetNode<Panel>("ProgressPanel");
         progressBar = progressPanel.GetNode<ProgressBar>("VBoxContainer/ProgressBar");
     }
@@ -39,6 +42,14 @@ class DetectPanel : Panel
         this.task.WhenPropertyValueChanges(x => x.percent).Subscribe(x => progressBar.Value = x);
         this.task.WhenPropertyValueChanges(x => x.isFinsihed).Subscribe(x => { if (x) this.Visible = false; });
         this.task.WhenPropertyValueChanges(x => x.isCanceled).Subscribe(x => { if (x) { progressPanel.Visible = false; progressBar.Value = 0; } });
+
+        var toopTipObs = Observable.CombineLatest(this.task.WhenPropertyValueChanges(x => x.difficulty), this.task.WhenPropertyValueChanges(x => x.speedDetail),
+                (diffculty, speedDetail) =>
+                {
+                    var rslt = $"diffculty:{diffculty}" + " \n" + String.Join("\n", speedDetail.Select(x => $"{x.desc}:{x.value}"));
+                    GD.Print(rslt);
+                    return rslt;
+                }).Subscribe(desc => progressBar.HintTooltip = desc);
     }
 
     private void _on_DetectedButton_pressed()
