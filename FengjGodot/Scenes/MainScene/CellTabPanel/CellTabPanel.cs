@@ -44,11 +44,10 @@ class CellTabPanel : MarginContainer
 			progressPanel.Visible = true;
 
 			var progressBar = progressPanel.GetNode<ProgressBar>("VBoxContainer/ProgressBar");
-			progressBar.Value = task.percent;
 
 			task.WhenPropertyValueChanges(x => x.percent).Subscribe(x => progressBar.Value = x);
 			task.WhenPropertyValueChanges(x => x.isFinsihed).Subscribe(x => { if (x) detectPanel.Visible = false; });
-			task.WhenPropertyValueChanges(x => x.isCanceled).Subscribe(x => { if (x) progressPanel.Visible = false; progressBar.Value = 0; });
+			task.WhenPropertyValueChanges(x => x.isCanceled).Subscribe(x => { if (x) { progressPanel.Visible = false; progressBar.Value = 0; } });
 		}
 	}
 
