@@ -9,5 +9,9 @@ namespace Fengj.Clan
 {
     class ClanG : ClanBase
     {
+        public ClanG()
+        {
+            traits.Add(new DetectTrait());
+        }
     }
 }
