@@ -9,14 +9,14 @@ public class ClanTable : Control
 	[Signal]
 	internal delegate void ClickClan(string key);
 
-	IEnumerable<IClan> clans;
+	IEnumerable<ClanBase> clans;
 
 	public override void _Ready()
 	{
 		
 	}
 
-	internal void SetGmObj(IEnumerable<IClan> clans)
+	internal void SetGmObj(IEnumerable<ClanBase> clans)
 	{
 		this.clans = clans;
 

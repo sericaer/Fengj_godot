@@ -25,7 +25,7 @@ namespace Fengj.Task
 
         public IEnumerable<(string desc, double value)> speedDetail { get; set; }
 
-        public List<IClan> clans { get; set; }
+        public List<ClanBase> clans { get; set; }
 
         protected Action OnFinsihed;
 

@@ -15,7 +15,7 @@ namespace Fengj.Task
     {
         internal ICell cell { get; set; }
 
-        public CellDetectTask(ICell cell, List<IClan> clans)
+        public CellDetectTask(ICell cell, List<ClanBase> clans)
         {
             this.cell = cell;
             this.percent = 0;

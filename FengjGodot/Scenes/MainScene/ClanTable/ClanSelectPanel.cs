@@ -9,13 +9,13 @@ public class ClanSelectPanel : VBoxContainer
 	[Signal]
 	public delegate void SelectedClan(string key);
 
-	IEnumerable<IClan> clans;
+	IEnumerable<ClanBase> clans;
 
 	ClanTable table;
 
 	Control confirmPanel;
 
-	IClan selectedClan;
+	ClanBase selectedClan;
 
 	public override void _Ready()
 	{
@@ -23,7 +23,7 @@ public class ClanSelectPanel : VBoxContainer
 		confirmPanel = GetNode<Control>("Table/ConfirmPanel");
 	}
 
-	internal void SetGmObj(IEnumerable<IClan> clans)
+	internal void SetGmObj(IEnumerable<ClanBase> clans)
 	{
 		this.clans = clans;
 		table.SetGmObj(clans);

@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DetailedValue.cs" />
     <Compile Include="Extentions.cs" />
     <Compile Include="GTRandom.cs" />
     <Compile Include="GRandom.cs" />

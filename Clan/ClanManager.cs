@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Fengj.Clan
 {
-    interface IClanManager: IEnumerable<IClan>
+    interface IClanManager: IEnumerable<ClanBase>
     {
 
     }
@@ -31,7 +31,7 @@ namespace Fengj.Clan
         {
             _inst = this;
 
-            clans = new List<IClan>()
+            clans = new List<ClanBase>()
             {
                 new ClanG(){ name = "A", origin = "ab", popNum = 1000},
                 new ClanQ(){ name = "B", origin = "bc", popNum = 1200},
@@ -39,9 +39,9 @@ namespace Fengj.Clan
             };
         }
 
-        public IEnumerator<IClan> GetEnumerator()
+        public IEnumerator<ClanBase> GetEnumerator()
         {
-            return ((IEnumerable<IClan>)clans).GetEnumerator();
+            return ((IEnumerable<ClanBase>)clans).GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -50,6 +50,6 @@ namespace Fengj.Clan
         }
 
         private static ClanManager _inst;
-        private List<IClan> clans;
+        private List<ClanBase> clans;
     }
 }
