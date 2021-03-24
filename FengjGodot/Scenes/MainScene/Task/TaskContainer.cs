@@ -19,7 +19,7 @@ public class TaskContainer : VBoxContainer
 
 				taskUI.gmObj = x;
 
-				if(x is CellTask cellTask)
+				if(x is CellDetectTask cellTask)
                 {
 					var param = new Vector2(cellTask.cell.axialCoord.q, cellTask.cell.axialCoord.r);
 					taskUI.button.Connect("pressed", this, nameof(_on_TaskButtonPressed), new Godot.Collections.Array() { param });

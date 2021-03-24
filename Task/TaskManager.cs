@@ -11,14 +11,14 @@ namespace Fengj.Task
 {
     interface ITaskManager
     {
-        void AddTask(Task cellTask);
+        void AddTask(TaskData cellTask);
 
         void DaysInc();
 
-        void OnRemoveItem(Action<Task> act);
-        void OnAddItem(Action<Task> act);
+        void OnRemoveItem(Action<TaskData> act);
+        void OnAddItem(Action<TaskData> act);
 
-        CellTask getCellTask(ICell cell);
+        CellDetectTask getCellTask(ICell cell);
     }
 
     class TaskManager : ITaskManager
@@ -41,23 +41,23 @@ namespace Fengj.Task
             _inst = this;
         }
 
-        public void AddTask(Task task)
+        public void AddTask(TaskData task)
         {
             tasks.Add(task);
         }
 
-        public void Cancel(Task task)
+        public void Cancel(TaskData task)
         {
             task.isCanceled = true;
             tasks.Remove(task);
         }
 
-        public void OnAddItem(Action<Task> act)
+        public void OnAddItem(Action<TaskData> act)
         {
             tasks.Connect().OnItemAdded(act).Subscribe();
         }
 
-        public void OnRemoveItem(Action<Task> act)
+        public void OnRemoveItem(Action<TaskData> act)
         {
             tasks.Connect().OnItemRemoved(act).Subscribe();
         }
@@ -73,15 +73,15 @@ namespace Fengj.Task
             tasks.RemoveMany(needRemove);
         }
 
-        public CellTask getCellTask(ICell cell)
+        public CellDetectTask getCellTask(ICell cell)
         {
             foreach(var elem in tasks.Items)
             {
-                if(elem is  CellTask cellTask)
+                if(elem is  CellDetectTask cellTask)
                 {
                     if(cellTask.cell == cell)
                     {
-                        return cellTask as CellTask;
+                        return cellTask as CellDetectTask;
                     }
                 }
             }
@@ -91,7 +91,7 @@ namespace Fengj.Task
 
         private static TaskManager _inst;
 
-        private SourceList<Task> tasks = new SourceList<Task>();
+        private SourceList<TaskData> tasks = new SourceList<TaskData>();
 
 
     }

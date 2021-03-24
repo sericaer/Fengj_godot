@@ -124,6 +124,7 @@ margin_top = 157.0
 margin_right = 346.0
 margin_bottom = 177.0
 rect_min_size = Vector2( 300, 20 )
+hint_tooltip = "12345"
 size_flags_horizontal = 4
 
 [node name="Button" type="Button" parent="Panel/TabContainer/Info/Detect/ProgressPanel/VBoxContainer"]

@@ -11,7 +11,7 @@ class DetectPanel : Panel
 {
     public ICell cell { get; set; }
 
-    Fengj.Task.Task task { get; set; }
+    TaskData task { get; set; }
 
     Panel progressPanel;
     ProgressBar progressBar;
@@ -35,7 +35,7 @@ class DetectPanel : Panel
         }
     }
 
-    private void SetTask(Fengj.Task.Task task)
+    private void SetTask(TaskData task)
     {
         progressPanel.Visible = true;
         this.task = task;
@@ -65,7 +65,7 @@ class DetectPanel : Panel
     private void _on_CreateDetectTask(string clanKey)
     {
         var clans = ClanManager.inst.Where(x => x.key == clanKey);
-        task = new CellTask(CellTask.Type.Detect, cell, clans.ToList());
+        task = new CellDetectTask(cell, clans.ToList());
         TaskManager.inst.AddTask(task);
 
         SetTask(task);

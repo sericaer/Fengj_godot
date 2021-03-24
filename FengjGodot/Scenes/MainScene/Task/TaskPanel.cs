@@ -5,7 +5,7 @@ using System;
 
 class TaskPanel : PanelContainer
 {
-    public Fengj.Task.Task gmObj
+    public TaskData gmObj
     {
         get
         {
@@ -23,7 +23,7 @@ class TaskPanel : PanelContainer
     ProgressBar progressBar;
     public Button button;
 
-    private Fengj.Task.Task _gmObj;
+    private TaskData _gmObj;
 
     public override void _Ready()
     {
