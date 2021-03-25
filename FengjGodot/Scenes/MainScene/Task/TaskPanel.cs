@@ -15,7 +15,7 @@ class TaskPanel : PanelContainer
         {
             _gmObj = value;
 
-            value.WhenPropertyValueChanges(x => x.percent).Subscribe(x => progressBar.Value = x);
+            value.WhenPropertyValueChanges(x => x.percent).Subscribe(x => progressBar.Value = x).EndWith(this);
         }
     }
 

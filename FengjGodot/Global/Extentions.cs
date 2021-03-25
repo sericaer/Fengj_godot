@@ -64,4 +64,11 @@ public static class Extentions
 
         return parent.GetParentRecursively<T>();
     }
+
+    public static void EndWith(this IDisposable disposable, Node node)
+    {
+        var wait = node.ToSignal(node, "tree_exited");
+        wait.OnCompleted(disposable.Dispose);
+
+    }
 }

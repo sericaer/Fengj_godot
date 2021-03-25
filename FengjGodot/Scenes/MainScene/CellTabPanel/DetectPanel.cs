@@ -39,17 +39,17 @@ class DetectPanel : Panel
     {
         progressPanel.Visible = true;
         this.task = task;
-        this.task.WhenPropertyValueChanges(x => x.percent).Subscribe(x => progressBar.Value = x);
-        this.task.WhenPropertyValueChanges(x => x.isFinsihed).Subscribe(x => { if (x) this.Visible = false; });
-        this.task.WhenPropertyValueChanges(x => x.isCanceled).Subscribe(x => { if (x) { progressPanel.Visible = false; progressBar.Value = 0; } });
+        this.task.WhenPropertyValueChanges(x => x.percent).Subscribe(x => progressBar.Value = x).EndWith(this);
+        this.task.WhenPropertyValueChanges(x => x.isFinsihed).Subscribe(x => { if (x) this.Visible = false; }).EndWith(this);
+        this.task.WhenPropertyValueChanges(x => x.isCanceled).Subscribe(x => { if (x) { progressPanel.Visible = false; progressBar.Value = 0; } }).EndWith(this);
 
-        var toopTipObs = Observable.CombineLatest(this.task.WhenPropertyValueChanges(x => x.difficulty), this.task.WhenPropertyValueChanges(x => x.speedDetail),
+        Observable.CombineLatest(this.task.WhenPropertyValueChanges(x => x.difficulty), this.task.WhenPropertyValueChanges(x => x.speedDetail),
                 (diffculty, speedDetail) =>
                 {
                     var rslt = $"diffculty:{diffculty}" + " \n" + String.Join("\n", speedDetail.Select(x => $"{x.desc}:{x.value}"));
                     GD.Print(rslt);
                     return rslt;
-                }).Subscribe(desc => progressBar.HintTooltip = desc);
+                }).Subscribe(desc => progressBar.HintTooltip = desc).EndWith(this);
     }
 
     private void _on_DetectedButton_pressed()
