@@ -3,6 +3,7 @@
     <TargetFramework>net472</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="DynamicData" Version="7.1.1" />
     <PackageReference Include="ReactiveMarbles.PropertyChanged" Version="1.4.1" />
     <PackageReference Include="System.ValueTuple" Version="4.5.0" />
   </ItemGroup>

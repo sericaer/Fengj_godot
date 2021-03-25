@@ -17,8 +17,9 @@ __meta__ = {
 [node name="Table" type="PanelContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_bottom = -12.0
 script = ExtResource( 1 )
-column_headers = [ "name", "origin", "num" ]
+column_headers = [ "name", "origin", "num", "trais" ]
 min_row_count = 8
-rows = [ [ "--", "--", "--" ], [ "--", "--", "--" ], [ "--", "--", "--" ], [ "--", "--", "--" ], [ "--", "--", "--" ], [ "--", "--", "--" ], [ "--", "--", "--" ], [ "--", "--", "--" ] ]
+rows = [ [ "--", "--", "--", "--" ], [ "--", "--", "--", "--" ], [ "--", "--", "--", "--" ], [ "--", "--", "--", "--" ], [ "--", "--", "--", "--" ], [ "--", "--", "--", "--" ], [ "--", "--", "--", "--" ], [ "--", "--", "--", "--" ] ]
 [connection signal="CLICK_ROW" from="Table" to="." method="_on_Table_CLICK_ROW"]

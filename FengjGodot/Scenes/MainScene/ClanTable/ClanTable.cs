@@ -20,7 +20,7 @@ public class ClanTable : Control
 	{
 		this.clans = clans;
 
-		var rowData = clans.Select(x => new Godot.Collections.Array() { x.name, x.origin, x.popNum.ToString() });
+		var rowData = clans.Select(x => new Godot.Collections.Array() { x.name, x.origin, x.popNum.ToString(), String.Join(" ", x.traits.Items.Select(y=>y.name)) });
 
 		var param = new Godot.Collections.Array(rowData);
 
