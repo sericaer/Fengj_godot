@@ -1,4 +1,5 @@
 using Fengj.Clan;
+using Fengj.Task;
 using Godot;
 using System;
 using System.Collections.Generic;
@@ -27,6 +28,9 @@ public class ClanSelectPanel : VBoxContainer
 	{
 		this.clans = clans;
 		table.SetGmObj(clans);
+
+		var invalidClans = TaskManager.inst.SelectMany(x => x.clans);
+		table.SetInvalidClans(invalidClans);
 	}
 
 	private void _on_Table_ClickClan(string key)

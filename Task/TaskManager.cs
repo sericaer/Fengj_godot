@@ -2,6 +2,7 @@
 using Fengj.IO;
 using Fengj.Map;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,7 +22,7 @@ namespace Fengj.Task
         CellDetectTask getCellTask(ICell cell);
     }
 
-    class TaskManager : ITaskManager
+    class TaskManager : ITaskManager, IEnumerable<TaskData>
     {
         public static TaskManager inst
         {
@@ -87,6 +88,16 @@ namespace Fengj.Task
             }
 
             return null;
+        }
+
+        public IEnumerator<TaskData> GetEnumerator()
+        {
+            return ((IEnumerable<TaskData>)tasks.Items).GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return ((IEnumerable)tasks.Items).GetEnumerator();
         }
 
         private static TaskManager _inst;

@@ -36,6 +36,14 @@ public class ClanTable : Control
 
 		EmitSignal(nameof(ClickClan), rslt.key);
 	}
+
+    internal void SetInvalidClans(IEnumerable<ClanBase> invalidClans)
+    {
+        foreach(var clans in invalidClans)
+        {
+
+        }
+    }
 }
 
 
